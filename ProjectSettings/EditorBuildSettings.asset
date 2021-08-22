@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/ID.unity
+    guid: d446ace8fe2861b459206c9722f24756
+  - enabled: 1
+    path: Assets/Scenes/Sc1LivingRoom.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/Sc1Questionnaire.unity
+    guid: 26099a504c9c59541adb53e255d5b2e7
+  - enabled: 1
+    path: Assets/Scenes/Sc2LectureHall.unity
+    guid: a04cbe16d21f8e646b47fa62886a4dcc
+  - enabled: 1
+    path: Assets/Scenes/Sc2Questionnaire.unity
+    guid: 775bac8e1cf02b246b92d19b4a748541
+  - enabled: 1
+    path: Assets/Scenes/SC3AStreet.unity
+    guid: e0e1f6607cfde3146b8325904f8f75fe
+  - enabled: 1
+    path: Assets/Scenes/Sc3BStreet.unity
+    guid: 88a64906fa15b6a46907a86eb05966aa
+  - enabled: 1
+    path: Assets/Scenes/Sc3Questionnaire.unity
+    guid: 2973ac654407643489a59d7288bf2230
+  - enabled: 1
+    path: Assets/Scenes/Sc4Bar.unity
+    guid: 3a7b50cbff8001340b56c54755572ac8
+  - enabled: 1
+    path: Assets/Scenes/Sc4Questionnaire.unity
+    guid: 8babc9999c69072439e66b850ba35cac
+  m_configObjects:
+    Unity.XR.OpenVR.Settings: {fileID: 11400000, guid: 06c32decb61e282439ba8c167d683d33,
+      type: 2}
+    Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: 5ef7ca064cc4100438a1abcccb9c9c9b,
+      type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: b334d35de3ac5d440abcec0f5bce6a32,
+      type: 2}
