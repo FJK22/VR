@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using SimpleJSON;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -39,7 +40,6 @@ public class Sc5Street : LevelScript
         if(other.tag == "Player")
         {
             StartCoroutine(Post());
-            NextScene();
         }
     }
     private void OnEventTrigger(int index)
@@ -71,16 +71,18 @@ public class Sc5Street : LevelScript
     }
     IEnumerator Post()
     {
+
         List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
         formData.Add(new MultipartFormDataSection("username", UserName));
-        formData.Add(new MultipartFormDataSection("reaction_time ", ((Time.time - startTime) * 1000).ToString("0.0")));
-        formData.Add(new MultipartFormDataSection("map_pressed ", mapOpenCount.ToString()));
+        formData.Add(new MultipartFormDataSection("reaction_time", ((Time.time - startTime) * 1000).ToString("0.0")));
+        formData.Add(new MultipartFormDataSection("map_pressed", mapOpenCount.ToString()));
         UnityWebRequest www = UnityWebRequest.Post(Constant.DOMAIN + Constant.SC5Data, formData);
         yield return www.SendWebRequest();
         if (www.result != UnityWebRequest.Result.Success)
         {
             Debug.LogError(www.error);
         }
+        NextScene();
     }
     IEnumerator MapClose()
     {

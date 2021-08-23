@@ -16,6 +16,7 @@ public class EventTriigger : MonoBehaviour
         if (!triggered && other.tag == "Player")
         {
             levelManager.SendMessage("OnEventTrigger", EventIndex);
+            triggered = true;
         }
     }
 }

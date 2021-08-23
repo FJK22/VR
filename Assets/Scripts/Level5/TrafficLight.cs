@@ -26,7 +26,7 @@ public class TrafficLight : MonoBehaviour
         green2 = render.materials[3];
         red1 = render.materials[1];
         red2 = render.materials[4];
-        IsRed = false;
+        IsRed = true;
         StartCoroutine(Replace());
     }
 

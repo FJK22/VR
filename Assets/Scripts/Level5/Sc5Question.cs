@@ -34,6 +34,7 @@ public class Sc5Question : MonoBehaviour
     {
         BtSubmit.interactable = false;
         List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
+        LevelScript.UserName = "test";
         formData.Add(new MultipartFormDataSection("username", LevelScript.UserName));
         formData.Add(new MultipartFormDataSection("q1", _q1));
         formData.Add(new MultipartFormDataSection("q2", _q2));
