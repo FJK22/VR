@@ -26,7 +26,7 @@ public class TrafficLight : MonoBehaviour
         green2 = render.materials[3];
         red1 = render.materials[1];
         red2 = render.materials[4];
-        IsRed = true;
+        IsRed = false;
         StartCoroutine(Replace());
     }
 
@@ -46,6 +46,7 @@ public class TrafficLight : MonoBehaviour
             else
             {
                 block.SetActive(IsRed);
+                if (Alarm) Alarm.Stop();
             }
         }
     }
@@ -61,6 +62,7 @@ public class TrafficLight : MonoBehaviour
         if(other.tag == "Player")
         {
             IsEnter = true;
+            if (isRed && Alarm) Alarm.Play();
         }
     }
     private void OnTriggerExit(Collider other)
@@ -68,6 +70,7 @@ public class TrafficLight : MonoBehaviour
         if(other.tag == "Player")
         {
             IsEnter = false;
+            if (Alarm) Alarm.Stop();
         }
     }
 }

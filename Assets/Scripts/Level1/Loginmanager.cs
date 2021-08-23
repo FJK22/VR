@@ -26,13 +26,13 @@ public class Loginmanager : MonoBehaviour
         set { _platform = value; }
     }
 
-    private void Start()
-    {
-        Platform = "PC";
-        IFUserName.onValueChanged.AddListener(delegate { Validate(); });
-        IFAge.onValueChanged.AddListener(delegate { Validate(); });
-        BtSubmit.onClick.AddListener(delegate { StartCoroutine(Login()); });
-    }
+    //private void Start()
+    //{
+    //    Platform = "PC";
+    //    IFUserName.onValueChanged.AddListener(delegate { Validate(); });
+    //    IFAge.onValueChanged.AddListener(delegate { Validate(); });
+    //    BtSubmit.onClick.AddListener(delegate { StartCoroutine(Login()); });
+    //}
 
     public IEnumerator Login() {
         BtSubmit.interactable = false;

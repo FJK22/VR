@@ -44,7 +44,7 @@ public class SC3Street : LevelScript
         formData.Add(new MultipartFormDataSection("accuracy", (SpawnPosIndex == 0 == IsLeft == Correspond) ? "Correct": "Wrong"));
         formData.Add(new MultipartFormDataSection("reaction_time", ((Time.time - startTime) * 1000).ToString("0.0")));
 
-        string url = Constant.DOMAIN + ((Correspond) ? Constant.SC3A : Constant.SC3B);
+        string url = Constant.DOMAIN + ((Correspond) ? Constant.SC3AData : Constant.SC3BData);
         //Debug.Log(url);
         UnityWebRequest www = UnityWebRequest.Post(url, formData);
         yield return www.SendWebRequest();
