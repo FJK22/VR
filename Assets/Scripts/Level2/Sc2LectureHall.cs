@@ -31,7 +31,7 @@ public class Sc2LectureHall : LevelScript
     }
     IEnumerator Post(bool pressed)
     {
-        posted = false;
+        posted = true;
         List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
         formData.Add(new MultipartFormDataSection("username", LevelScript.UserName));
         formData.Add(new MultipartFormDataSection("digit", currentNumber.ToString()));
