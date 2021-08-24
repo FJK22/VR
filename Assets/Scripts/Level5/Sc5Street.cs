@@ -32,6 +32,15 @@ public class Sc5Street : LevelScript
     new public void StartTask()
     {
         base.StartTask();
+        if (IsVR)
+        {
+            Vector3 phonePos = phone.transform.localPosition;
+            Quaternion phoneRot = phone.transform.localRotation;
+
+            phone.transform.SetParent(VRCamera.transform.Find("Camera"));
+            phone.transform.localRotation = phoneRot;
+            phone.transform.localPosition = phonePos;
+        }
         startTime = Time.time;
         mapCanvas.SetActive(true);
     }
