@@ -142,7 +142,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &208305192
 RectTransform:
   m_ObjectHideFlags: 0
@@ -496,8 +496,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "In this scene your task is to listen to the conversation that the three
     people in front of you will talk about and count how many times the word \u201Ccapacity\u201D
-    was mentioned by them. If you require more information, feel free to ask the
-    experimenter."
+    was mentioned by them. If you require further information, feel free to ask the
+    experimenter. Press the Spacebar to start the task."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -666,7 +666,7 @@ Light:
   m_Type: 0
   m_Shape: 0
   m_Color: {r: 0.5529412, g: 0, b: 0.70980394, a: 1}
-  m_Intensity: 1.7
+  m_Intensity: 2.25
   m_Range: 13.31
   m_SpotAngle: 179
   m_InnerSpotAngle: 1
@@ -1122,7 +1122,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1061481704}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0.08, y: 1.03, z: -2.998}
+  m_LocalPosition: {x: 0.65, y: 1.11, z: -3.03}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 236160506}
@@ -1489,7 +1489,7 @@ Light:
   serializedVersion: 10
   m_Type: 2
   m_Shape: 0
-  m_Color: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 1}
+  m_Color: {r: 0.46226418, g: 0.46226418, b: 0.46226418, a: 1}
   m_Intensity: 1.59
   m_Range: 39.85
   m_SpotAngle: 30
@@ -2009,7 +2009,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1953909133
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6039,8 +6039,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 917602215467120272}
-  m_LocalRotation: {x: -0, y: -0.93297756, z: -0, w: 0.35993463}
-  m_LocalPosition: {x: 2.366727, y: -2.134, z: 0.24715209}
+  m_LocalRotation: {x: -0, y: -0.90167356, z: -0, w: 0.43241745}
+  m_LocalPosition: {x: 2.5755665, y: -2.134, z: 0.30669308}
   m_LocalScale: {x: 0.81946325, y: 0.81946325, z: 0.81946325}
   m_Children:
   - {fileID: 1551644939593107440}
@@ -6053,7 +6053,7 @@ Transform:
   - {fileID: 6582132739516453618}
   m_Father: {fileID: 1800140652}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: -137.808, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -128.758, z: 0}
 --- !u!1 &572087498931426340
 GameObject:
   m_ObjectHideFlags: 0
@@ -9333,7 +9333,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 422443880435531397}
   m_LocalRotation: {x: -0, y: 0.84651154, z: -0, w: 0.5323704}
-  m_LocalPosition: {x: 2.071, y: -2.111, z: -0.969}
+  m_LocalPosition: {x: 1.67, y: -2.111, z: -0.806}
   m_LocalScale: {x: 0.79473734, y: 0.79473734, z: 0.79473734}
   m_Children:
   - {fileID: 8120539072018018245}
@@ -22772,8 +22772,8 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -5154070213984342367, guid: fc1f380db1085054bb1d930246124e60, type: 3}
-  - {fileID: 4058673905107743897, guid: fc1f380db1085054bb1d930246124e60, type: 3}
+  - {fileID: 2100000, guid: 272db6f47ce500343a289942713409fe, type: 2}
+  - {fileID: 2100000, guid: 272db6f47ce500343a289942713409fe, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -29995,8 +29995,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3993417021828937533}
-  m_LocalRotation: {x: -0, y: 0.357795, z: -0, w: 0.93380016}
-  m_LocalPosition: {x: 1.962, y: -2.0914, z: -0.278}
+  m_LocalRotation: {x: -0, y: 0.32477567, z: -0, w: 0.94579107}
+  m_LocalPosition: {x: 2.124, y: -2.0914, z: -0.141}
   m_LocalScale: {x: 0.77740633, y: 0.77740633, z: 0.77740633}
   m_Children:
   - {fileID: 7846496131279393613}
@@ -30007,7 +30007,7 @@ Transform:
   - {fileID: 8568252397331253892}
   m_Father: {fileID: 1800140652}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 41.93, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 37.904, z: 0}
 --- !u!4 &4334552473776493847
 Transform:
   m_ObjectHideFlags: 0
