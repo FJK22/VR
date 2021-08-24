@@ -62,6 +62,7 @@ public class TrafficLight : MonoBehaviour
         if(other.tag == "Player")
         {
             IsEnter = true;
+            block.SetActive(false);
             if (isRed && Alarm) Alarm.Play();
         }
     }
@@ -70,6 +71,7 @@ public class TrafficLight : MonoBehaviour
         if(other.tag == "Player")
         {
             IsEnter = false;
+            if (IsRed) block.SetActive(true);
             if (Alarm) Alarm.Stop();
         }
     }

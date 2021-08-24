@@ -4,7 +4,7 @@ public class PlayerController : MonoBehaviour
 {
     float xRotation = 0f;
     [SerializeField] float mouseSensitivity = 100f;
-    [SerializeField] float moveSpeed = 1f;
+    [SerializeField] float moveSpeed = 100f;
     [SerializeField] bool isMove = false;
     Transform cameraTransform;
     CharacterController controller;
@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
             float x = Input.GetAxis("Horizontal");
             float z = Input.GetAxis("Vertical");
             Vector3 move = transform.right * x + transform.forward * z;
-            controller.Move(move / 10 * moveSpeed);
+            controller.Move(move * Time.deltaTime * moveSpeed);
         }
     }
 }
