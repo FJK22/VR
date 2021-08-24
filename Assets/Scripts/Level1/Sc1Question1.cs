@@ -43,7 +43,6 @@ public class Sc1Question1 : MonoBehaviour
         else
         {
             JSONNode data = JSON.Parse(www.downloadHandler.text);
-            Debug.Log(www.downloadHandler.text);
             if (data["status"] == "success")
             {
                 LevelScript.NextScene();
