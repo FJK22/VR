@@ -19,6 +19,7 @@ public class Sc5Street : LevelScript
     [SerializeField] float messageDelay = 3;
     [SerializeField] float mapDelay = 3;
 
+    public GameObject[] CarPrefabs;
     int mapOpenCount = 0;
     float startTime = 0;
     bool isMapOpened = false;

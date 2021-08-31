@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class TrafficLight : MonoBehaviour
 {
-    bool isRed = false;
-    public bool IsEnter;
+    bool isFirstRoadRed = false;
+    public bool isEnter;
     [SerializeField] GameObject block;
     [SerializeField] MeshRenderer render;
     [SerializeField] float Delay = 20f;
@@ -13,47 +13,55 @@ public class TrafficLight : MonoBehaviour
     [SerializeField] Color GreenOff;
     [SerializeField] Color RedOn;
     [SerializeField] Color RedOff;
-    [SerializeField] AudioSource Alarm;
+
+    [SerializeField] Obstacle[] obstacle1;
+    [SerializeField] Obstacle[] obstacle2;
+
 
     [ReadOnly] Material green1;
     [ReadOnly] Material green2;
     [ReadOnly] Material red1;
     [ReadOnly] Material red2;
-
+    
     private void Start()
     {
         green1 = render.materials[6];
         green2 = render.materials[3];
-        red1 = render.materials[1];
-        red2 = render.materials[4];
-        IsRed = true;
+        red1 = render.materials[4];
+        red2 = render.materials[1];
+        IsFirstRoadRed = true;
         StartCoroutine(Replace());
     }
 
-    bool IsRed {
-        get { return isRed; }
+    bool IsFirstRoadRed {
+        get { return isFirstRoadRed; }
         set
         {
-            isRed = value;
-            green1.SetColor("_EmissionColor", (isRed) ? GreenOff : GreenOn);
-            green2.SetColor("_EmissionColor", (isRed) ? GreenOff : GreenOn);
-            red1.SetColor("_EmissionColor", (isRed) ? RedOn: RedOff);
-            red2.SetColor("_EmissionColor", (isRed) ? RedOn : RedOff);
-            if (IsEnter)
+            isFirstRoadRed = value;
+            green1.SetColor("_EmissionColor", (isFirstRoadRed) ? GreenOff : GreenOn);
+            green2.SetColor("_EmissionColor", (isFirstRoadRed) ? GreenOn : GreenOff);
+            red1.SetColor("_EmissionColor", (isFirstRoadRed) ? RedOn: RedOff);
+            red2.SetColor("_EmissionColor", (isFirstRoadRed) ? RedOff : RedOn);
+            if(!isEnter)
             {
-                if(Alarm)Alarm.Play();
+                block.SetActive(IsFirstRoadRed);
             }
-            else
+            foreach(var o1 in obstacle1)
             {
-                block.SetActive(IsRed);
-                if (Alarm) Alarm.Stop();
+                o1.IsBlock = !value || isEnter;
+                if (isEnter && value) o1.Alarm?.Invoke();
+            }
+            foreach(var o2 in obstacle2)
+            {
+                o2.IsBlock = value || isEnter;
             }
         }
     }
+    
     IEnumerator Replace()
     {
         yield return new WaitForSeconds(Delay);
-        IsRed = !IsRed;
+        IsFirstRoadRed = !IsFirstRoadRed;
         StartCoroutine(Replace());
     }
 
@@ -61,17 +69,15 @@ public class TrafficLight : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            IsEnter = true;
-            if (isRed && Alarm) Alarm.Play();
+            isEnter = true;
         }
     }
     private void OnTriggerExit(Collider other)
     {
         if(other.tag == "Player")
         {
-            IsEnter = false;
-            if (IsRed) block.SetActive(true);
-            if (Alarm) Alarm.Stop();
+            isEnter = false;
+            if (IsFirstRoadRed) block.SetActive(true);
         }
     }
 }
