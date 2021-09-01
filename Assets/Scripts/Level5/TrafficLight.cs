@@ -21,7 +21,7 @@ public class TrafficLight : MonoBehaviour
     [SerializeField] Obstacle[] obstacle1;
     [SerializeField] Obstacle[] obstacle2;
 
-    AudioSource audio;
+    AudioSource audioSource;
 
     [ReadOnly] Material green1;
     [ReadOnly] Material green2;
@@ -30,12 +30,12 @@ public class TrafficLight : MonoBehaviour
     
     private void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         green1 = render.materials[6];
         green2 = render.materials[3];
         red1 = render.materials[4];
         red2 = render.materials[1];
         IsFirstRoadRed = true;
-        audio = GetComponent<AudioSource>();
         StartCoroutine(Replace());
         if (playerBlock2)
         {
@@ -63,7 +63,11 @@ public class TrafficLight : MonoBehaviour
             StartCoroutine(CarPass());
             if((isEnter1 && value) || (isEnter2 && !value))
             {
-                audio.Play();
+                audioSource.Play();
+            }
+            else
+            {
+                audioSource.Stop();
             }
         }
     }
@@ -71,7 +75,6 @@ public class TrafficLight : MonoBehaviour
     IEnumerator CarPass()
     {
         StopCoroutine(CarPass());
-        Debug.Log("excute");
         if (isFirstRoadRed)
         {
             foreach (var o2 in obstacle2)
@@ -104,13 +107,5 @@ public class TrafficLight : MonoBehaviour
         yield return new WaitForSeconds(TrafficCrossTime);
         IsFirstRoadRed = !IsFirstRoadRed;
         StartCoroutine(Replace());
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.tag == "Player")
-        {
-            isEnter1 = true;
-        }
     }
 }
