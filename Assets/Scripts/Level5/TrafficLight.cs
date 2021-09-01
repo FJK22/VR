@@ -11,7 +11,8 @@ public class TrafficLight : MonoBehaviour
     [SerializeField] PersonBlock playerBlock1;
     [SerializeField] PersonBlock playerBlock2;
     [SerializeField] MeshRenderer render;
-    [SerializeField] float Delay = 20f;
+    [SerializeField] float TrafficCrossTime = 20f;
+    [SerializeField] float CrossDelay = 1f;
     [SerializeField] Color GreenOn;
     [SerializeField] Color GreenOff;
     [SerializeField] Color RedOn;
@@ -19,6 +20,8 @@ public class TrafficLight : MonoBehaviour
 
     [SerializeField] Obstacle[] obstacle1;
     [SerializeField] Obstacle[] obstacle2;
+
+    AudioSource audio;
 
     [ReadOnly] Material green1;
     [ReadOnly] Material green2;
@@ -32,6 +35,7 @@ public class TrafficLight : MonoBehaviour
         red1 = render.materials[4];
         red2 = render.materials[1];
         IsFirstRoadRed = true;
+        audio = GetComponent<AudioSource>();
         StartCoroutine(Replace());
         if (playerBlock2)
         {
@@ -56,22 +60,48 @@ public class TrafficLight : MonoBehaviour
             {
                 playerBlock2.SetCollider(!isFirstRoadRed);
             }
-            foreach(var o1 in obstacle1)
+            StartCoroutine(CarPass());
+            if((isEnter1 && value) || (isEnter2 && !value))
             {
-                o1.IsBlock = !value || isEnter1;
-                if (isEnter1 && value) o1.Alarm?.Invoke();
-            }
-            foreach(var o2 in obstacle2)
-            {
-                o2.IsBlock = value || isEnter1;
-                if (isEnter1 && !value) o2.Alarm?.Invoke();
+                audio.Play();
             }
         }
     }
     
+    IEnumerator CarPass()
+    {
+        StopCoroutine(CarPass());
+        Debug.Log("excute");
+        if (isFirstRoadRed)
+        {
+            foreach (var o2 in obstacle2)
+            {
+                o2.IsBlock = true;
+            }
+            yield return new WaitForSeconds(CrossDelay);
+            foreach (var o1 in obstacle1)
+            {
+                o1.IsBlock = isEnter1;
+            }
+        }
+        else
+        {
+            foreach (var o1 in obstacle1)
+            {
+                o1.IsBlock = true;
+            }
+            yield return new WaitForSeconds(CrossDelay);
+            foreach (var o2 in obstacle2)
+            {
+                o2.IsBlock = isEnter2;
+            }
+            
+            
+        }
+    }
     IEnumerator Replace()
     {
-        yield return new WaitForSeconds(Delay);
+        yield return new WaitForSeconds(TrafficCrossTime);
         IsFirstRoadRed = !IsFirstRoadRed;
         StartCoroutine(Replace());
     }

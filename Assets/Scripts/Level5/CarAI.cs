@@ -86,7 +86,6 @@ public class CarAI : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        
         if (other.tag == "Obstacle")
         {
             
@@ -98,7 +97,7 @@ public class CarAI : MonoBehaviour
                 sz = rotateTarget.position.z - transform.position.z;
             }
             currentObstacle.currentCar = this;
-            isWait = currentObstacle.IsBlock;
+            isWait = currentObstacle.IsBlock || currentObstacle.isLimit;
             startTime = Time.time;
         }
         else if(other.tag == "car")
