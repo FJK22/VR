@@ -28,51 +28,59 @@ public class CarAI : MonoBehaviour
     {
         if (isWait) return;
         // rotation
-        if(rotateTarget)
+       
+        Vector3 starPos = detectorPos.position;
+        Ray ray = new Ray(starPos, transform.forward * detectDistance);
+        RaycastHit hit;
+        isBlock = false;
+        if (Physics.Raycast(starPos, ray.direction, out hit, detectDistance, layer))
         {
-            pastTime = Mathf.Min(Time.time - startTime, rotateTime);
-            deltax = k * sx * ((Horizontal) ? (rotateTime - pastTime) : pastTime) * Time.deltaTime;
-            deltaz = k * sz * ((Horizontal) ? pastTime : (rotateTime - pastTime)) * Time.deltaTime;
-            if(deltaz == 0)
+            if (hit.collider.tag == "car")
             {
-                alpha = (sx > 0) ? 90 : -90;
-            }
-            else
-            {
-                alpha = Mathf.Atan(deltax / deltaz) * 180 / Mathf.PI;
-                if (sz < 0)
+                isBlock = true;
+                if (!rotateTarget)
                 {
-                    alpha = 180 + alpha;
-                }
-            }
-            transform.eulerAngles = new Vector3(0, alpha, 0);
-            transform.position += new Vector3(deltax, 0, deltaz);
-            if (pastTime == rotateTime)
-            {
-                rotateTarget = null;
-                Horizontal = !Horizontal;
-            }
-        }
-        else
-        {
-            Vector3 starPos = detectorPos.position;
-            Ray ray = new Ray(starPos, transform.forward * detectDistance);
-            Debug.DrawRay(starPos, ray.direction * detectDistance);
-            RaycastHit hit;
-            isBlock = false;
-            if (Physics.Raycast(starPos, ray.direction, out hit, detectDistance, layer))
-            {
-                if (hit.collider.tag == "car")
-                {
-                    isBlock = true;
                     float temp;
                     temp = speed;
                     speed = hit.collider.GetComponent<CarAI>().speed;
                     hit.collider.GetComponent<CarAI>().speed = temp;
-
                 }
             }
-            if (!isBlock) transform.Translate(Vector3.forward * Time.deltaTime * speed);
+        }
+        if (!isBlock) {
+            if (rotateTarget)
+            {
+                pastTime = Mathf.Min(Time.time - startTime, rotateTime);
+                deltax = k * sx * ((Horizontal) ? (rotateTime - pastTime) : pastTime) * Time.deltaTime;
+                deltaz = k * sz * ((Horizontal) ? pastTime : (rotateTime - pastTime)) * Time.deltaTime;
+                if (deltaz == 0)
+                {
+                    alpha = (sx > 0) ? 90 : -90;
+                }
+                else
+                {
+                    alpha = Mathf.Atan(deltax / deltaz) * 180 / Mathf.PI;
+                    if (sz < 0)
+                    {
+                        alpha = 180 + alpha;
+                    }
+                }
+                transform.eulerAngles = new Vector3(0, alpha, 0);
+                transform.position += new Vector3(deltax, 0, deltaz);
+                if (pastTime == rotateTime)
+                {
+                    rotateTarget = null;
+                    Horizontal = !Horizontal;
+                }
+            }
+            else
+            {
+                transform.Translate(Vector3.forward * Time.deltaTime * speed);
+            }
+        }
+        else
+        {
+            startTime += Time.deltaTime;
         }
     }
     

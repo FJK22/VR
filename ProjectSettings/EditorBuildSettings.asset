@@ -42,6 +42,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Sc5Questionnaire.unity
     guid: 259149709e2c81949833fbde31fcb49a
   - enabled: 1
+    path: Assets/Scenes/Sc6TrainStation.unity
+    guid: 36917b117666474469786944725e6977
+  - enabled: 1
     path: Assets/Scenes/Sc6Questionnairee.unity
     guid: 7b4e17fcdd695f64db352b12d5f557da
   m_configObjects:

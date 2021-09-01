@@ -4,6 +4,7 @@ using UnityEngine;
 public class EventTriigger : MonoBehaviour
 {
     [SerializeField] int EventIndex;
+    [SerializeField] string TriggerEventName = "OnEventTrigger";
     bool triggered = false;
     LevelScript levelManager;
     void Start()
@@ -15,7 +16,7 @@ public class EventTriigger : MonoBehaviour
     {
         if (!triggered && other.tag == "Player")
         {
-            levelManager.SendMessage("OnEventTrigger", EventIndex);
+            levelManager.SendMessage(TriggerEventName, EventIndex);
             triggered = true;
         }
     }

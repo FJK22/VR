@@ -5,8 +5,11 @@ using UnityEngine;
 public class TrafficLight : MonoBehaviour
 {
     bool isFirstRoadRed = false;
-    public bool isEnter;
-    [SerializeField] GameObject block;
+    [HideInInspector] public bool isEnter1;
+    [HideInInspector] public bool isEnter2;
+
+    [SerializeField] PersonBlock playerBlock1;
+    [SerializeField] PersonBlock playerBlock2;
     [SerializeField] MeshRenderer render;
     [SerializeField] float Delay = 20f;
     [SerializeField] Color GreenOn;
@@ -16,7 +19,6 @@ public class TrafficLight : MonoBehaviour
 
     [SerializeField] Obstacle[] obstacle1;
     [SerializeField] Obstacle[] obstacle2;
-
 
     [ReadOnly] Material green1;
     [ReadOnly] Material green2;
@@ -31,9 +33,13 @@ public class TrafficLight : MonoBehaviour
         red2 = render.materials[1];
         IsFirstRoadRed = true;
         StartCoroutine(Replace());
+        if (playerBlock2)
+        {
+            playerBlock2.isFirstRoad = false;
+        }
     }
 
-    bool IsFirstRoadRed {
+    public bool IsFirstRoadRed {
         get { return isFirstRoadRed; }
         set
         {
@@ -42,18 +48,23 @@ public class TrafficLight : MonoBehaviour
             green2.SetColor("_EmissionColor", (isFirstRoadRed) ? GreenOn : GreenOff);
             red1.SetColor("_EmissionColor", (isFirstRoadRed) ? RedOn: RedOff);
             red2.SetColor("_EmissionColor", (isFirstRoadRed) ? RedOff : RedOn);
-            if(!isEnter)
+            if(!isEnter1)
             {
-                block.SetActive(IsFirstRoadRed);
+                playerBlock1.SetCollider(IsFirstRoadRed);
+            }
+            if (!isEnter2 && playerBlock2)
+            {
+                playerBlock2.SetCollider(!isFirstRoadRed);
             }
             foreach(var o1 in obstacle1)
             {
-                o1.IsBlock = !value || isEnter;
-                if (isEnter && value) o1.Alarm?.Invoke();
+                o1.IsBlock = !value || isEnter1;
+                if (isEnter1 && value) o1.Alarm?.Invoke();
             }
             foreach(var o2 in obstacle2)
             {
-                o2.IsBlock = value || isEnter;
+                o2.IsBlock = value || isEnter1;
+                if (isEnter1 && !value) o2.Alarm?.Invoke();
             }
         }
     }
@@ -69,15 +80,7 @@ public class TrafficLight : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            isEnter = true;
-        }
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        if(other.tag == "Player")
-        {
-            isEnter = false;
-            if (IsFirstRoadRed) block.SetActive(true);
+            isEnter1 = true;
         }
     }
 }

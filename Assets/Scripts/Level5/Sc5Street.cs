@@ -6,6 +6,7 @@ using UnityEngine.Networking;
 
 public class Sc5Street : LevelScript
 {
+    [SerializeField] float MaxLimitTime = 30f;
     [SerializeField] GameObject phone;
     [SerializeField] GameObject mapCanvas;
     [SerializeField] GameObject mapPan;
@@ -23,6 +24,8 @@ public class Sc5Street : LevelScript
     int mapOpenCount = 0;
     float startTime = 0;
     bool isMapOpened = false;
+    int marks = 10;
+    int currentPointIndex = 0;
     void Update()
     {
         if (!isStarted && Input.GetKey(KeyCode.Space))
@@ -44,6 +47,7 @@ public class Sc5Street : LevelScript
         }
         startTime = Time.time;
         mapCanvas.SetActive(true);
+        StartCoroutine(LimitTimer());
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -70,6 +74,21 @@ public class Sc5Street : LevelScript
                 break;
         }
     }
+    private void PathPass(int index)
+    {
+        if(index < 0)
+        {
+            marks += index;
+        }
+        else if(currentPointIndex > index)
+        {
+            marks += index - currentPointIndex;
+        }
+        else
+        {
+            currentPointIndex = index;
+        }
+    }
     public void MapOpen()
     {
         if (isMapOpened) return;
@@ -81,11 +100,14 @@ public class Sc5Street : LevelScript
     }
     IEnumerator Post()
     {
-
+        string accuracy = "High";
+        if (marks < 8) accuracy = "Medium";
+        if (marks < 5) accuracy = "Low";
         List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
         formData.Add(new MultipartFormDataSection("username", UserName));
         formData.Add(new MultipartFormDataSection("reaction_time", ((Time.time - startTime) * 1000).ToString("0.0")));
         formData.Add(new MultipartFormDataSection("map_pressed", mapOpenCount.ToString()));
+        formData.Add(new MultipartFormDataSection("accuracy", accuracy));
         UnityWebRequest www = UnityWebRequest.Post(Constant.DOMAIN + Constant.SC5Data, formData);
         yield return www.SendWebRequest();
         if (www.result != UnityWebRequest.Result.Success)
@@ -116,5 +138,11 @@ public class Sc5Street : LevelScript
         yield return new WaitForSeconds(messageDelay);
         messagePan.SetActive(false);
         phone.SetActive(false);
+    }
+    IEnumerator LimitTimer()
+    {
+        yield return new WaitForSeconds(MaxLimitTime);
+        marks = 0;
+        StartCoroutine(Post());
     }
 }
