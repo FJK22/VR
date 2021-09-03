@@ -3,14 +3,15 @@ using UnityEngine;
 
 public class CarSpwaner : MonoBehaviour
 {
-    [MinMaxSlider(5, 10)] [SerializeField] Vector2 spawnDelay;
+    [MinMaxSlider(5, 10)] [SerializeField]
+    Vector2 spawnDelay = new Vector2(5, 10);
     [SerializeField] bool isReady = true;
     [MinMaxSlider(5, 10)][SerializeField]
-    private Vector2 speedRange;
+    private Vector2 speedRange = new Vector2(5, 10);
     Sc5Street manager;
     private void Start()
     {
-        manager = GameObject.FindObjectOfType<Sc5Street>();
+        manager = FindObjectOfType<Sc5Street>();
         StartCoroutine(Spawn());
     }
     private void OnTriggerExit(Collider other)

@@ -5,13 +5,13 @@ using UnityEngine.Networking;
 
 public class SC3Street : LevelScript
 {
-    [SerializeField] Transform[] SpawnPoses;
-    [SerializeField] GameObject[] SpawnPrefabs;
-    [SerializeField] float CarShowTime;
-    [SerializeField] float CarSpeed;
-    [SerializeField] float Delay;
-    [SerializeField] int TotalCount;
-    [SerializeField] bool Correspond;
+    [SerializeField] Transform[] SpawnPoses = null;
+    [SerializeField] GameObject[] SpawnPrefabs = null;
+    [SerializeField] float CarShowTime = 5f;
+    [SerializeField] float CarSpeed = 10f;
+    [SerializeField] float Delay = 2f;
+    [SerializeField] int TotalCount = 10;
+    [SerializeField] bool Correspond = false;
 
     int SpawnPosIndex;
     int count;

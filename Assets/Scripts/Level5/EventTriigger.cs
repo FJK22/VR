@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public class EventTriigger : MonoBehaviour
 {
-    [SerializeField] int EventIndex;
+    [SerializeField] int EventIndex = 0;
     [SerializeField] string TriggerEventName = "OnEventTrigger";
     bool triggered = false;
     LevelScript levelManager;

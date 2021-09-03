@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class Sc5Question : MonoBehaviour
 {
-    [SerializeField] Button BtSubmit;
+    [SerializeField] Button BtSubmit = null;
     string _q1 = "";
     string _q2 = "";
     string _q3 = "";
@@ -34,7 +34,6 @@ public class Sc5Question : MonoBehaviour
     {
         BtSubmit.interactable = false;
         List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
-        LevelScript.UserName = "test";
         formData.Add(new MultipartFormDataSection("username", LevelScript.UserName));
         formData.Add(new MultipartFormDataSection("q1", _q1));
         formData.Add(new MultipartFormDataSection("q2", _q2));

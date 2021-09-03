@@ -8,15 +8,15 @@ using SimpleJSON;
 
 public class Loginmanager : MonoBehaviour
 {
-    [SerializeField] TMP_InputField IFUserName;
-    [SerializeField] TMP_InputField IFAge;
-    [SerializeField] TMP_Dropdown DDGender;
-    [SerializeField] TMP_Dropdown DDHighestEducation;
-    [SerializeField] TMP_Dropdown DDGroup;
-    [SerializeField] TMP_Dropdown DDVision;
-    [SerializeField] TMP_Dropdown DDHearing;
-    [SerializeField] Button BtSubmit;
-    [SerializeField] TMP_Text ErrorMessage;
+    [SerializeField] TMP_InputField IFUserName = null;
+    [SerializeField] TMP_InputField IFAge = null;
+    [SerializeField] TMP_Dropdown DDGender = null;
+    [SerializeField] TMP_Dropdown DDHighestEducation = null;
+    [SerializeField] TMP_Dropdown DDGroup = null;
+    [SerializeField] TMP_Dropdown DDVision = null;
+    [SerializeField] TMP_Dropdown DDHearing = null;
+    [SerializeField] Button BtSubmit = null;
+    [SerializeField] TMP_Text ErrorMessage = null;
 
     private string UserId;
 

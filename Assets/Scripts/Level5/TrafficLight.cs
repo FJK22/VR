@@ -5,21 +5,21 @@ using UnityEngine;
 public class TrafficLight : MonoBehaviour
 {
     bool isFirstRoadRed = false;
-    [HideInInspector] public bool isEnter1;
-    [HideInInspector] public bool isEnter2;
+    [HideInInspector] public bool isEnter1 = false;
+    [HideInInspector] public bool isEnter2 = false;
 
-    [SerializeField] PersonBlock playerBlock1;
-    [SerializeField] PersonBlock playerBlock2;
-    [SerializeField] MeshRenderer render;
+    [SerializeField] PersonBlock playerBlock1 = null;
+    [SerializeField] PersonBlock playerBlock2 = null;
+    [SerializeField] MeshRenderer render = null;
     [SerializeField] float TrafficCrossTime = 20f;
     [SerializeField] float CrossDelay = 1f;
-    [SerializeField] Color GreenOn;
-    [SerializeField] Color GreenOff;
-    [SerializeField] Color RedOn;
-    [SerializeField] Color RedOff;
+    [SerializeField] Color GreenOn = Color.green;
+    [SerializeField] Color GreenOff = Color.black;
+    [SerializeField] Color RedOn = Color.red;
+    [SerializeField] Color RedOff = Color.black;
 
-    [SerializeField] Obstacle[] obstacle1;
-    [SerializeField] Obstacle[] obstacle2;
+    [SerializeField] Obstacle[] obstacle1 = null;
+    [SerializeField] Obstacle[] obstacle2 = null;
 
     AudioSource audioSource;
 

@@ -5,8 +5,8 @@ using UnityEngine.Video;
 
 public class Sc1LivingRoom : LevelScript
 {
-    [SerializeField] VideoPlayer video;
-    [SerializeField] AudioSource[] audios;
+    [SerializeField] VideoPlayer video = null;
+    [SerializeField] AudioSource[] audios = null;
     void Update()
     {
         if (!isStarted && Input.GetKey(KeyCode.Space))

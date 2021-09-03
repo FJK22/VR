@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Sc4Bar : LevelScript
 {
-    [SerializeField] AudioSource[] audios;
+    [SerializeField] AudioSource[] audios = null;
     void Update()
     {
         if (!isStarted && Input.GetKey(KeyCode.Space))

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class Sc2Question : MonoBehaviour
 {
-    [SerializeField] Button BtSubmit;
+    [SerializeField] Button BtSubmit = null;
     string _q1 = "";
     string _q2 = "";
     string _q3 = "";

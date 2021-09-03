@@ -2,7 +2,7 @@
 
 public class RoadLimit : MonoBehaviour
 {
-    [SerializeField] Obstacle obstacle;
+    [SerializeField] Obstacle obstacle = null;
     [SerializeField] int limit = 3;
     int carCount;
     int CarCount

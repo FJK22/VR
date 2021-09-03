@@ -7,11 +7,12 @@ public class LevelScript : MonoBehaviour
 {
     public static string UserName;
     public static bool IsVR;
-    [SerializeField] protected GameObject MainCamera;
-    [SerializeField] protected GameObject VRCamera;
-    [SerializeField] GameObject StartButton;
-    [SerializeField] Canvas TaskCanvas;
-    [HideInInspector] public bool isStarted;
+    public static bool PlayerFreeze = false;
+    [SerializeField] protected GameObject MainCamera = null;
+    [SerializeField] protected GameObject VRCamera = null;
+    [SerializeField] GameObject StartButton = null;
+    [SerializeField] protected Canvas TaskCanvas = null;
+    [HideInInspector] public bool isStarted = false;
     bool TaskLevel = true;
     void Start()
     {

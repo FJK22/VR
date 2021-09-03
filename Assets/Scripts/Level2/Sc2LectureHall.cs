@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 using TMPro;
 public class Sc2LectureHall : LevelScript
 {
-    [SerializeField] TextMeshPro text;
+    [SerializeField] TextMeshPro text = null;
     [SerializeField] float delay = 1f;
     int count = 0;
     int currentNumber = 0;

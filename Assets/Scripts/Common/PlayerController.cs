@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation , -90 , 90);
         cameraTransform.localRotation = Quaternion.Euler(xRotation , 0f , 0f);
-        if (isMove)
+        if (isMove && !LevelScript.PlayerFreeze)
         {
             float x = Input.GetAxis("Horizontal");
             float z = Input.GetAxis("Vertical");

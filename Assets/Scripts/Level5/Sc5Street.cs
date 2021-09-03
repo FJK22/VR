@@ -7,20 +7,20 @@ using UnityEngine.Networking;
 public class Sc5Street : LevelScript
 {
     [SerializeField] float MaxLimitTime = 30f;
-    [SerializeField] GameObject phone;
-    [SerializeField] GameObject mapCanvas;
-    [SerializeField] GameObject mapPan;
-    [SerializeField] GameObject missedCallPan;
-    [SerializeField] GameObject callingPan;
-    [SerializeField] GameObject messagePan;
-    [SerializeField] AudioSource missedSound;
-    [SerializeField] AudioSource callIncomeSound;
-    [SerializeField] AudioSource messageSound;
+    [SerializeField] GameObject phone = null;
+    [SerializeField] GameObject mapCanvas = null;
+    [SerializeField] GameObject mapPan = null;
+    [SerializeField] GameObject missedCallPan = null;
+    [SerializeField] GameObject callingPan = null;
+    [SerializeField] GameObject messagePan = null;
+    [SerializeField] AudioSource missedSound = null;
+    [SerializeField] AudioSource callIncomeSound = null;
+    [SerializeField] AudioSource messageSound = null;
     [SerializeField] float missedCallDelay = 3;
     [SerializeField] float messageDelay = 3;
     [SerializeField] float mapDelay = 3;
 
-    public GameObject[] CarPrefabs;
+    public GameObject[] CarPrefabs = null;
     int mapOpenCount = 0;
     float startTime = 0;
     bool isMapOpened = false;
