@@ -8,15 +8,15 @@ public class Sc6Train : LevelScript
 {
     int CorrectIndex = 3; // 19 Gloucester Road
     public static string[] trainDestinations = {
-        "<color=\"red\">5</color> Oxford Circus",
-        "<color=\"red\">7</color> Great Portland Street",
-        "<color=\"red\">11</color> Baker Street",
-        "<color=\"red\">19</color> Gloucester Road",
-        "<color=\"red\">29</color> Tottenham Court Road",
-        "<color=\"red\">45</color> Bond Street",
-        "<color=\"red\">58</color> Marble Arch",
-        "<color=\"red\">73</color> Edgware Road",
-        "<color=\"red\">95</color> Piccadilly Circus"};
+        "5 Oxford Circus",
+        "7 Great Portland Street",
+        "11 Baker Street",
+        "19 Gloucester Road",
+        "29 Tottenham Court Road",
+        "45 Bond Street",
+        "58 Marble Arch",
+        "73 Edgware Road",
+        "95 Piccadilly Circus"};
     [SerializeField] Transform[] spawnPos = null;
     [SerializeField] GameObject trainPrefab = null;
     [SerializeField] float GeneratingDelay = 20f;
@@ -147,7 +147,7 @@ public class Sc6Train : LevelScript
                 }
                 else
                 {
-                    MessageManager.Instance.Messge("You are in wrong train.");
+                    MessageManager.Instance.Messge("You are in the wrong train.");
                 }
             }
         }
