@@ -17056,7 +17056,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 17.459, y: -90, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.1485, y: 1.3713}
+  m_AnchoredPosition: {x: 0.14, y: 1.397}
   m_SizeDelta: {x: 19, y: 5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1467959470
@@ -17079,7 +17079,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Put your ticket and get your train number and destination.
+  m_text: Press the green button to put your ticket and get your train number and
+    destination.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
