@@ -2451,6 +2451,9 @@ GameObject:
   - component: {fileID: 218866393}
   - component: {fileID: 218866395}
   - component: {fileID: 218866394}
+  - component: {fileID: 218866396}
+  - component: {fileID: 218866397}
+  - component: {fileID: 218866398}
   m_Layer: 0
   m_Name: ArrivePos
   m_TagString: Untagged
@@ -2521,6 +2524,48 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 218866392}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &218866396
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 218866392}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &218866397
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 218866392}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
+--- !u!114 &218866398
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 218866392}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4565b579f3b55c945afa6f750e9aafca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collider: {fileID: 568583059}
 --- !u!1 &230238376
 GameObject:
   m_ObjectHideFlags: 0
@@ -2701,6 +2746,7 @@ GameObject:
   - component: {fileID: 252013509}
   - component: {fileID: 252013511}
   - component: {fileID: 252013510}
+  - component: {fileID: 252013512}
   m_Layer: 0
   m_Name: SpawnPos2
   m_TagString: Untagged
@@ -2773,6 +2819,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 252013508}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &252013512
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 252013508}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.12455654, y: 6.3507366, z: 239.3574}
+  m_Center: {x: -2.0876632, y: 2.6753683, z: 119.1787}
 --- !u!1 &263410831
 GameObject:
   m_ObjectHideFlags: 0
@@ -6579,6 +6638,9 @@ GameObject:
   - component: {fileID: 566209523}
   - component: {fileID: 566209525}
   - component: {fileID: 566209524}
+  - component: {fileID: 566209527}
+  - component: {fileID: 566209526}
+  - component: {fileID: 566209528}
   m_Layer: 0
   m_Name: ArrivePos2
   m_TagString: Untagged
@@ -6649,6 +6711,48 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 566209522}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &566209526
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 566209522}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
+--- !u!65 &566209527
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 566209522}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &566209528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 566209522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4565b579f3b55c945afa6f750e9aafca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collider: {fileID: 252013512}
 --- !u!1 &568583055
 GameObject:
   m_ObjectHideFlags: 0
@@ -6660,6 +6764,7 @@ GameObject:
   - component: {fileID: 568583056}
   - component: {fileID: 568583058}
   - component: {fileID: 568583057}
+  - component: {fileID: 568583059}
   m_Layer: 0
   m_Name: SpawnPos
   m_TagString: Untagged
@@ -6732,6 +6837,19 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 568583055}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!65 &568583059
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 568583055}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.12455654, y: 6.3507366, z: 239.3574}
+  m_Center: {x: -2.0876632, y: 2.6753683, z: 119.1787}
 --- !u!1 &570706915
 GameObject:
   m_ObjectHideFlags: 0
@@ -22986,10 +23104,14 @@ MonoBehaviour:
   - {fileID: 252013509}
   trainPrefab: {fileID: 7516493734637326966, guid: 43b7e4504ef2af3458ff44b3a23a249a,
     type: 3}
+  arriveAudio: {fileID: 8300000, guid: c40203cecac02a34081e6689b1d624bb, type: 3}
+  leaveAudio: {fileID: 8300000, guid: 00cbfa5e7b2ecd240a4880cfeb71025c, type: 3}
   GeneratingDelay: 10
   WaitingTime: 10
   TimeLimit: 300
   InTrainDelay: 2
+  TalkAnimator: {fileID: 3105273979816478326}
+  TalkAudio: {fileID: 5327979970854050601}
   buttonClickCount: 0
 --- !u!1 &2067237779
 GameObject:
@@ -24116,6 +24238,7 @@ GameObject:
   - component: {fileID: 2143973640}
   - component: {fileID: 2143973639}
   - component: {fileID: 2143973642}
+  - component: {fileID: 2143973643}
   m_Layer: 0
   m_Name: Button
   m_TagString: Untagged
@@ -24157,7 +24280,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2143973637}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -24169,7 +24292,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 489470d8426b0584d8e367b693e21cf0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -24212,6 +24335,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSouce: {fileID: 791148446}
+--- !u!111 &2143973643
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2143973637}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: 0d6e44670b9750142919f6ccc251d3aa, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 0d6e44670b9750142919f6ccc251d3aa, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &1901301740589836
 GameObject:
   m_ObjectHideFlags: 0
@@ -29273,7 +29412,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8553420100465854134}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 9000000, guid: 9e60f5471594ee94db6725a1eb60ab0a, type: 3}
   m_Controller: {fileID: 9100000, guid: 4612e06eb6dae644dadb03661e129cd1, type: 2}
   m_CullingMode: 1
@@ -32557,7 +32696,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 79d23d4d17df07c4289c94a8b83aceec, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

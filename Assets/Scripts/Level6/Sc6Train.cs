@@ -19,10 +19,14 @@ public class Sc6Train : LevelScript
         "95 Piccadilly Circus"};
     [SerializeField] Transform[] spawnPos = null;
     [SerializeField] GameObject trainPrefab = null;
+    [SerializeField] AudioClip arriveAudio = null;
+    [SerializeField] AudioClip leaveAudio = null;
     [SerializeField] float GeneratingDelay = 20f;
     [SerializeField] float WaitingTime = 10f;
     [SerializeField] int TimeLimit = 300;
     [SerializeField] float InTrainDelay = 2f;
+    [SerializeField] Animator TalkAnimator = null;
+    [SerializeField] AudioSource TalkAudio = null;
     public int buttonClickCount = 0;
     Transform[] arrivePos;
     Transform[] targetPos;
@@ -57,11 +61,19 @@ public class Sc6Train : LevelScript
             targetPos[i] = spawnPos[i].GetChild(1);
         }
         StartCoroutine(GernerateTrain());
+        StartCoroutine(talk());
+    }
+
+    IEnumerator talk()
+    {
+        yield return new WaitForSeconds(3);
+        TalkAnimator.enabled = true;
+        TalkAudio.Play();
         StartCoroutine(PlayerRelease());
     }
     IEnumerator PlayerRelease()
     {
-        yield return new WaitForSeconds(59);
+        yield return new WaitForSeconds(57);
         startTime = Time.deltaTime;
         PlayerFreeze = false;
     }
@@ -104,14 +116,17 @@ public class Sc6Train : LevelScript
                 train.DOMove(arrivePos[roadIndex].position, 3, true).SetEase(Ease.OutQuad)
                 .OnStart(() =>
                 {
-                    train.GetComponent<AudioSource>().Play();
+                    train.GetComponent<AudioSource>().PlayOneShot(arriveAudio);
                 })
                 .OnComplete(() =>
                 {
                     train.GetComponent<Animator>().SetBool("Open", true);
                 }))
             .AppendInterval(WaitingTime)
-            .AppendCallback(() => { train.GetComponent<Animator>().SetBool("Open", false); })
+            .AppendCallback(() => {
+                train.GetComponent<Animator>().SetBool("Open", false);
+                train.GetComponent<AudioSource>().PlayOneShot(leaveAudio);
+            })
             .AppendInterval(2)
             .Append(
                 train.DOMove(targetPos[roadIndex].position, 3, true).SetEase(Ease.InQuad)
