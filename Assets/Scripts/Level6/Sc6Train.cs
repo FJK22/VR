@@ -73,13 +73,13 @@ public class Sc6Train : LevelScript
     }
     IEnumerator PlayerRelease()
     {
-        yield return new WaitForSeconds(57);
+        yield return new WaitForSeconds(52);
         startTime = Time.deltaTime;
         PlayerFreeze = false;
     }
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Space))
+        if (Input.GetKeyUp(KeyCode.Space) && !isStarted)
         {
             StartTask();
         }
