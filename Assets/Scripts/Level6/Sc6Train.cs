@@ -154,7 +154,7 @@ public class Sc6Train : LevelScript
         else
         {
             yield return new WaitForSeconds(InTrainDelay);
-            if (index > 0)
+            if (index >= 0)
             {
                 if (index == CorrectIndex)
                 {

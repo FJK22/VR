@@ -23108,7 +23108,7 @@ MonoBehaviour:
   leaveAudio: {fileID: 8300000, guid: 00cbfa5e7b2ecd240a4880cfeb71025c, type: 3}
   GeneratingDelay: 10
   WaitingTime: 10
-  TimeLimit: 300
+  TimeLimit: 50
   InTrainDelay: 2
   TalkAnimator: {fileID: 3105273979816478326}
   TalkAudio: {fileID: 5327979970854050601}
@@ -26173,16 +26173,6 @@ PrefabInstance:
     - target: {fileID: 1129994193508228853, guid: 7924853e452eb09478fe2ad413b6db1f,
         type: 3}
       propertyPath: m_Pivot.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1129994193558447627, guid: 7924853e452eb09478fe2ad413b6db1f,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1129994193558447629, guid: 7924853e452eb09478fe2ad413b6db1f,
-        type: 3}
-      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

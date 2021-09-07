@@ -64,6 +64,7 @@ public class Train : MonoBehaviour
     {
         if(other.tag == "Player")
         {
+            MessageManager.Instance.MessageOff();
             StartCoroutine(levelManager.TrainTrigger(-1));
             sequence.Play();
         }
