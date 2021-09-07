@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
@@ -12,21 +11,23 @@ public class Train : MonoBehaviour
     [SerializeField] Transform textParent = null;
     [SerializeField] float setingRate = 0.3f;
     [SerializeField] float standingRate = 0.3f;
-
-    int trainIndex;
+    public Collider DoorBlock;
+    [HideInInspector] public Sequence sequence;
+    [HideInInspector] public int roadIndex;
+    int destinationIndex;
     Sc6Train levelManager;
-    public int TrainIndex
+    public int DestinationIndex
     {
-        get { return trainIndex; }
+        get { return destinationIndex; }
         set
         {
-            trainIndex = value;
-            if (trainIndex >= 0 && trainIndex < Sc6Train.trainDestinations.Length)
+            destinationIndex = value;
+            if (destinationIndex >= 0 && destinationIndex < Sc6Train.trainDestinations.Length)
             {
                 var texts = textParent.GetComponentsInChildren<TextMeshPro>();
                 foreach (var t in texts)
                 {
-                    t.text = Sc6Train.trainDestinations[trainIndex];
+                    t.text = Sc6Train.trainDestinations[destinationIndex];
                 }
             }
         }
@@ -55,14 +56,16 @@ public class Train : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            StartCoroutine(levelManager.TrainTrigger(true, trainIndex));
+            StartCoroutine(levelManager.TrainTrigger(destinationIndex));
+            sequence.Pause();
         }
     }
     private void OnTriggerExit(Collider other)
     {
         if(other.tag == "Player")
         {
-            StartCoroutine(levelManager.TrainTrigger(false, trainIndex));
+            StartCoroutine(levelManager.TrainTrigger(-1));
+            sequence.Play();
         }
     }
 }

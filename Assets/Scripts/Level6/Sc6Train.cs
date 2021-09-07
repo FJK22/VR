@@ -32,25 +32,10 @@ public class Sc6Train : LevelScript
     Transform[] targetPos;
     int roadIndex = 0;
     float startTime = 0;
-    bool isInTrain = false;
-    public bool IsInTrain
-    {
-        get { return isInTrain; }
-        set
-        {
-            isInTrain = value;
-            if (isInTrain)
-            {
-                DOTween.PauseAll();
-            }
-            else
-            {
-                DOTween.PlayAll();
-            }
-        }
-    }
+    int trainState = 0; // bit state => 00 : two road empty, 01 10 : one road fill, 11 : two road fill
     new void StartTask()
     {
+        
         PlayerFreeze = true;
         base.StartTask();
         arrivePos = new Transform[2];
@@ -73,7 +58,7 @@ public class Sc6Train : LevelScript
     }
     IEnumerator PlayerRelease()
     {
-        yield return new WaitForSeconds(52);
+        yield return new WaitForSeconds(1);
         startTime = Time.deltaTime;
         PlayerFreeze = false;
     }
@@ -106,12 +91,22 @@ public class Sc6Train : LevelScript
     }
     IEnumerator GernerateTrain()
     {
-        if (!isInTrain)
+        if (trainState < 3)
         {
-            roadIndex = (roadIndex == 0) ? 1 : 0;
+            if (trainState == 0)
+            {
+                roadIndex ^= 1;
+            }
+            else
+            {
+                roadIndex = (trainState == 1) ? 1 : 0;
+            }
             Transform train = Instantiate(trainPrefab, spawnPos[roadIndex]).transform;
-            train.GetComponent<Train>().TrainIndex = Random.Range(0, trainDestinations.Length);
+            Train trainScript = train.GetComponent<Train>();
+            trainScript.DestinationIndex = Random.Range(0, trainDestinations.Length);
+            trainScript.roadIndex = roadIndex;
             Sequence s = DOTween.Sequence();
+            trainScript.sequence = s;
             s.Append(
                 train.DOMove(arrivePos[roadIndex].position, 3, true).SetEase(Ease.OutQuad)
                 .OnStart(() =>
@@ -120,22 +115,28 @@ public class Sc6Train : LevelScript
                 })
                 .OnComplete(() =>
                 {
+                    trainState |= 1 << trainScript.roadIndex; // train state set
                     train.GetComponent<Animator>().SetBool("Open", true);
                 }))
             .AppendInterval(WaitingTime)
-            .AppendCallback(() => {
+            .AppendCallback(() =>
+            {
                 train.GetComponent<Animator>().SetBool("Open", false);
                 train.GetComponent<AudioSource>().PlayOneShot(leaveAudio);
+                train.GetComponent<Train>().DoorBlock.enabled = true;
             })
             .AppendInterval(2)
             .Append(
                 train.DOMove(targetPos[roadIndex].position, 3, true).SetEase(Ease.InQuad)
                 .OnComplete(() =>
                 {
+                    trainState &= ~(1 << trainScript.roadIndex);
+                    //trainState ^= 1 << trainScript.roadIndex; // train state toggle
                     Destroy(train.gameObject);
                 })
             );
         }
+        
         yield return new WaitForSeconds(GeneratingDelay);
         StartCoroutine(GernerateTrain());
     }
@@ -144,17 +145,16 @@ public class Sc6Train : LevelScript
         yield return new WaitForSeconds(TimeLimit);
         StartCoroutine(Post());
     }
-    public IEnumerator TrainTrigger(bool isIn, int index)
+    public IEnumerator TrainTrigger(int index)
     {
-        IsInTrain = isIn;
-        if (!isIn)
+        if (index < 0)
         {
             MessageManager.Instance.MessageOff();
         }
         else
         {
             yield return new WaitForSeconds(InTrainDelay);
-            if (isIn)
+            if (index > 0)
             {
                 if (index == CorrectIndex)
                 {

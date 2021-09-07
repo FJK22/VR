@@ -38031,8 +38031,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d5e0239773b6d9498cb2262eb98045b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anim: {fileID: 3105273979816478326}
-  James: {fileID: 8553420100465854134}
 --- !u!4 &8559236023252575325
 Transform:
   m_ObjectHideFlags: 0
