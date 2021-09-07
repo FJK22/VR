@@ -33,7 +33,7 @@ public class PlayAnimationJames : MonoBehaviour
         anim.SetBool("Animation2", true);
         anim.SetBool("Animation1", false);
 
-        yield return new WaitForSeconds(27f);
+        yield return new WaitForSeconds(30f);
 
         anim.SetBool("Animation3", true);
         anim.SetBool("Animation1", false);
