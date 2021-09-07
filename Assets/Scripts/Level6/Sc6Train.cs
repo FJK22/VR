@@ -33,9 +33,9 @@ public class Sc6Train : LevelScript
     int roadIndex = 0;
     float startTime = 0;
     int trainState = 0; // bit state => 00 : two road empty, 01 10 : one road fill, 11 : two road fill
+    bool personInTrain = false;
     new void StartTask()
     {
-        
         PlayerFreeze = true;
         base.StartTask();
         arrivePos = new Transform[2];
@@ -150,11 +150,13 @@ public class Sc6Train : LevelScript
         if (index < 0)
         {
             MessageManager.Instance.MessageOff();
+            personInTrain = false;
         }
         else
         {
+            personInTrain = true;
             yield return new WaitForSeconds(InTrainDelay);
-            if (index >= 0)
+            if (personInTrain)
             {
                 if (index == CorrectIndex)
                 {
