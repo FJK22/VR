@@ -23108,7 +23108,7 @@ MonoBehaviour:
   leaveAudio: {fileID: 8300000, guid: 00cbfa5e7b2ecd240a4880cfeb71025c, type: 3}
   GeneratingDelay: 10
   WaitingTime: 10
-  TimeLimit: 50
+  TimeLimit: 60
   InTrainDelay: 2
   TalkAnimator: {fileID: 3105273979816478326}
   TalkAudio: {fileID: 5327979970854050601}

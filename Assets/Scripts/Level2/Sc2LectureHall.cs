@@ -7,7 +7,7 @@ using TMPro;
 public class Sc2LectureHall : LevelScript
 {
     [SerializeField] TextMeshPro text = null;
-    [SerializeField] float delay = 1f;
+    [SerializeField] float delay = 1.15f;
     int count = 0;
     int currentNumber = 0;
     bool posted = false;

@@ -23,7 +23,7 @@ public class Sc6Train : LevelScript
     [SerializeField] AudioClip leaveAudio = null;
     [SerializeField] float GeneratingDelay = 20f;
     [SerializeField] float WaitingTime = 10f;
-    [SerializeField] int TimeLimit = 300;
+    [SerializeField] int TimeLimit = 600;
     [SerializeField] float InTrainDelay = 2f;
     [SerializeField] Animator TalkAnimator = null;
     [SerializeField] AudioSource TalkAudio = null;

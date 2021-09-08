@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 
 public class Sc5Street : LevelScript
 {
-    [SerializeField] float MaxLimitTime = 30f;
+    [SerializeField] float MaxLimitTime = 600f;
     [SerializeField] GameObject phone = null;
     [SerializeField] GameObject mapCanvas = null;
     [SerializeField] GameObject mapPan = null;
