@@ -6,7 +6,7 @@ using UnityEngine.Networking;
 
 public class Sc5Street : LevelScript
 {
-    [SerializeField] float MaxLimitTime = 600f;
+    [SerializeField] float MaxLimitTime = 600f; 
     [SerializeField] GameObject phone = null;
     [SerializeField] GameObject mapCanvas = null;
     [SerializeField] GameObject mapPan = null;
@@ -59,13 +59,14 @@ public class Sc5Street : LevelScript
     private void OnEventTrigger(int index)
     {
         mapPan.SetActive(false);
-        phone.SetActive(true);
+        
         switch (index)
         {
             case 0:
                 StartCoroutine(MissedCall());
                 break;
             case 1:
+                phone.SetActive(true);
                 callingPan.SetActive(true);
                 callIncomeSound.Play();
                 break;
@@ -126,6 +127,8 @@ public class Sc5Street : LevelScript
     IEnumerator MissedCall()
     {
         missedSound.Play();
+        //yield return new WaitForSeconds(0.01f);
+        phone.SetActive(true);
         missedCallPan.SetActive(true);
         yield return new WaitForSeconds(missedCallDelay);
         phone.SetActive(false);
@@ -134,6 +137,8 @@ public class Sc5Street : LevelScript
     IEnumerator Message()
     {
         messageSound.Play();
+       // yield return new WaitForSeconds(1);
+        phone.SetActive(true);
         messagePan.SetActive(true);
         yield return new WaitForSeconds(messageDelay);
         messagePan.SetActive(false);
