@@ -58,8 +58,8 @@ public class Sc6Train : LevelScript
     }
     IEnumerator PlayerRelease()
     {
-        yield return new WaitForSeconds(1);
-        startTime = Time.deltaTime;
+        yield return new WaitForSeconds(52);
+        startTime = Time.time;
         StartCoroutine(LimitTimeCounter());
         PlayerFreeze = false;
     }

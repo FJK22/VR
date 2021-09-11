@@ -20,9 +20,14 @@ public class Sc5Street : LevelScript
     [SerializeField] float messageDelay = 3;
     [SerializeField] float mapDelay = 3;
 
+    public static Sc5Street Instance;
+    private void Awake()
+    {
+        Instance = this;
+    }
     public GameObject[] CarPrefabs = null;
     int mapOpenCount = 0;
-    float startTime = 0;
+    public float startTime = 0;
     bool isMapOpened = false;
     int marks = 10;
     int currentPointIndex = 0;
@@ -45,7 +50,6 @@ public class Sc5Street : LevelScript
             phone.transform.localRotation = phoneRot;
             phone.transform.localPosition = phonePos;
         }
-        startTime = Time.time;
         mapCanvas.SetActive(true);
         StartCoroutine(LimitTimer());
     }
@@ -98,6 +102,15 @@ public class Sc5Street : LevelScript
         phone.SetActive(true);
         mapPan.SetActive(true);
         StartCoroutine(MapClose());
+    }
+    public void ReceiveCall()
+    {
+        StartCoroutine(AudioCalling());
+    }
+    IEnumerator AudioCalling() {
+        yield return new WaitForSeconds(6.5f);
+        callingPan.SetActive(false);
+        phone.SetActive(false);
     }
     IEnumerator Post()
     {

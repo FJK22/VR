@@ -63,6 +63,7 @@ public class TrafficLight : MonoBehaviour
         set
         {
             isFirstRoadRed = value;
+            if (!isFirstRoadRed && Sc5Street.Instance.startTime == 0) Sc5Street.Instance.startTime = Time.time;
             green1.SetColor("_EmissionColor", (isFirstRoadRed) ? GreenOff : GreenOn);
             green2.SetColor("_EmissionColor", (isFirstRoadRed) ? GreenOn : GreenOff);
             red1.SetColor("_EmissionColor", (isFirstRoadRed) ? RedOn: RedOff);
