@@ -11,6 +11,7 @@ public class TrafficLight : MonoBehaviour
     [SerializeField] PersonBlock playerBlock1 = null;
     [SerializeField] PersonBlock playerBlock2 = null;
     [SerializeField] MeshRenderer render = null;
+    [SerializeField] MeshRenderer reverseRender = null;
     [SerializeField] float TrafficCrossTime = 20f;
     [SerializeField] float CrossDelay = 1f;
     [SerializeField] Color GreenOn = Color.green;
@@ -27,6 +28,12 @@ public class TrafficLight : MonoBehaviour
     [ReadOnly] Material green2;
     [ReadOnly] Material red1;
     [ReadOnly] Material red2;
+
+    [ReadOnly] Material rGreen1;
+    [ReadOnly] Material rGreen2;
+    [ReadOnly] Material rRed1;
+    [ReadOnly] Material rRed2;
+
     
     private void Start()
     {
@@ -35,6 +42,14 @@ public class TrafficLight : MonoBehaviour
         green2 = render.materials[3];
         red1 = render.materials[4];
         red2 = render.materials[1];
+
+        if (reverseRender)
+        {
+            rGreen1 = reverseRender.materials[6];
+            rGreen2 = reverseRender.materials[3];
+            rRed1 = reverseRender.materials[4];
+            rRed2 = reverseRender.materials[1];
+        }
         IsFirstRoadRed = true;
         StartCoroutine(Replace());
         if (playerBlock2)
@@ -52,6 +67,16 @@ public class TrafficLight : MonoBehaviour
             green2.SetColor("_EmissionColor", (isFirstRoadRed) ? GreenOn : GreenOff);
             red1.SetColor("_EmissionColor", (isFirstRoadRed) ? RedOn: RedOff);
             red2.SetColor("_EmissionColor", (isFirstRoadRed) ? RedOff : RedOn);
+
+            if (reverseRender)
+            {
+                rGreen2.SetColor("_EmissionColor", (isFirstRoadRed) ? GreenOff : GreenOn);
+                rGreen1.SetColor("_EmissionColor", (isFirstRoadRed) ? GreenOn : GreenOff);
+                rRed2.SetColor("_EmissionColor", (isFirstRoadRed) ? RedOn : RedOff);
+                rRed1.SetColor("_EmissionColor", (isFirstRoadRed) ? RedOff : RedOn);
+            }
+
+
             if(!isEnter1)
             {
                 playerBlock1.SetCollider(IsFirstRoadRed);
