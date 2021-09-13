@@ -4,6 +4,7 @@
     public const string USER = @"user/save_user";
     public const string SC1QS = @"sc1qs/save_sc1qs";
     public const string SC2Data = @"sc2data/save_sc2data";
+    public const string SC2BData = @"sc2bdata/save_sc2bdata";
     public const string SC2QS = @"sc2qs/save_sc2qs";
     public const string SC3AData = @"sc3adata/save_sc3adata"; 
     public const string SC3BData = @"sc3bdata/save_sc3bdata";

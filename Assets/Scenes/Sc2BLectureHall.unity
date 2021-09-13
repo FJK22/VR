@@ -34615,6 +34615,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1083368143}
+  - component: {fileID: 1083368142}
   m_Layer: 0
   m_Name: SceneScript
   m_TagString: Untagged
@@ -34622,6 +34623,26 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1083368142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1083368141}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94638e92ceb52464881061cc190ba7e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MainCamera: {fileID: 1358832298}
+  VRCamera: {fileID: 2025819720}
+  StartButton: {fileID: 522834625}
+  TaskCanvas: {fileID: 660804257}
+  isStarted: 0
+  text: {fileID: 1392427551}
+  delay: 1.15
+  isReverse: 1
 --- !u!4 &1083368143
 Transform:
   m_ObjectHideFlags: 0
