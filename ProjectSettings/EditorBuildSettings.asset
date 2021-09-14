@@ -24,7 +24,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Sc2Questionnaire.unity
     guid: 775bac8e1cf02b246b92d19b4a748541
   - enabled: 1
-    path: Assets/Scenes/SC3AStreet.unity
+    path: Assets/Scenes/Sc3AStreet.unity
     guid: e0e1f6607cfde3146b8325904f8f75fe
   - enabled: 1
     path: Assets/Scenes/Sc3BStreet.unity
@@ -45,10 +45,10 @@ EditorBuildSettings:
     path: Assets/Scenes/Sc5Questionnaire.unity
     guid: 259149709e2c81949833fbde31fcb49a
   - enabled: 1
-    path: Assets/Scenes/Sc7Elevator.unity
-    guid: 36917b117666474469786944725e6977
+    path: Assets/Scenes/Sc6TrainStation.unity
+    guid: aa359d50be7c9d54aa9d7ba9fd1aa8e4
   - enabled: 1
-    path: Assets/Scenes/Sc6Questionnairee.unity
+    path: Assets/Scenes/Sc6Questionnaire.unity
     guid: 7b4e17fcdd695f64db352b12d5f557da
   m_configObjects:
     Unity.XR.OpenVR.Settings: {fileID: 11400000, guid: 06c32decb61e282439ba8c167d683d33,
