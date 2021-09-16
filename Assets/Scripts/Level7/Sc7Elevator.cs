@@ -9,6 +9,8 @@ public class Sc7Elevator : LevelScript {
     [SerializeField] GameObject phoneButton = null;
     [SerializeField] float TextDelay = 3f;
     [SerializeField] float TimeLimit = 30;
+    [SerializeField] float StartDelayTime = 10;
+    [SerializeField] GameObject Interviewer = null;
     private Animation DoorsAnim;
     public float DoorsAnimSpeed = 1;
     public float OneFloorTime = 1.5f;
@@ -83,6 +85,12 @@ public class Sc7Elevator : LevelScript {
     new void StartTask()
     {
         base.StartTask();
+        StartCoroutine(StartDelay(StartDelayTime));
+    }
+    
+    IEnumerator StartDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
         ShowPhone();
         startTime = Time.time;
     }
@@ -178,6 +186,7 @@ public class Sc7Elevator : LevelScript {
                     if(TargetFloor == 23 && !isRightPressed)
                     {
                         isRightPressed = true;
+                        if (Interviewer) Interviewer.SetActive(true);
                         reactionTime = Time.time - startTime;
                     }
                     BtnSoundFX.clip = ElevatorBtn;
@@ -202,10 +211,10 @@ public class Sc7Elevator : LevelScript {
                     {
                         StartCoroutine(DoorsClosing());
                     }
-                    else if (!isOpen)
-                    {
-                        StartCoroutine(DoorsOpening(OpenDelay));
-                    }
+                    //else if (!isOpen)
+                    //{
+                    //    StartCoroutine(DoorsOpening(OpenDelay));
+                    //}
                 }
             }
         }
@@ -400,6 +409,10 @@ public class Sc7Elevator : LevelScript {
         if (isRightPressed)
         {
             StartCoroutine(Post(true));
+        }
+        else if (DoorsAnim[AnimName].speed > 0)
+        {
+            MessageManager.Instance.Messge("You are on wrong floor.", 2);
         }
         if (Time.time - startTime > TimeLimit)
         {
