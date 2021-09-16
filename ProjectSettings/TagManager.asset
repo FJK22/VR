@@ -6,6 +6,7 @@ TagManager:
   tags:
   - car
   - Obstacle
+  - ElevatorNumericButton
   layers:
   - Default
   - TransparentFX

@@ -6,14 +6,25 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float mouseSensitivity = 100f;
     [SerializeField] float moveSpeed = 100f;
     [SerializeField] bool isMove = false;
+    [SerializeField] bool isRigidbody = false;
     Transform cameraTransform;
+    Rigidbody rb;
     CharacterController controller;
     private void Start()
     {
         cameraTransform = transform.GetComponentInChildren<Camera>().transform;
         if (isMove)
         {
-            controller = gameObject.AddComponent<CharacterController>();
+            if (isRigidbody)
+            {
+                rb = gameObject.AddComponent<Rigidbody>();
+                rb.constraints = RigidbodyConstraints.FreezeRotation;
+                rb.drag = 2;
+            }
+            else
+            {
+                controller = gameObject.AddComponent<CharacterController>();
+            }
         }
     }
 
@@ -30,7 +41,14 @@ public class PlayerController : MonoBehaviour
             float x = Input.GetAxis("Horizontal");
             float z = Input.GetAxis("Vertical");
             Vector3 move = transform.right * x + transform.forward * z;
-            controller.Move(move * Time.deltaTime * moveSpeed);
+            if (isRigidbody)
+            {
+                rb.MovePosition(transform.position + move * Time.deltaTime * moveSpeed);
+            }
+            else
+            {
+                controller.Move(move * Time.deltaTime * moveSpeed);
+            }
         }
     }
 }

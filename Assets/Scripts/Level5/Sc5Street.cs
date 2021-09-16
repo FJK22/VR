@@ -157,8 +157,9 @@ public class Sc5Street : LevelScript
         messagePan.SetActive(false);
         phone.SetActive(false);
     }
-    IEnumerator LimitTimer()
+    public IEnumerator LimitTimer()
     {
+        startTime = Time.time;
         yield return new WaitForSeconds(MaxLimitTime);
         marks = 0;
         StartCoroutine(Post());

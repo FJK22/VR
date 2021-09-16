@@ -12,6 +12,8 @@
     public const string SC4QS = @"sc4qs/save_sc4qs";
     public const string SC5Data = @"sc5data/save_sc5data";
     public const string SC5QS = @"sc5qs/save_sc5qs";
-    public const string SC6Data = @"sc6data/save_sc6data ";
+    public const string SC6Data = @"sc6data/save_sc6data";
     public const string SC6QS = @"sc6qs/save_sc6qs";
+    public const string SC7Data = @"sc7data/save_sc7data";
+    public const string SC7QS = @"sc7qs/save_sc7qs ";
 }
