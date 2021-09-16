@@ -3570,7 +3570,8 @@ MonoBehaviour:
   TextDelay: 3
   TimeLimit: 30
   StartDelayTime: 10
-  Interviewer: {fileID: 0}
+  Interviewer: {fileID: 5275678045217783027}
+  InterviewrAS: {fileID: 5355391100617514447}
   DoorsAnimSpeed: 1
   OneFloorTime: 1
   OpenDelay: 1
@@ -22454,7 +22455,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5290200179283184172
 Transform:
   m_ObjectHideFlags: 0

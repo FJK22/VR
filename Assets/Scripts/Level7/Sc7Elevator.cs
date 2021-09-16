@@ -11,6 +11,7 @@ public class Sc7Elevator : LevelScript {
     [SerializeField] float TimeLimit = 30;
     [SerializeField] float StartDelayTime = 10;
     [SerializeField] GameObject Interviewer = null;
+    [SerializeField] AudioSource InterviewrAS = null;
     private Animation DoorsAnim;
     public float DoorsAnimSpeed = 1;
     public float OneFloorTime = 1.5f;
@@ -186,7 +187,6 @@ public class Sc7Elevator : LevelScript {
                     if(TargetFloor == 23 && !isRightPressed)
                     {
                         isRightPressed = true;
-                        if (Interviewer) Interviewer.SetActive(true);
                         reactionTime = Time.time - startTime;
                     }
                     BtnSoundFX.clip = ElevatorBtn;
@@ -211,10 +211,6 @@ public class Sc7Elevator : LevelScript {
                     {
                         StartCoroutine(DoorsClosing());
                     }
-                    //else if (!isOpen)
-                    //{
-                    //    StartCoroutine(DoorsOpening(OpenDelay));
-                    //}
                 }
             }
         }
@@ -312,6 +308,11 @@ public class Sc7Elevator : LevelScript {
 	}
     IEnumerator Post(bool isRight)
     {
+        if (isRight)
+        {
+            InterviewrAS.Play();
+            yield return new WaitForSeconds(5);
+        }
         int marks = Mathf.Clamp((int)(20 - reactionTime * 2 / TimeLimit) - phonePressed, 0, 10);
         string accuracy = "High";
         if (marks < 7) accuracy = "Medium";
@@ -336,7 +337,8 @@ public class Sc7Elevator : LevelScript {
 		SoundFX.volume = BellVolume;
 		SoundFX.pitch = 1;
 		SoundFX.Play ();
-	}
+        if (isRightPressed && Interviewer) Interviewer.SetActive(true);
+    }
 
 	void ButtonsReset(){
 		foreach (MeshRenderer MR in ElevatorNumericButtons) {
