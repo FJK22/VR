@@ -3017,6 +3017,7 @@ MonoBehaviour:
   mouseSensitivity: 100
   moveSpeed: 5
   isMove: 0
+  isRigidbody: 0
 --- !u!4 &1118163615
 Transform:
   m_ObjectHideFlags: 0
@@ -4546,7 +4547,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: please input task infomation.
+  m_text: 'In this task, you will be in an elevator, and at some point, you will
+    receive a message giving information about the floor number you need to go to.
+    Once you know the floor number, you need to press the right button in the elevator.
+    There will be a human character that will try to have a dialogue with you. It''s
+    your choice to reply to the character, but the character will understand your
+    words, so you can speak out loud with the character if you wish to do so. '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
