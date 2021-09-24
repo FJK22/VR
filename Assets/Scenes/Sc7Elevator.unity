@@ -163,7 +163,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 2, y: 2.25}
+  m_AnchoredPosition: {x: 2, y: 2}
   m_SizeDelta: {x: -101.54224, y: -116.0459}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &21519290
@@ -4187,7 +4187,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settings: {fileID: 11400000, guid: 68126ec0abeb6664c9abba2193390051, type: 2}
-  voice: 19
+  voice: 17
   outputAudioSource: {fileID: 459173426583577249}
   oculusLipsyncAudioSource: {fileID: 0}
   externalInputField: {fileID: 0}
@@ -28728,7 +28728,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 788ab6f8e105cce41b652663dfb25c1b, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.1
+  m_Volume: 0.037
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -29886,7 +29886,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: d03ca442cc86dd94c98119065596a201, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.1
+  m_Volume: 0.037
   m_Pitch: 1
   Loop: 0
   Mute: 0
