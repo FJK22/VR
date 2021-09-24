@@ -3671,6 +3671,10 @@ MonoBehaviour:
   StartDelayTime: 10
   Interviewer: {fileID: 5275678045217783027}
   InterviewrAS: {fileID: 5355391100617514447}
+  characters:
+  - {fileID: 7207726468591113919}
+  - {fileID: 7621263856665384141}
+  watson: {fileID: 1985812856}
   DoorsAnimSpeed: 1
   OneFloorTime: 1
   OpenDelay: 1
@@ -5544,7 +5548,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1985812857
 Transform:
   m_ObjectHideFlags: 0
@@ -28719,7 +28723,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7207726468591113918}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 788ab6f8e105cce41b652663dfb25c1b, type: 3}
@@ -29877,7 +29881,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7621263856665384140}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: d03ca442cc86dd94c98119065596a201, type: 3}

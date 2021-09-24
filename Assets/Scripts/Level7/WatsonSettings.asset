@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Assistant_apikey: 18Qf8VpFAD3gZjIpo7dUm4uHxxSjQjvN8yVdXYvTpDht
   serviceUrl: https://api.eu-gb.assistant.watson.cloud.ibm.com/instances/fd4ae256-efd6-410a-a42b-387feb83a88c
-  versionDate: 8/30/2021
+  versionDate: 2021-08-30
   assistantId: 32e3e9d9-fc8f-495a-bc60-e2d494309d6b
   tts_apikey: 5MqicnB_t0DxmSGEaF9YdfEN8iq1thQ2G8sfWwl1jdzW
   tts_serviceUrl: https://api.eu-gb.text-to-speech.watson.cloud.ibm.com/instances/6ded069e-852f-4ce4-b6bc-46d5e54dafa5

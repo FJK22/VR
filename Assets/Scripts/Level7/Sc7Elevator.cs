@@ -12,6 +12,10 @@ public class Sc7Elevator : LevelScript {
     [SerializeField] float StartDelayTime = 10;
     [SerializeField] GameObject Interviewer = null;
     [SerializeField] AudioSource InterviewrAS = null;
+
+    [SerializeField] AudioSource[] characters = null;
+    [SerializeField] GameObject watson = null;
+
     private Animation DoorsAnim;
     public float DoorsAnimSpeed = 1;
     public float OneFloorTime = 1.5f;
@@ -86,6 +90,11 @@ public class Sc7Elevator : LevelScript {
     new void StartTask()
     {
         base.StartTask();
+        foreach(var a in characters)
+        {
+            a.enabled = true;
+        }
+        watson.SetActive(true);
         StartCoroutine(StartDelay(StartDelayTime));
     }
     
