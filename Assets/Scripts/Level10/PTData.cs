@@ -18,6 +18,7 @@ public class ChemicalElement
     public float Mass;
     public string Symbol;
     public string Name;
+    public string Detail;
     public ChemicalProperty chemicalProperty;
 }
 public enum ChemicalProperty

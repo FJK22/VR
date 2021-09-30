@@ -9,6 +9,7 @@ public class PeriodTable : MonoBehaviour
     [SerializeField] Transform tableParent = null;
     [SerializeField] Transform modelParent = null;
     [SerializeField] Material orbitMaterial = null;
+    [SerializeField] Text detailText = null;
 
     private int[] orbitCapacity = new[] { 2, 2, 6, 2, 6, 2, 10, 6, 2, 10, 6, 2, 14, 10, 6, 2 };
     private int[] orbitOrder = new[] { 1, 2, 2, 3, 3, 4, 3, 4, 5, 4, 5, 6, 4, 5, 6, 7 };
@@ -69,6 +70,7 @@ public class PeriodTable : MonoBehaviour
     {
         if (selectedNumber == e.Number) return;
         SelectedType = (int)e.chemicalProperty;
+        detailText.text = e.Detail;
         selectedNumber = e.Number;
         if (modelParent.childCount > 0)
         {
@@ -90,6 +92,7 @@ public class PeriodTable : MonoBehaviour
             {
                 temp += protonRate;
                 var s = GameObject.CreatePrimitive(PrimitiveType.Sphere).transform;
+                s.gameObject.layer = 5;
                 s.SetParent(nuclear);
                 s.localPosition = pos[i] / distanceBetweenQuantum;
                 if(temp >= 1)
@@ -107,6 +110,7 @@ public class PeriodTable : MonoBehaviour
         else
         {
             var s = GameObject.CreatePrimitive(PrimitiveType.Sphere).transform;
+            s.gameObject.layer = 5;
             s.SetParent(nuclear);
             s.localPosition = Vector3.zero;
             s.GetComponent<MeshRenderer>().material.color = Color.red;
@@ -131,7 +135,7 @@ public class PeriodTable : MonoBehaviour
         }
 
         // Electron Orbit Generate
-        float orbitAngleDelta = Mathf.PI * 2 / (float)e.Row;
+        float orbitAngleDelta = Mathf.PI / (float)e.Row;
         for(int i = 0; i < e.Row; i++)
         {
             var orbit = GenerateOrbit(1.5f + i * 0.5f, 0.02f, electrons[i], 32, orbitAngleDelta * i).transform;
@@ -158,7 +162,7 @@ public class PeriodTable : MonoBehaviour
     private GameObject GenerateOrbit(float radius, float thickness, int electrons, int resolution, float originAngle)
     {
         GameObject result = new GameObject();
-
+        result.layer = 5;
         // Generate Orbit Path
         var mf = result.AddComponent<MeshFilter>();
         var mr = result.AddComponent<MeshRenderer>();
@@ -179,7 +183,7 @@ public class PeriodTable : MonoBehaviour
             verts[i * 4] = new Vector3(x, 0f, z) * (radius + thickness);
             verts[i * 4 + 1] = new Vector3(x, 0f, z) * radius + new Vector3(0, thickness, 0);
             verts[i * 4 + 2] = new Vector3(x, 0f, z) * (radius - thickness);
-            verts[i * 4 + 3] = verts[i * 4 + 1] - new Vector3(0, thickness * -2, 0);
+            verts[i * 4 + 3] = new Vector3(x, 0f, z) * radius - new Vector3(0, thickness, 0);
 
             uv[i * 4] = new Vector2(progress, 0f);
             uv[i * 4 + 1] = new Vector2(progress, 0.25f);
@@ -201,8 +205,7 @@ public class PeriodTable : MonoBehaviour
         mesh.vertices = verts;
         mesh.triangles = trigs;
         mesh.uv = uv;
-        //mesh.RecalculateNormals();
-        //mesh.RecalculateTangents();
+        mesh.RecalculateNormals();
 
         // Generate Electrons
         Transform electronParent = new GameObject().transform;
@@ -212,11 +215,19 @@ public class PeriodTable : MonoBehaviour
         for (int i = 0; i < electrons; i++)
         {
             var e = GameObject.CreatePrimitive(PrimitiveType.Sphere).transform;
+            e.gameObject.layer = 5;
             e.GetComponent<MeshRenderer>().material.color = Color.green;
             e.SetParent(electronParent);
             e.localPosition = new Vector3(Mathf.Cos(angleDelta * i + originAngle), 0f, Mathf.Sin(angleDelta * i + originAngle)) * radius;
             e.localScale = Vector3.one * thickness * 6;
         }
+        electronParent.DOLocalRotate(new Vector3(0, 180, 0), 1).SetLoops(-1, LoopType.Incremental).SetEase(Ease.Linear);
+        float rotateAxis = originAngle * Mathf.Rad2Deg;
+        result.transform.localEulerAngles = new Vector3(0, rotateAxis, 0);
+        Sequence s = DOTween.Sequence();
+        s.Append(
+            result.transform.DORotate(new Vector3(180, rotateAxis, 0), 10).SetDelay(2f).SetLoops(2, LoopType.Incremental).SetEase(Ease.Linear)
+            ).AppendInterval(2).SetLoops(-1);
         return result;
     }
 }
