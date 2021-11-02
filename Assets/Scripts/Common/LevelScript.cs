@@ -2,17 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class LevelScript : MonoBehaviour
 {
     public static string UserName;
     public static bool IsVR;
     public static bool PlayerFreeze = false;
-    [SerializeField] protected GameObject MainCamera = null;
+    //[SerializeField] protected GameObject MainCamera = null;
     [SerializeField] protected GameObject VRCamera = null;
-    [SerializeField] GameObject StartButton = null;
+    public GameObject StartButton = null;
+    public Button StartBTN;
     [SerializeField] protected Canvas TaskCanvas = null;
     [HideInInspector] public bool isStarted = false;
+    [HideInInspector] public bool btnIsClicked = false;
     bool TaskLevel = true;
     void Start()
     {
@@ -22,9 +25,9 @@ public class LevelScript : MonoBehaviour
             Time.timeScale = 0;
         }
 
-        if (MainCamera && VRCamera)
+        if (VRCamera)
         {
-            MainCamera.SetActive(!IsVR);
+            //MainCamera.SetActive(!IsVR);
             VRCamera.SetActive(IsVR);
         }
         if(!IsVR && StartButton)

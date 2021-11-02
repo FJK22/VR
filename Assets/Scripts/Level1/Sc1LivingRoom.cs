@@ -9,9 +9,12 @@ public class Sc1LivingRoom : LevelScript
     [SerializeField] AudioSource[] audios = null;
     void Update()
     {
-        if (!isStarted && Input.GetKey(KeyCode.Space))
+        StartBTN.onClick.AddListener(buttonIsClicked);
+
+        if (!isStarted && btnIsClicked)
         {
-            StartTask();
+             StartTask();
+            
         }
         if (isStarted && video.isPaused)
         {
@@ -22,15 +25,23 @@ public class Sc1LivingRoom : LevelScript
 
     new public void StartTask()
     {
+
         base.StartTask();
         video.Play();
         foreach (var a in audios)
             a.Play();
+        
+        
+    }
+
+    void buttonIsClicked()
+    {
+        btnIsClicked = true;
     }
 
     IEnumerator EndTask()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         NextScene();
     }
 }

@@ -2,6 +2,7 @@
 {
     public const string DOMAIN = @"https://www.oxforia.com/api/apifjm82/vrenvironments/";
     public const string USER = @"user/save_user";
+    public const string SC1Data = @"sc1data/save_sc1data";
     public const string SC1QS = @"sc1qs/save_sc1qs";
     public const string SC2Data = @"sc2data/save_sc2data";
     public const string SC2BData = @"sc2bdata/save_sc2bdata";

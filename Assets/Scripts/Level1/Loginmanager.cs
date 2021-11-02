@@ -28,7 +28,7 @@ public class Loginmanager : MonoBehaviour
 
     private void Start()
     {
-        Platform = "PC";
+        Platform = "VR";
         IFUserName.onValueChanged.AddListener(delegate { Validate(); });
         IFAge.onValueChanged.AddListener(delegate { Validate(); });
         BtSubmit.onClick.AddListener(delegate { StartCoroutine(Login()); });

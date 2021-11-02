@@ -7,6 +7,13 @@ TagManager:
   - car
   - Obstacle
   - ElevatorNumericButton
+  - BeakerExam2
+  - potassium
+  - Exp3
+  - Exp1
+  - WaterLiquid
+  - Exp2
+  - FluidPlate
   layers:
   - Default
   - TransparentFX
@@ -43,4 +50,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: UI
+    uniqueID: 918632259
     locked: 0
