@@ -65,11 +65,20 @@ public class Sc6Train : LevelScript
     }
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Space) && !isStarted)
+        StartBTN.onClick.AddListener(buttonIsClicked);
+
+        if (!isStarted && btnIsClicked)
         {
             StartTask();
         }
     }
+
+    void buttonIsClicked()
+    {
+        btnIsClicked = true;
+    }
+
+
     IEnumerator Post()
     {
         float time = Time.time - startTime;

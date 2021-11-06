@@ -24,14 +24,22 @@ public class SC3Street : LevelScript
     }
     private void Update()
     {
-        if (!isStarted && Input.GetKey(KeyCode.Space)) StartTask();
+        StartBTN.onClick.AddListener(buttonIsClicked);
+
+        if (!isStarted && btnIsClicked) StartTask();
         if (!isPressed)
         {
-            if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-                StartCoroutine(Post(true));
-            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) 
-                StartCoroutine(Post(false));
+            //TO BE FIXED FOR THE CONTROLLER
+            //if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+                //StartCoroutine(Post(true));
+            //if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) 
+               // StartCoroutine(Post(false));
         }
+    }
+
+    void buttonIsClicked()
+    {
+        btnIsClicked = true;
     }
 
     IEnumerator Post(bool IsLeft)

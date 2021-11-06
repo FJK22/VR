@@ -6,10 +6,17 @@ public class Sc4Bar : LevelScript
     [SerializeField] AudioSource[] audios = null;
     void Update()
     {
-        if (!isStarted && Input.GetKey(KeyCode.Space))
+        StartBTN.onClick.AddListener(buttonIsClicked);
+
+        if (!isStarted && btnIsClicked)
         {
             StartTask();
         }
+    }
+
+    void buttonIsClicked()
+    {
+        btnIsClicked = true;
     }
 
     new public void StartTask()

@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
+using Valve.VR;
 
 public class Sc1LivingRoom : LevelScript
 {
     [SerializeField] VideoPlayer video = null;
     [SerializeField] AudioSource[] audios = null;
+    
+
     void Update()
     {
         StartBTN.onClick.AddListener(buttonIsClicked);
@@ -21,7 +24,10 @@ public class Sc1LivingRoom : LevelScript
             isStarted = false;
             StartCoroutine(EndTask());
         }
+
     }
+
+   
 
     new public void StartTask()
     {

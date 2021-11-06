@@ -167,7 +167,9 @@ public class Sc7Elevator : LevelScript {
 
     void Update() {
 
-        if (Input.GetKeyDown(KeyCode.Space) && !isStarted)
+        StartBTN.onClick.AddListener(buttonIsClicked);
+
+        if (!isStarted && btnIsClicked)
         {
             StartTask();
         }
@@ -253,6 +255,11 @@ public class Sc7Elevator : LevelScript {
                 SoundFX.pitch -= 0.9f * Time.deltaTime;
             }
         }
+    }
+
+    void buttonIsClicked()
+    {
+        btnIsClicked = true;
     }
     IEnumerator Error(MeshRenderer btn)
     {

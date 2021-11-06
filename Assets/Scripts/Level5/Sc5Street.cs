@@ -33,11 +33,20 @@ public class Sc5Street : LevelScript
     int currentPointIndex = 0;
     void Update()
     {
-        if (!isStarted && Input.GetKey(KeyCode.Space))
+        StartBTN.onClick.AddListener(buttonIsClicked);
+
+
+        if (!isStarted && btnIsClicked)
         {
             StartTask();
         }
     }
+
+    void buttonIsClicked()
+    {
+        btnIsClicked = true;
+    }
+
     new public void StartTask()
     {
         base.StartTask();
@@ -46,7 +55,7 @@ public class Sc5Street : LevelScript
             Vector3 phonePos = phone.transform.localPosition;
             Quaternion phoneRot = phone.transform.localRotation;
 
-            phone.transform.SetParent(VRCamera.transform.Find("Camera"));
+            //phone.transform.SetParent(VRCamera.transform.Find("Camera"));
             phone.transform.localRotation = phoneRot;
             phone.transform.localPosition = phonePos;
         }

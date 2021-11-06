@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using TMPro;
+using Valve.VR;
+using UnityEngine.UI;
+
 public class Sc2LectureHall : LevelScript
 {
     [SerializeField] TextMeshPro text = null;
@@ -13,31 +16,47 @@ public class Sc2LectureHall : LevelScript
     int currentNumber = 0;
     bool posted = false;
     float startTime = 0f;
-    
-    new void StartTask()
+  
+
+    [Space]
+    [Header("VR Trigger")]
+    public SteamVR_Input_Sources handType;
+    public SteamVR_Action_Boolean grabPinchAction = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("GrabPinch");
+
+
+     void Update()
+     {
+
+         StartBTN.onClick.AddListener(buttonIsClicked);
+
+         if (btnIsClicked) 
+         {
+             if (!isStarted)
+                 StartTask();
+             else if (!posted)
+                 StartCoroutine(Post());
+         }
+     }
+
+    new public void StartTask()
     {
         base.StartTask();
         StartCoroutine(ShowNumber(true));
     }
-    
-    private void Update()
+
+    void buttonIsClicked()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (!isStarted)
-                StartTask();
-            else if (!posted)
-                StartCoroutine(Post(true));
-        }
+        btnIsClicked = true;
     }
-    IEnumerator Post(bool pressed)
+
+    IEnumerator Post()
     {
         posted = true;
         List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
         formData.Add(new MultipartFormDataSection("username", LevelScript.UserName));
         formData.Add(new MultipartFormDataSection("digit", currentNumber.ToString()));
-        formData.Add(new MultipartFormDataSection("spacebar_pressed", (pressed)? "YES": "NO"));
-        if (pressed)
+        formData.Add(new MultipartFormDataSection("spacebar_pressed", (grabPinchAction.GetStateDown(handType)) ? "YES": "NO"));
+        if (grabPinchAction.GetStateDown(handType))
         {
             formData.Add(new MultipartFormDataSection("accuracy", (currentNumber == 3 == isReverse) ? "Wrong" : "Correct"));
             formData.Add(new MultipartFormDataSection("reaction_time", ((Time.time - startTime) * 1000).ToString("0.0")));

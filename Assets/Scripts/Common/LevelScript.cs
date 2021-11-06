@@ -10,10 +10,10 @@ public class LevelScript : MonoBehaviour
     public static bool IsVR;
     public static bool PlayerFreeze = false;
     //[SerializeField] protected GameObject MainCamera = null;
-    [SerializeField] protected GameObject VRCamera = null;
-    public GameObject StartButton = null;
-    public Button StartBTN;
-    [SerializeField] protected Canvas TaskCanvas = null;
+    [SerializeField] protected GameObject VRCamera;
+    //public GameObject StartButton;
+    [SerializeField] protected Button StartBTN;
+    public Canvas TaskCanvas = null;
     [HideInInspector] public bool isStarted = false;
     [HideInInspector] public bool btnIsClicked = false;
     bool TaskLevel = true;
@@ -25,15 +25,15 @@ public class LevelScript : MonoBehaviour
             Time.timeScale = 0;
         }
 
-        if (VRCamera)
-        {
+        //if (VRCamera)
+        //{
             //MainCamera.SetActive(!IsVR);
-            VRCamera.SetActive(IsVR);
-        }
-        if(!IsVR && StartButton)
-        {
-            StartButton.SetActive(false);
-        }
+        //    VRCamera.SetActive(IsVR);
+        //}
+        //if(!IsVR && StartButton)
+        //{
+            //StartButton.SetActive(false);
+        //}
     }
     public void StartTask()
     {
