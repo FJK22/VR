@@ -63,7 +63,7 @@ public class Sc2LectureHall : LevelScript
         List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
         formData.Add(new MultipartFormDataSection("username", LevelScript.UserName));
         formData.Add(new MultipartFormDataSection("digit", currentNumber.ToString()));
-        formData.Add(new MultipartFormDataSection("spacebar_pressed", (pressed) ? "YES": "NO"));
+        formData.Add(new MultipartFormDataSection("spacebar_trigger_pressed", (pressed) ? "YES": "NO"));
         if (pressed)
         {
             formData.Add(new MultipartFormDataSection("accuracy", (currentNumber == 3 == isReverse) ? "Wrong" : "Correct"));
