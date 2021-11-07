@@ -29,13 +29,20 @@ public class Sc2LectureHall : LevelScript
 
          StartBTN.onClick.AddListener(buttonIsClicked);
 
-         if (btnIsClicked) 
+         if (btnIsClicked && !isStarted) 
          {
-             if (!isStarted)
-                 StartTask();
-             else if (!posted)
-                 StartCoroutine(Post());
+             
+             StartTask();
+            
          }
+
+        if (!posted)
+        {
+            if (grabPinchAction.GetStateDown(handType))
+            {
+                StartCoroutine(Post(true));
+            }
+        }
      }
 
     new public void StartTask()
@@ -47,16 +54,17 @@ public class Sc2LectureHall : LevelScript
     void buttonIsClicked()
     {
         btnIsClicked = true;
+        //Debug.Log("Button is pressed");
     }
 
-    IEnumerator Post()
+    IEnumerator Post(bool pressed)
     {
         posted = true;
         List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
         formData.Add(new MultipartFormDataSection("username", LevelScript.UserName));
         formData.Add(new MultipartFormDataSection("digit", currentNumber.ToString()));
-        formData.Add(new MultipartFormDataSection("spacebar_pressed", (grabPinchAction.GetStateDown(handType)) ? "YES": "NO"));
-        if (grabPinchAction.GetStateDown(handType))
+        formData.Add(new MultipartFormDataSection("spacebar_pressed", (pressed) ? "YES": "NO"));
+        if (pressed)
         {
             formData.Add(new MultipartFormDataSection("accuracy", (currentNumber == 3 == isReverse) ? "Wrong" : "Correct"));
             formData.Add(new MultipartFormDataSection("reaction_time", ((Time.time - startTime) * 1000).ToString("0.0")));
@@ -86,9 +94,9 @@ public class Sc2LectureHall : LevelScript
         text.text = currentNumber.ToString();
         startTime = Time.time; 
         yield return new WaitForSeconds(delay);
-         //if (!posted)
-         //{
-         //    StartCoroutine(Post(false));
+        // if (posted)
+        // {
+        //     StartCoroutine(Post(false));
          //}
         posted = false;
         count++;
