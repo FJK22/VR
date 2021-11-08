@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using Valve.VR;
 
 public class SC3Street : LevelScript
 {
@@ -17,6 +18,12 @@ public class SC3Street : LevelScript
     int count;
     float startTime;
     bool isPressed;
+
+    [Space]
+    [Header("VR Touchpad")]
+    public SteamVR_Input_Sources handType;
+    public SteamVR_Action_Vector2 touchPadAction = SteamVR_Input.GetAction<SteamVR_Action_Vector2>("TouchpadLeftRight");
+    public SteamVR_Action_Boolean touchPadClick = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("TouchpadClick");
     new public void StartTask()
     {
         base.StartTask();
@@ -27,13 +34,29 @@ public class SC3Street : LevelScript
         StartBTN.onClick.AddListener(buttonIsClicked);
 
         if (!isStarted && btnIsClicked) StartTask();
+
+        Vector2 touchpadValue = touchPadAction.GetAxis(handType);
+        bool touchpadClicked = touchPadClick.GetStateDown(handType);
+
         if (!isPressed)
         {
+
+            if (touchpadValue.x < 0 && touchpadClicked)
+            {
+                //Debug.Log("Pressed Left");
+                StartCoroutine(Post(true));
+            }
+            if (touchpadValue.x > 0 && touchpadClicked)
+            {
+                //Debug.Log("Pressed Right");
+                StartCoroutine(Post(false));
+            }
+
             //TO BE FIXED FOR THE CONTROLLER
             //if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-                //StartCoroutine(Post(true));
+            //StartCoroutine(Post(true));
             //if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) 
-               // StartCoroutine(Post(false));
+            // StartCoroutine(Post(false));
         }
     }
 

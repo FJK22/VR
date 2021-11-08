@@ -3,12 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using Valve.VR;
+using UnityEngine.UI;
+
 
 public class Sc5Street : LevelScript
 {
-    [SerializeField] float MaxLimitTime = 600f; 
+    [SerializeField] float MaxLimitTime = 600f;
     [SerializeField] GameObject phone = null;
-    [SerializeField] GameObject mapCanvas = null;
+    //[SerializeField] GameObject mapCanvas = null;
     [SerializeField] GameObject mapPan = null;
     [SerializeField] GameObject missedCallPan = null;
     [SerializeField] GameObject callingPan = null;
@@ -31,6 +34,13 @@ public class Sc5Street : LevelScript
     bool isMapOpened = false;
     int marks = 10;
     int currentPointIndex = 0;
+    public GameObject VRController;
+
+    [Space]
+    [Header("VR Trigger")]
+    public SteamVR_Input_Sources handType;
+    public SteamVR_Action_Boolean grabPinchAction = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("GrabPinch");
+
     void Update()
     {
         StartBTN.onClick.AddListener(buttonIsClicked);
@@ -38,8 +48,21 @@ public class Sc5Street : LevelScript
 
         if (!isStarted && btnIsClicked)
         {
+            VRController.GetComponent<VRController>().enabled = true;
             StartTask();
+
+            TaskCanvas.GetComponent<Canvas>().enabled = false;
+            TaskCanvas.GetComponent<GraphicRaycaster>().enabled = false;
+
+
         }
+
+        if (isStarted && !missedCallPan.activeSelf && !callingPan.activeSelf && !messagePan.activeSelf && grabPinchAction.GetStateDown(handType))
+        {
+            MapOpen();
+        }
+
+
     }
 
     void buttonIsClicked()
@@ -49,17 +72,18 @@ public class Sc5Street : LevelScript
 
     new public void StartTask()
     {
+        
         base.StartTask();
-        if (IsVR)
-        {
-            Vector3 phonePos = phone.transform.localPosition;
-            Quaternion phoneRot = phone.transform.localRotation;
+        //if (IsVR)
+        //{
+        //    Vector3 phonePos = phone.transform.localPosition;
+         //   Quaternion phoneRot = phone.transform.localRotation;
 
             //phone.transform.SetParent(VRCamera.transform.Find("Camera"));
-            phone.transform.localRotation = phoneRot;
-            phone.transform.localPosition = phonePos;
-        }
-        mapCanvas.SetActive(true);
+          //  phone.transform.localRotation = phoneRot;
+          //  phone.transform.localPosition = phonePos;
+        //}
+        //mapCanvas.SetActive(true);
         StartCoroutine(LimitTimer());
     }
     private void OnTriggerEnter(Collider other)
@@ -108,9 +132,14 @@ public class Sc5Street : LevelScript
         if (isMapOpened) return;
         isMapOpened = true;
         mapOpenCount++;
+
         phone.SetActive(true);
         mapPan.SetActive(true);
         StartCoroutine(MapClose());
+
+       
+       
+        
     }
     public void ReceiveCall()
     {

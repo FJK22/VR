@@ -8,8 +8,8 @@ public class Sc1LivingRoom : LevelScript
 {
     [SerializeField] VideoPlayer video = null;
     [SerializeField] AudioSource[] audios = null;
-    
 
+    
     void Update()
     {
         StartBTN.onClick.AddListener(buttonIsClicked);
@@ -25,13 +25,16 @@ public class Sc1LivingRoom : LevelScript
             StartCoroutine(EndTask());
         }
 
+        
+
+      
     }
 
    
 
     new public void StartTask()
     {
-
+        
         base.StartTask();
         video.Play();
         foreach (var a in audios)
