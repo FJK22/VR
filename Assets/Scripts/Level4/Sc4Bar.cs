@@ -4,6 +4,7 @@ using UnityEngine;
 public class Sc4Bar : LevelScript
 {
     [SerializeField] AudioSource[] audios = null;
+    public GameObject Pointer;
     void Update()
     {
         StartBTN.onClick.AddListener(buttonIsClicked);
@@ -11,6 +12,7 @@ public class Sc4Bar : LevelScript
         if (!isStarted && btnIsClicked)
         {
             StartTask();
+            Pointer.SetActive(false);
         }
     }
 

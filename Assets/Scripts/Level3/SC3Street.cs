@@ -19,6 +19,8 @@ public class SC3Street : LevelScript
     float startTime;
     bool isPressed;
 
+    public GameObject Pointer;
+
     [Space]
     [Header("VR Touchpad")]
     public SteamVR_Input_Sources handType;
@@ -33,7 +35,13 @@ public class SC3Street : LevelScript
     {
         StartBTN.onClick.AddListener(buttonIsClicked);
 
-        if (!isStarted && btnIsClicked) StartTask();
+        if (!isStarted && btnIsClicked)
+        {
+
+            StartTask();
+            Pointer.SetActive(false);
+
+        }
 
         Vector2 touchpadValue = touchPadAction.GetAxis(handType);
         bool touchpadClicked = touchPadClick.GetStateDown(handType);
@@ -52,7 +60,7 @@ public class SC3Street : LevelScript
                 StartCoroutine(Post(false));
             }
 
-            //TO BE FIXED FOR THE CONTROLLER
+            
             //if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
             //StartCoroutine(Post(true));
             //if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) 

@@ -10,12 +10,27 @@ public class MachineButton : MonoBehaviour
     {
         gameManager = FindObjectOfType<Sc6Train>();
     }
-    private void OnMouseUp()
+  //  private void OnMouseUp()
+    //{
+  //      if (!audioSouce.isPlaying)
+   //     {
+   //         audioSouce.Play();
+   //         gameManager.buttonClickCount++;
+   //     }
+   // }
+
+    void OnTriggerEnter(Collider col)
     {
-        if (!audioSouce.isPlaying)
+
+        if (col.gameObject.tag == "RightHand")
         {
-            audioSouce.Play();
-            gameManager.buttonClickCount++;
+            if (!audioSouce.isPlaying)
+            {
+                audioSouce.Play();
+                gameManager.buttonClickCount++;
+            }
+
+
         }
     }
 }

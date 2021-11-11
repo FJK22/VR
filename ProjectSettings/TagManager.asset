@@ -14,6 +14,7 @@ TagManager:
   - WaterLiquid
   - Exp2
   - FluidPlate
+  - RightHand
   layers:
   - Default
   - TransparentFX

@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
+
 public class MessageManager : MonoBehaviour
 {
     public static MessageManager Instance;
-    [SerializeField] TextMeshProUGUI text;
+    [SerializeField] Text text;
     private void Start()
     {
         Instance = this;

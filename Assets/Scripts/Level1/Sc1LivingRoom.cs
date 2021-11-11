@@ -8,8 +8,8 @@ public class Sc1LivingRoom : LevelScript
 {
     [SerializeField] VideoPlayer video = null;
     [SerializeField] AudioSource[] audios = null;
+    public GameObject Pointer;
 
-    
     void Update()
     {
         StartBTN.onClick.AddListener(buttonIsClicked);
@@ -17,7 +17,8 @@ public class Sc1LivingRoom : LevelScript
         if (!isStarted && btnIsClicked)
         {
              StartTask();
-            
+            Pointer.SetActive(false);
+
         }
         if (isStarted && video.isPaused)
         {

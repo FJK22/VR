@@ -3,6 +3,8 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.Networking;
 using System.Collections.Generic;
+using Valve.VR;
+using UnityEngine.UI;
 
 public class Sc6Train : LevelScript
 {
@@ -34,9 +36,17 @@ public class Sc6Train : LevelScript
     float startTime = 0;
     int trainState = 0; // bit state => 00 : two road empty, 01 10 : one road fill, 11 : two road fill
     bool personInTrain = false;
+
+    public GameObject VRController;
+    public GameObject Pointer;
+
+    [Space]
+    [Header("VR Trigger")]
+    public SteamVR_Input_Sources handType;
+    public SteamVR_Action_Boolean grabPinchAction = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("GrabPinch");
     new void StartTask()
     {
-        PlayerFreeze = true;
+        //PlayerFreeze = true;
         base.StartTask();
         arrivePos = new Transform[2];
         targetPos = new Transform[2];
@@ -61,7 +71,8 @@ public class Sc6Train : LevelScript
         yield return new WaitForSeconds(52);
         startTime = Time.time;
         StartCoroutine(LimitTimeCounter());
-        PlayerFreeze = false;
+       // PlayerFreeze = false;
+        VRController.GetComponent<VRController>().enabled = true;
     }
     private void Update()
     {
@@ -69,7 +80,11 @@ public class Sc6Train : LevelScript
 
         if (!isStarted && btnIsClicked)
         {
+            
             StartTask();
+            TaskCanvas.GetComponent<Canvas>().enabled = false;
+            TaskCanvas.GetComponent<GraphicRaycaster>().enabled = false;
+            Pointer.SetActive(false);
         }
     }
 

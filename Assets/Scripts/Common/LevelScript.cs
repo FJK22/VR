@@ -8,7 +8,7 @@ public class LevelScript : MonoBehaviour
 {
     public static string UserName;
     public static bool IsVR;
-    public static bool PlayerFreeze = false;
+  //  public static bool PlayerFreeze = false;
     //[SerializeField] protected GameObject MainCamera = null;
     [SerializeField] protected GameObject VRCamera;
     //public GameObject StartButton;

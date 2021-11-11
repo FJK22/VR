@@ -22,9 +22,9 @@ public class Sc2LectureHall : LevelScript
     [Header("VR Trigger")]
     public SteamVR_Input_Sources handType;
     public SteamVR_Action_Boolean grabPinchAction = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("GrabPinch");
+    public GameObject Pointer;
 
-
-     void Update()
+    void Update()
      {
 
          StartBTN.onClick.AddListener(buttonIsClicked);
@@ -33,7 +33,8 @@ public class Sc2LectureHall : LevelScript
          {
              
              StartTask();
-            
+             Pointer.SetActive(false);
+
          }
 
         if (!posted)

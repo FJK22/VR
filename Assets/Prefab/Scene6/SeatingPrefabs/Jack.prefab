@@ -1276,7 +1276,7 @@ Transform:
   m_LocalRotation: {x: -0.0000000016489767, y: -0.075448416, z: -0.000000021793399,
     w: 0.9971497}
   m_LocalPosition: {x: 0.041068975, y: -1.0010729, z: 0.13827325}
-  m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
+  m_LocalScale: {x: 2.3, y: 2.3, z: 2.3}
   m_Children:
   - {fileID: 902330050058128825}
   - {fileID: 3118821005949139636}

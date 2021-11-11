@@ -35,11 +35,20 @@ public class Sc5Street : LevelScript
     int marks = 10;
     int currentPointIndex = 0;
     public GameObject VRController;
-
+    public GameObject Pointer;
     [Space]
     [Header("VR Trigger")]
     public SteamVR_Input_Sources handType;
     public SteamVR_Action_Boolean grabPinchAction = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("GrabPinch");
+
+    [Space]
+    [Header("IncomingCall")]
+    public GameObject IncomingCall;
+    public GameObject Calling;
+    [SerializeField] AudioSource IncomingCallAudio = null;
+    [SerializeField] AudioSource CallingAudio = null;
+
+    private bool callingPanBool = true;
 
     void Update()
     {
@@ -53,6 +62,7 @@ public class Sc5Street : LevelScript
 
             TaskCanvas.GetComponent<Canvas>().enabled = false;
             TaskCanvas.GetComponent<GraphicRaycaster>().enabled = false;
+            Pointer.SetActive(false);
 
 
         }
@@ -62,7 +72,26 @@ public class Sc5Street : LevelScript
             MapOpen();
         }
 
+        if (callingPan.activeSelf)
+        {
+            StartCall();
+        }
 
+
+
+    }
+
+    void StartCall()
+    {
+         if (callingPanBool && grabPinchAction.GetStateDown(handType))
+         {
+             IncomingCallAudio.Stop();
+             IncomingCall.SetActive(false);
+             Calling.SetActive(true);
+             CallingAudio.Play();
+             callingPanBool = false;
+             ReceiveCall();
+         }
     }
 
     void buttonIsClicked()
@@ -143,12 +172,14 @@ public class Sc5Street : LevelScript
     }
     public void ReceiveCall()
     {
+        callingPanBool = false;
         StartCoroutine(AudioCalling());
     }
     IEnumerator AudioCalling() {
         yield return new WaitForSeconds(6.5f);
         callingPan.SetActive(false);
         phone.SetActive(false);
+
     }
     IEnumerator Post()
     {
