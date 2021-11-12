@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
+using Valve.VR;
 using UnityEngine.UI;
 
 public class Sc7Elevator : LevelScript {
     [SerializeField] GameObject phone = null;
-    [SerializeField] GameObject phoneButton = null;
+   // [SerializeField] GameObject phoneButton = null;
     [SerializeField] float TextDelay = 3f;
-    [SerializeField] float TimeLimit = 30;
+    [SerializeField] float TimeLimit = 600;
     [SerializeField] float StartDelayTime = 10;
     [SerializeField] GameObject Interviewer = null;
     [SerializeField] AudioSource InterviewrAS = null;
@@ -70,6 +71,15 @@ public class Sc7Elevator : LevelScript {
     private float startTime = 0f;
     private float reactionTime = 0;
     private int phonePressed = 0;
+    
+    [Space]
+    [Header("VR")]
+    //public GameObject VRController;
+    public GameObject Pointer;
+
+    public SteamVR_Input_Sources handType;
+    public SteamVR_Action_Boolean grabPinchAction = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("GrabPinch");
+
     void Awake() {
         Moving = false;
         BtnSoundFX = GetComponent<AudioSource>();
@@ -107,17 +117,21 @@ public class Sc7Elevator : LevelScript {
 
     public void ShowPhone()
     {
-        phone.SetActive(true);
-        phoneButton.SetActive(false);
-        phonePressed++;
-        StopCoroutine(HidePhone());
-        StartCoroutine(HidePhone());
+        if (grabPinchAction.GetStateDown(handType))
+        {
+            phone.SetActive(true);
+            // phoneButton.SetActive(false);
+            phonePressed++;
+            StopCoroutine(HidePhone());
+            StartCoroutine(HidePhone());
+        }
+        
     }
     IEnumerator HidePhone()
     {
         yield return new WaitForSeconds(TextDelay);
         phone.SetActive(false);
-        phoneButton.SetActive(true);
+       // phoneButton.SetActive(true);
     }
     void ButtonInit(int _count) {
         if (_count > 0)
@@ -172,6 +186,10 @@ public class Sc7Elevator : LevelScript {
         if (!isStarted && btnIsClicked)
         {
             StartTask();
+            //Pointer.SetActive(false);
+
+            TaskCanvas.GetComponent<Canvas>().enabled = false;
+            TaskCanvas.GetComponent<GraphicRaycaster>().enabled = false;
         }
         RaycastHit[] hits;
         if(isStarted && Time.time - startTime > TimeLimit && !Moving)
@@ -179,7 +197,7 @@ public class Sc7Elevator : LevelScript {
             reactionTime = TimeLimit;
             StartCoroutine(Post(false));
         }
-        if (Input.GetMouseButtonDown(0))
+        if (grabPinchAction.GetStateDown(handType)) //Input.GetMouseButtonDown(0)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             hits = Physics.RaycastAll(ray, 3);
@@ -326,6 +344,7 @@ public class Sc7Elevator : LevelScript {
     {
         if (isRight)
         {
+            //VRController.GetComponent<VRController>().enabled = true;
             InterviewrAS.Play();
             yield return new WaitForSeconds(5);
         }
