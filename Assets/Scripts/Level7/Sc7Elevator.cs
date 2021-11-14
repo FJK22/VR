@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using Valve.VR;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class Sc7Elevator : LevelScript {
     [SerializeField] GameObject phone = null;
@@ -37,6 +38,7 @@ public class Sc7Elevator : LevelScript {
 
     private MeshRenderer ElevatorGoBtn;
     private List<MeshRenderer> ElevatorNumericButtons = new List<MeshRenderer>();
+    private List<Collision> ElevatorNumericButtonsCollider = new List<Collision>();
     private AudioSource SoundFX;
     private bool SpeedUp = false;
     private bool SlowDown = false;
@@ -75,10 +77,15 @@ public class Sc7Elevator : LevelScript {
     [Space]
     [Header("VR")]
     //public GameObject VRController;
-    public GameObject Pointer;
+    public GameObject PointerGameObject;
+    private bool phoneFirstShown = false;
 
     public SteamVR_Input_Sources handType;
     public SteamVR_Action_Boolean grabPinchAction = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("GrabPinch");
+    public SteamVR_Action_Boolean touchPadClick = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("TouchpadClick");
+
+    //public SphereCollider Dot;
+    public Pointer pointer;
 
     void Awake() {
         Moving = false;
@@ -117,20 +124,19 @@ public class Sc7Elevator : LevelScript {
 
     public void ShowPhone()
     {
-        if (grabPinchAction.GetStateDown(handType))
-        {
-            phone.SetActive(true);
-            // phoneButton.SetActive(false);
-            phonePressed++;
-            StopCoroutine(HidePhone());
-            StartCoroutine(HidePhone());
-        }
+        phone.SetActive(true);
+        // phoneButton.SetActive(false);
+        
+        StopCoroutine(HidePhone());
+        StartCoroutine(HidePhone());
+       
         
     }
     IEnumerator HidePhone()
     {
         yield return new WaitForSeconds(TextDelay);
         phone.SetActive(false);
+        phoneFirstShown = true;
        // phoneButton.SetActive(true);
     }
     void ButtonInit(int _count) {
@@ -186,10 +192,19 @@ public class Sc7Elevator : LevelScript {
         if (!isStarted && btnIsClicked)
         {
             StartTask();
-            //Pointer.SetActive(false);
+
 
             TaskCanvas.GetComponent<Canvas>().enabled = false;
             TaskCanvas.GetComponent<GraphicRaycaster>().enabled = false;
+            //Pointer.SetActive(false);
+        }
+        if (phoneFirstShown && touchPadClick.GetStateDown(handType))
+        {
+            phone.SetActive(true);
+            // phoneButton.SetActive(false);
+            phonePressed++;
+            StopCoroutine(HidePhone());
+            StartCoroutine(HidePhone());
         }
         RaycastHit[] hits;
         if(isStarted && Time.time - startTime > TimeLimit && !Moving)
@@ -197,15 +212,24 @@ public class Sc7Elevator : LevelScript {
             reactionTime = TimeLimit;
             StartCoroutine(Post(false));
         }
-        if (grabPinchAction.GetStateDown(handType)) //Input.GetMouseButtonDown(0)
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            hits = Physics.RaycastAll(ray, 3);
-            for (int i = 0; i < hits.Length; i++)
-            {
-                RaycastHit hit = hits[i];
-                if (hit.transform.tag == "ElevatorNumericButton" && !Moving)
+        //if (!grabPinchAction.GetStateDown(handType)) 
+        // {
+        //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //hits = Physics.RaycastAll(ray, 3);
+        RaycastHit hit;
+        Ray ray = new Ray(pointer.transform.position, pointer.transform.forward);
+
+        Physics.Raycast(ray, out hit, pointer.m_DefaultLength);
+
+
+        //  for (int i = 0; i < hits.Length; i++)
+        // {
+
+        //RaycastHit hit = hits[i];
+
+                if (grabPinchAction.GetStateDown(handType) && !Moving)
                 {
+                    
                     InputFloor = hit.transform.name;
                     hit.transform.GetComponent<MeshRenderer>().enabled = true;
                     ElevatorNumericButtons.Add(hit.transform.GetComponent<MeshRenderer>());
@@ -241,8 +265,8 @@ public class Sc7Elevator : LevelScript {
                         StartCoroutine(DoorsClosing());
                     }
                 }
-            }
-        }
+            //}
+        //}
         if (SpeedUp)
         {
             if (SoundFX.volume < ElevatorMoveVolume)
@@ -273,8 +297,11 @@ public class Sc7Elevator : LevelScript {
                 SoundFX.pitch -= 0.9f * Time.deltaTime;
             }
         }
+       
     }
 
+
+   
     void buttonIsClicked()
     {
         btnIsClicked = true;
