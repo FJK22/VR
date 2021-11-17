@@ -7,6 +7,8 @@ using UnityEngine.UI;
 using Valve.VR.InteractionSystem;
 using Valve.VR.InteractionSystem.Sample;
 using UnitySimpleLiquid;
+using SimpleJSON;
+using UnityEngine.Networking;
 
 namespace Looxid.Link
 {
@@ -18,7 +20,7 @@ namespace Looxid.Link
         RAW_SIGNAL = 3
     }
 
-    public class _2DVisualizer : MonoBehaviour
+    public class _2DVisualizer : LevelScript
     {
         [Header("Tabs")]
         public Tab2DVisualizer SelectTab = Tab2DVisualizer.SENSOR_STATUS;
@@ -128,6 +130,17 @@ namespace Looxid.Link
         private bool exp1finished = false;
         private bool attentionChecking = false;
 
+        float startTime = 0;
+        public Button startExperimentBTN;
+        [SerializeField] int TimeLimit = 600;
+        //bool startExButtonClicked;
+        [HideInInspector] public bool startExButtonClicked = false;
+        private int count;
+        private float attentionAverage;
+        bool burnFLameIsActive;
+        int countBool = 0;
+        int countBool2 = 0;
+
         void Start()
         {
             LooxidLinkManager.Instance.SetDebug(true);
@@ -148,11 +161,37 @@ namespace Looxid.Link
             beta = new LinkDataValue();
             gamma = new LinkDataValue();
 
-             //plate_renderer = Plate.GetComponent<Renderer>();
+            startExperimentBTN.interactable = false;
+
+            //plate_renderer = Plate.GetComponent<Renderer>();
             meshColliderPotassium = PotassiumStone.GetComponent<MeshCollider>();
             meshColliderAluminum = Aluminum.GetComponent<MeshCollider>();
 
+            burnFLameIsActive = false;
+
         }
+        void buttonIsClicked()
+        {
+            btnIsClicked = true;
+            TaskCanvas.GetComponent<Canvas>().enabled = false;
+            TaskCanvas.GetComponent<GraphicRaycaster>().enabled = false;
+        }
+        void buttonExpIsClicked()
+        {
+            StartTask();
+            Debug.Log("Task started");
+        }
+
+        new public void StartTask()
+        {
+            base.StartTask();
+            StartCoroutine(Experiments());
+            StartCoroutine(LimitTimeCounter());
+        }
+
+        
+
+        
 
         void OnEnable()
         {
@@ -379,6 +418,25 @@ namespace Looxid.Link
 
         void Update()
         {
+            StartBTN.onClick.AddListener(buttonIsClicked);
+           
+            attention.value = Mathf.Lerp((float)attention.value, (float)attention.target, 0.2f);
+            attentionAverage = (float)(attentionAverage * count + attention.value) / (count + 1);
+            count++;
+            //Debug.Log(attention.value + " && " + attentionAverage);
+
+            if (!isStarted && btnIsClicked)
+            {
+                //if (sensorStatusData != null)
+                //{
+                startExperimentBTN.interactable = true;
+                startExperimentBTN.onClick.AddListener(buttonExpIsClicked);
+                //}
+
+
+            }
+
+
             if (Panels != null)
             {
                 for (int i = 0; i < Panels.Length; i++)
@@ -423,10 +481,12 @@ namespace Looxid.Link
             leftActivity.value = Mathf.Lerp((float)leftActivity.value, (float)leftActivity.target, 0.2f);
             rightActivity.value = Mathf.Lerp((float)rightActivity.value, (float)rightActivity.target, 0.2f);
             attention.value = Mathf.Lerp((float)attention.value, (float)attention.target, 0.2f);
+            burnFLameIsActive = false;
 
-      
-           // PeriodTable.isInteractable = attention.value >= 0.4;
-            startButton.interactable = attention.value >= 0.4;
+            // PeriodTable.isInteractable = attention.value >= 0.4;
+            //startButton.interactable = attention.value >= 0.4;
+
+
 
 
             if (ExperimentManager.GetComponent<ExperimentManager>().CurrentExperiment1 == true)
@@ -555,11 +615,31 @@ namespace Looxid.Link
                 else
                 {
                     attentionChecking = false;
-                    Txt_Instruction.text = "This is a chemical reaction of Nitromethane combnined with Methanol. Well done for completing this experiment. You can now remove the headset.";
+                    Txt_Instruction.text = "This is a chemical reaction of Nitromethane combnined with Methanol. Well done for completing this experiment.";
+                    burnFLameIsActive = true;
+                    countBool++;
+
+                    if (burnFLameIsActive && countBool == 1)
+                    {
+                        StartCoroutine(PostData());
+                        burnFLameIsActive = false;
+                    }
+
 
                 }
 
+                /*if (Time.time > TimeLimit)
+                {
+                    StartCoroutine(Post());
+
+                    countBool2++;
+                    if (countBool2 == 1)
+                    {
+                    }
+                }*/
             }
+
+            
 
 
 
@@ -592,8 +672,59 @@ namespace Looxid.Link
             ExperimentManager.GetComponent<ExperimentManager>().StartExperiment3();
 
         }
-        
 
+        IEnumerator Experiments()
+        {
+            yield return new WaitForSeconds(0.1f);
+            startTime = Time.time;
+
+            
+           // StartCoroutine(LimitTimeCounter());
+
+         
+        }
+        public IEnumerator LimitTimeCounter()
+        {
+            startTime = Time.time;
+            yield return new WaitForSeconds(TimeLimit);
+            countBool2++;
+            if (countBool2 == 1) {
+                StartCoroutine(Post());
+            }
+        }
+
+        IEnumerator PostData()
+        {
+            yield return new WaitForSeconds(7);
+            StartCoroutine(Post());
+            
+        }
+
+     
+
+        IEnumerator Post()
+        {
+            
+                float time = Time.time - startTime;
+                float score = Mathf.Clamp((float)(20 - time * 2 / TimeLimit) + (attentionAverage * 100), 0, 100); 
+                string accuracy = "High"; 
+                if (score < 60f) accuracy = "Medium";
+                if (score < 20f) accuracy = "Low";
+                List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
+                formData.Add(new MultipartFormDataSection("username", UserName));
+                formData.Add(new MultipartFormDataSection("attention_average", attentionAverage.ToString()));
+                formData.Add(new MultipartFormDataSection("score", score.ToString()));
+                formData.Add(new MultipartFormDataSection("accuracy", accuracy));
+                formData.Add(new MultipartFormDataSection("reaction_time", (time * 1000).ToString("0.0")));
+                UnityWebRequest www = UnityWebRequest.Post(Constant.DOMAIN + Constant.SC8Data, formData);
+                yield return www.SendWebRequest();
+                if (www.result != UnityWebRequest.Result.Success)
+                {
+                    Debug.LogError(www.error);
+                }
+                NextScene();
+            
+        }
 
 
         public void OnSelectChannel(int num)

@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class Sc6Train : LevelScript
 {
-    int CorrectIndex = 3; // 19 Gloucester Road
+    int CorrectIndex = 3;//19 Gloucester Road This train should arrive more often.Maybe every once in 3 trains.So user does not wait much for right train
     public static string[] trainDestinations = {
         "5 Oxford Circus",
         "7 Great Portland Street",
@@ -35,6 +35,7 @@ public class Sc6Train : LevelScript
     int roadIndex = 0;
     float startTime = 0;
     int trainState = 0; // bit state => 00 : two road empty, 01 10 : one road fill, 11 : two road fill
+    int countWrongTrains = 0;
     bool personInTrain = false;
 
     public GameObject VRController;
@@ -129,6 +130,15 @@ public class Sc6Train : LevelScript
             Transform train = Instantiate(trainPrefab, spawnPos[roadIndex]).transform;
             Train trainScript = train.GetComponent<Train>();
             trainScript.DestinationIndex = Random.Range(0, trainDestinations.Length);
+            if(countWrongTrains > 4)
+            {
+                trainScript.DestinationIndex = CorrectIndex;
+            }
+            if(trainScript.DestinationIndex == CorrectIndex)
+            {
+                countWrongTrains = 0;
+            }
+            countWrongTrains++;
             trainScript.roadIndex = roadIndex;
             Sequence s = DOTween.Sequence();
             trainScript.sequence = s;

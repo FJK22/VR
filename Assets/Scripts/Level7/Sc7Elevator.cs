@@ -126,7 +126,7 @@ public class Sc7Elevator : LevelScript {
     {
         phone.SetActive(true);
         // phoneButton.SetActive(false);
-        
+        //phonePressed++;
         StopCoroutine(HidePhone());
         StartCoroutine(HidePhone());
        
@@ -206,26 +206,31 @@ public class Sc7Elevator : LevelScript {
             StopCoroutine(HidePhone());
             StartCoroutine(HidePhone());
         }
-        RaycastHit[] hits;
-        if(isStarted && Time.time - startTime > TimeLimit && !Moving)
+       
+        
+        if (isStarted && Time.time - startTime > TimeLimit && !Moving)
         {
             reactionTime = TimeLimit;
             StartCoroutine(Post(false));
         }
-        //if (!grabPinchAction.GetStateDown(handType)) 
-        // {
-        //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        //hits = Physics.RaycastAll(ray, 3);
-        RaycastHit hit;
-        Ray ray = new Ray(pointer.transform.position, pointer.transform.forward);
+        RaycastHit[] hits;
+        //if (grabPinchAction.GetStateDown(handType)) 
+        //{
+            
+            //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            //hits = Physics.RaycastAll(ray, 3);
+            //RaycastHit hit;
+            Ray ray = new Ray(pointer.transform.position, pointer.transform.forward);
 
-        Physics.Raycast(ray, out hit, pointer.m_DefaultLength);
+            hits = Physics.RaycastAll(ray, pointer.m_DefaultLength);
+            //Physics.Raycast(ray, out hit, pointer.m_DefaultLength);
 
 
-        //  for (int i = 0; i < hits.Length; i++)
-        // {
 
-        //RaycastHit hit = hits[i];
+            for (int i = 0; i < hits.Length; i++)
+            {
+
+                RaycastHit hit = hits[i];
 
                 if (grabPinchAction.GetStateDown(handType) && !Moving)
                 {
@@ -264,9 +269,9 @@ public class Sc7Elevator : LevelScript {
                     {
                         StartCoroutine(DoorsClosing());
                     }
-                }
-            //}
-        //}
+               // }
+            }
+        }
         if (SpeedUp)
         {
             if (SoundFX.volume < ElevatorMoveVolume)
@@ -369,6 +374,7 @@ public class Sc7Elevator : LevelScript {
 	}
     IEnumerator Post(bool isRight)
     {
+        
         if (isRight)
         {
             //VRController.GetComponent<VRController>().enabled = true;
@@ -386,6 +392,7 @@ public class Sc7Elevator : LevelScript {
         formData.Add(new MultipartFormDataSection("phone_pressed", phonePressed.ToString()));
         UnityWebRequest www = UnityWebRequest.Post(Constant.DOMAIN + Constant.SC7Data, formData);
         yield return www.SendWebRequest();
+
         if (www.result != UnityWebRequest.Result.Success)
         {
             Debug.LogError(www.error);
