@@ -379,7 +379,7 @@ public class Sc7Elevator : LevelScript {
         {
             //VRController.GetComponent<VRController>().enabled = true;
             InterviewrAS.Play();
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(10);
         }
         int marks = Mathf.Clamp((int)(20 - reactionTime * 2 / TimeLimit) - phonePressed, 0, 10);
         string accuracy = "High";
