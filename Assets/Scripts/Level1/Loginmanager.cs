@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using SimpleJSON;
+using System.IO;
+
 
 public class Loginmanager : MonoBehaviour
 {
@@ -21,7 +23,8 @@ public class Loginmanager : MonoBehaviour
     private string UserId;
 
     string _platform;
-    public string Platform {
+    public string Platform
+    {
         get { return _platform; }
         set { _platform = value; }
     }
@@ -32,9 +35,15 @@ public class Loginmanager : MonoBehaviour
         IFUserName.onValueChanged.AddListener(delegate { Validate(); });
         IFAge.onValueChanged.AddListener(delegate { Validate(); });
         BtSubmit.onClick.AddListener(delegate { StartCoroutine(Login()); });
+
     }
 
-    public IEnumerator Login() {
+    public IEnumerator Login()
+    {
+
+        string path = "";
+        string date = System.DateTime.Now.ToString("yyyy_MM_dd");
+
         BtSubmit.interactable = false;
         List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
         formData.Add(new MultipartFormDataSection("username", IFUserName.text));
@@ -55,10 +64,33 @@ public class Loginmanager : MonoBehaviour
         else
         {
             JSONNode data = JSON.Parse(www.downloadHandler.text);
-            if(data["status"] == "success")
+            if (data["status"] == "success")
             {
                 LevelScript.UserName = IFUserName.text;
                 LevelScript.IsVR = Platform == "VR";
+
+                if (DDGroup.captionText.text == "Control")
+                {
+                    path = $"{Application.dataPath}/Data/Control/{IFUserName.text + "_(" + date + ")"}";
+
+                }
+                else if (DDGroup.captionText.text == "ADHD")
+                {
+                    path = $"{Application.dataPath}/Data/ADHD/{IFUserName.text + "_(" + date + ")"}";
+
+                }
+                else if (DDGroup.captionText.text == "Stuttering")
+                {
+                    path = $"{Application.dataPath}/Data/Stuttering/{IFUserName.text + "_(" + date + ")"}";
+
+                }
+
+
+                if (!Directory.Exists(path))
+                {
+                    Directory.CreateDirectory(path);
+                }
+
                 LevelScript.NextScene();
             }
             else
@@ -67,13 +99,16 @@ public class Loginmanager : MonoBehaviour
                 StartCoroutine(Error(data["msg"]));
             }
         }
+
+
     }
 
     void Validate()
     {
         BtSubmit.interactable = IFUserName.text != "" && IFAge.text != "";
     }
-    IEnumerator Error(string message){
+    IEnumerator Error(string message)
+    {
         ErrorMessage.transform.parent.parent.gameObject.SetActive(true);
         ErrorMessage.text = message;
         yield return new WaitForSeconds(3);
