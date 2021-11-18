@@ -6,6 +6,8 @@ using UnityEngine.Networking;
 using TMPro;
 using Valve.VR;
 using UnityEngine.UI;
+using PupilLabs;
+using UnityEngine.SceneManagement;
 
 public class Sc2LectureHall : LevelScript
 {
@@ -24,6 +26,30 @@ public class Sc2LectureHall : LevelScript
     public SteamVR_Action_Boolean grabPinchAction = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("GrabPinch");
     public GameObject Pointer;
 
+    [Space]
+    [Header("Eye Tracker")]
+    public RecordingController recorder;
+    public Text statusText;
+
+    void Awake()
+    {
+        Scene scene = SceneManager.GetActiveScene();
+
+        string date = System.DateTime.Now.ToString("yyyy_MM_dd");
+
+        if (scene.name == "Sc2LectureHall")
+        {
+            recorder.customPath = $"{Application.dataPath}/Data/{UserGroup}/{UserName + "_" + date}/Sc2LectureHall/EyeTracking";
+        }
+        if (scene.name == "Sc2BLectureHall")
+        {
+            recorder.customPath = $"{Application.dataPath}/Data/{UserGroup}/{UserName + "_" + date}/Sc3LectureHall/EyeTracking";
+        }
+
+        bool connected = recorder.requestCtrl.IsConnected;
+    }
+
+
     void Update()
      {
 
@@ -32,8 +58,9 @@ public class Sc2LectureHall : LevelScript
          if (btnIsClicked && !isStarted) 
          {
              
-             StartTask();
-             Pointer.SetActive(false);
+            StartTask();
+            recorder.StartRecording();
+            Pointer.SetActive(false);
 
          }
 
@@ -107,6 +134,7 @@ public class Sc2LectureHall : LevelScript
         }
         else
         {
+            recorder.StopRecording();
             yield return new WaitForSeconds(2f);
             NextScene();
         }

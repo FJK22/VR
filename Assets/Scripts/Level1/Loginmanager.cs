@@ -67,21 +67,23 @@ public class Loginmanager : MonoBehaviour
             if (data["status"] == "success")
             {
                 LevelScript.UserName = IFUserName.text;
+                LevelScript.UserGroup = DDGroup.captionText.text;
+
                 LevelScript.IsVR = Platform == "VR";
 
                 if (DDGroup.captionText.text == "Control")
                 {
-                    path = $"{Application.dataPath}/Data/Control/{IFUserName.text + "_(" + date + ")"}";
+                    path = $"{Application.dataPath}/Data/Control/{IFUserName.text + "_" + date}";
 
                 }
                 else if (DDGroup.captionText.text == "ADHD")
                 {
-                    path = $"{Application.dataPath}/Data/ADHD/{IFUserName.text + "_(" + date + ")"}";
+                    path = $"{Application.dataPath}/Data/ADHD/{IFUserName.text + "_" + date}";
 
                 }
                 else if (DDGroup.captionText.text == "Stuttering")
                 {
-                    path = $"{Application.dataPath}/Data/Stuttering/{IFUserName.text + "_(" + date + ")"}";
+                    path = $"{Application.dataPath}/Data/Stuttering/{IFUserName.text + "_" + date}";
 
                 }
 

@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using Valve.VR;
+using UnityEngine.UI;
+using PupilLabs;
+using UnityEngine.SceneManagement;
 
 public class SC3Street : LevelScript
 {
@@ -26,6 +29,33 @@ public class SC3Street : LevelScript
     public SteamVR_Input_Sources handType;
     public SteamVR_Action_Vector2 touchPadAction = SteamVR_Input.GetAction<SteamVR_Action_Vector2>("TouchpadLeftRight");
     public SteamVR_Action_Boolean touchPadClick = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("TouchpadClick");
+
+    [Space]
+    [Header("Eye Tracker")]
+    public RecordingController recorder;
+    public Text statusText;
+    public Camera camera;
+
+    void Awake()
+    {
+        Scene scene = SceneManager.GetActiveScene();
+
+        string date = System.DateTime.Now.ToString("yyyy_MM_dd");
+
+        if (scene.name == "Sc3AStreet")
+        {
+            recorder.customPath = $"{Application.dataPath}/Data/{UserGroup}/{UserName + "_" + date}/Sc4Street/EyeTracking";
+        }
+        if (scene.name == "Sc3BStreet")
+        {
+            recorder.customPath = $"{Application.dataPath}/Data/{UserGroup}/{UserName + "_" + date}/Sc5Street/EyeTracking";
+        }
+
+        bool connected = recorder.requestCtrl.IsConnected;
+
+        camera.clearFlags = CameraClearFlags.Skybox;
+    }
+
     new public void StartTask()
     {
         base.StartTask();
@@ -39,6 +69,7 @@ public class SC3Street : LevelScript
         {
 
             StartTask();
+            recorder.StartRecording();
             Pointer.SetActive(false);
 
         }
@@ -107,6 +138,7 @@ public class SC3Street : LevelScript
         }
         else
         {
+            recorder.StopRecording();
             NextScene();
         }
     }

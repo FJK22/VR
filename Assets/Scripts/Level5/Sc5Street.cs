@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using Valve.VR;
 using UnityEngine.UI;
+using PupilLabs;
 
 
 public class Sc5Street : LevelScript
@@ -27,6 +28,14 @@ public class Sc5Street : LevelScript
     private void Awake()
     {
         Instance = this;
+        string date = System.DateTime.Now.ToString("yyyy_MM_dd");
+
+        recorder.customPath = $"{Application.dataPath}/Data/{UserGroup}/{UserName + "_" + date}/Sc7StreetPedestrian/EyeTracking";
+
+
+        bool connected = recorder.requestCtrl.IsConnected;
+
+        camera.clearFlags = CameraClearFlags.Skybox;
     }
     public GameObject[] CarPrefabs = null;
     int mapOpenCount = 0;
@@ -50,6 +59,16 @@ public class Sc5Street : LevelScript
 
     private bool callingPanBool = true;
 
+    [Space]
+    [Header("Eye Tracker")]
+    public RecordingController recorder;
+    public Text statusText;
+    public Camera camera;
+
+   
+
+
+
     void Update()
     {
         StartBTN.onClick.AddListener(buttonIsClicked);
@@ -59,7 +78,7 @@ public class Sc5Street : LevelScript
         {
             VRController.GetComponent<VRController>().enabled = true;
             StartTask();
-
+            recorder.StartRecording();
             TaskCanvas.GetComponent<Canvas>().enabled = false;
             TaskCanvas.GetComponent<GraphicRaycaster>().enabled = false;
             Pointer.SetActive(false);
@@ -197,6 +216,7 @@ public class Sc5Street : LevelScript
         {
             Debug.LogError(www.error);
         }
+        recorder.StopRecording();
         NextScene();
     }
     IEnumerator MapClose()

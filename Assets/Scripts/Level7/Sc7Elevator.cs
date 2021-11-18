@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using Valve.VR;
 using UnityEngine.UI;
+using PupilLabs;
 using UnityEngine.EventSystems;
 
 public class Sc7Elevator : LevelScript {
@@ -87,7 +88,17 @@ public class Sc7Elevator : LevelScript {
     //public SphereCollider Dot;
     public Pointer pointer;
 
+    [Space]
+    [Header("Eye Tracker")]
+    public RecordingController recorder;
+    public Text statusText;
+
     void Awake() {
+
+        string date = System.DateTime.Now.ToString("yyyy_MM_dd");
+        recorder.customPath = $"{Application.dataPath}/Data/{UserGroup}/{UserName + "_" + date}/Sc9Elevator/EyeTracking";
+        bool connected = recorder.requestCtrl.IsConnected;
+
         Moving = false;
         BtnSoundFX = GetComponent<AudioSource>();
         SoundFX = new GameObject().AddComponent<AudioSource>();
@@ -193,7 +204,7 @@ public class Sc7Elevator : LevelScript {
         {
             StartTask();
 
-
+            recorder.StartRecording();
             TaskCanvas.GetComponent<Canvas>().enabled = false;
             TaskCanvas.GetComponent<GraphicRaycaster>().enabled = false;
             //Pointer.SetActive(false);
@@ -397,6 +408,7 @@ public class Sc7Elevator : LevelScript {
         {
             Debug.LogError(www.error);
         }
+        recorder.StopRecording();
         NextScene();
     }
 

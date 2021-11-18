@@ -1,10 +1,26 @@
 ﻿using System.Collections;
 using UnityEngine;
+using PupilLabs;
+using UnityEngine.UI;
 
 public class Sc4Bar : LevelScript
 {
     [SerializeField] AudioSource[] audios = null;
     public GameObject Pointer;
+
+    [Space]
+    [Header("Eye Tracker")]
+    public RecordingController recorder;
+    public Text statusText;
+
+    void Awake()
+    {
+        string date = System.DateTime.Now.ToString("yyyy_MM_dd");
+        recorder.customPath = $"{Application.dataPath}/Data/{UserGroup}/{UserName + "_" + date}/Sc6Club/EyeTracking";
+        bool connected = recorder.requestCtrl.IsConnected;
+    }
+
+
     void Update()
     {
         StartBTN.onClick.AddListener(buttonIsClicked);
@@ -12,6 +28,7 @@ public class Sc4Bar : LevelScript
         if (!isStarted && btnIsClicked)
         {
             StartTask();
+            recorder.StartRecording();
             Pointer.SetActive(false);
         }
     }
@@ -30,6 +47,7 @@ public class Sc4Bar : LevelScript
 
     IEnumerator EndTask()
     {
+        recorder.StopRecording();
         yield return new WaitForSeconds(2);
         NextScene();
     }

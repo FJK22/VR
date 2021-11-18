@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
 using Valve.VR;
+using PupilLabs;
+using UnityEngine.UI;
+
 
 public class Sc1LivingRoom : LevelScript
 {
@@ -10,33 +13,53 @@ public class Sc1LivingRoom : LevelScript
     [SerializeField] AudioSource[] audios = null;
     public GameObject Pointer;
 
+    [Space]
+    [Header("Eye Tracker")]
+    public RecordingController recorder;
+    public Text statusText;
+
+    void Awake()
+    {
+        string date = System.DateTime.Now.ToString("yyyy_MM_dd");
+        recorder.customPath = $"{Application.dataPath}/Data/{UserGroup}/{UserName + "_" + date}/Sc1LivingRoom/EyeTracking";
+        bool connected = recorder.requestCtrl.IsConnected;
+    }
+
     void Update()
     {
         StartBTN.onClick.AddListener(buttonIsClicked);
+        
 
         if (!isStarted && btnIsClicked)
         {
-             StartTask();
+            StartTask();
+            recorder.StartRecording();
             Pointer.SetActive(false);
 
         }
+      
+        //if (connected && statusText.text == "Calibration is done." && btnIsClicked)
+        //{
+             
+
+        //}
         if (isStarted && video.isPaused)
         {
             isStarted = false;
+            
             StartCoroutine(EndTask());
         }
-
-        
 
       
     }
 
-   
+
 
     new public void StartTask()
     {
         
         base.StartTask();
+        
         video.Play();
         foreach (var a in audios)
             a.Play();
@@ -51,6 +74,7 @@ public class Sc1LivingRoom : LevelScript
 
     IEnumerator EndTask()
     {
+        recorder.StopRecording();
         yield return new WaitForSeconds(1);
         NextScene();
     }

@@ -5,6 +5,8 @@ using UnityEngine.Networking;
 using System.Collections.Generic;
 using Valve.VR;
 using UnityEngine.UI;
+using PupilLabs;
+
 
 public class Sc6Train : LevelScript
 {
@@ -45,6 +47,19 @@ public class Sc6Train : LevelScript
     [Header("VR Trigger")]
     public SteamVR_Input_Sources handType;
     public SteamVR_Action_Boolean grabPinchAction = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("GrabPinch");
+
+    [Space]
+    [Header("Eye Tracker")]
+    public RecordingController recorder;
+    public Text statusText;
+
+    void Awake()
+    {
+        string date = System.DateTime.Now.ToString("yyyy_MM_dd");
+        recorder.customPath = $"{Application.dataPath}/Data/{UserGroup}/{UserName + "_" + date}/Sc8TrainStation/EyeTracking";
+        bool connected = recorder.requestCtrl.IsConnected;
+    }
+
     new void StartTask()
     {
         //PlayerFreeze = true;
@@ -74,6 +89,7 @@ public class Sc6Train : LevelScript
         StartCoroutine(LimitTimeCounter());
        // PlayerFreeze = false;
         VRController.GetComponent<VRController>().enabled = true;
+        recorder.StartRecording();
     }
     private void Update()
     {
@@ -83,6 +99,7 @@ public class Sc6Train : LevelScript
         {
             
             StartTask();
+           
             TaskCanvas.GetComponent<Canvas>().enabled = false;
             TaskCanvas.GetComponent<GraphicRaycaster>().enabled = false;
             Pointer.SetActive(false);
@@ -113,6 +130,7 @@ public class Sc6Train : LevelScript
         {
             Debug.LogError(www.error);
         }
+        recorder.StopRecording();
         NextScene();
     }
     IEnumerator GernerateTrain()
