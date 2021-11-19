@@ -126,6 +126,8 @@ namespace PupilLabs
                 ToggleCalibration();
             }
 
+           
+
            // if (statusText.text == "Calibration succeeded.")
            // {
            //     StartCoroutine(DisableTheTextOnCalib());
@@ -279,6 +281,10 @@ namespace PupilLabs
             if (OnCalibrationFailed != null)
             {
                 OnCalibrationFailed();
+                if (Input.GetKeyUp(KeyCode.C))
+                {
+                    ToggleCalibration();
+                }
             }
         }
 

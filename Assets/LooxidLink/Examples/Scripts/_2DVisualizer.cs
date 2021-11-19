@@ -142,17 +142,7 @@ namespace Looxid.Link
         int countBool = 0;
         int countBool2 = 0;
 
-        [Space]
-        [Header("Eye Tracker")]
-        public RecordingController recorder;
-        public Text statusText;
-
-        void Awake()
-        {
-            string date = System.DateTime.Now.ToString("yyyy_MM_dd");
-            recorder.customPath = $"{Application.dataPath}/Data/{UserGroup}/{UserName + "_" + date}/Sc10ChemistryLab/EyeTracking";
-            bool connected = recorder.requestCtrl.IsConnected;
-        }
+      
 
         void Start()
         {
@@ -192,14 +182,13 @@ namespace Looxid.Link
         public void buttonExpIsClicked()
         {
             StartTask();
-           
             //Debug.Log("Task started");
         }
 
         new public void StartTask()
         {
             base.StartTask();
-            recorder.StartRecording();
+           
             StartCoroutine(Experiments());
             StartCoroutine(LimitTimeCounter());
         }
@@ -450,6 +439,8 @@ namespace Looxid.Link
 
 
             }
+
+            
 
 
             if (Panels != null)
@@ -737,7 +728,7 @@ namespace Looxid.Link
                 {
                     Debug.LogError(www.error);
                 }
-            recorder.StopRecording();
+           
             NextScene();
             
         }
