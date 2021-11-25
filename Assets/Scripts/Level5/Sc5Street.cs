@@ -26,19 +26,7 @@ public class Sc5Street : LevelScript
     [SerializeField] float mapDelay = 3;
 
     public static Sc5Street Instance;
-    private void Awake()
-    {
-        
-        Instance = this;
-        string date = System.DateTime.Now.ToString("yyyy_MM_dd");
-
-        recorder.customPath = $"{Application.dataPath}/Data/{UserGroup}/{UserName + "_" + date}/Sc7StreetPedestrian/EyeTracking";
-
-
-        bool connected = recorder.requestCtrl.IsConnected;
-
-        camera.clearFlags = CameraClearFlags.Skybox;
-    }
+    
     public GameObject[] CarPrefabs = null;
     int mapOpenCount = 0;
     public float startTime = 0;
@@ -67,7 +55,19 @@ public class Sc5Street : LevelScript
     public Text statusText;
     public Camera camera;
 
-   
+    private void Awake()
+    {
+        Pointer.SetActive(true);
+        Instance = this;
+        string date = System.DateTime.Now.ToString("yyyy_MM_dd");
+
+        recorder.customPath = $"{Application.dataPath}/Data/{UserGroup}/{UserName + "_" + date}/Sc7StreetPedestrian/EyeTracking";
+
+
+        bool connected = recorder.requestCtrl.IsConnected;
+
+        camera.clearFlags = CameraClearFlags.Skybox;
+    }
 
 
 

@@ -34,7 +34,7 @@ public class Sc5Practice : MonoBehaviour
     int mapOpenCount = 0;
     bool isMapOpened = false;
     [SerializeField] float MaxLimitTime = 50f;
-
+    public Canvas smartphoneCanvas;
 
     [Space]
     [Header("VR Trigger")]
@@ -89,6 +89,10 @@ public class Sc5Practice : MonoBehaviour
         if (mapOpenCount >= 1 && count3 >= 1)
         {
             StartCoroutine(PracticeCompleted());
+            Destroy(phone);
+            smartphoneCanvas.GetComponent<Canvas>().enabled = false;
+            smartphoneCanvas.GetComponent<CanvasScaler>().enabled = false;
+            smartphoneCanvas.GetComponent<GraphicRaycaster>().enabled = false;
         }
         if (startTime >= MaxLimitTime)
         {
