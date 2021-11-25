@@ -38,6 +38,8 @@ public class SC3Street : LevelScript
 
     void Awake()
     {
+        Pointer.SetActive(true);
+
         Scene scene = SceneManager.GetActiveScene();
 
         string date = System.DateTime.Now.ToString("yyyy_MM_dd");
@@ -126,6 +128,7 @@ public class SC3Street : LevelScript
     IEnumerator ShowCar()
     {
         isPressed = false;
+        yield return new WaitForSeconds(2);
         SpawnPosIndex = Random.Range(0, 2);
         int _carIndex = Random.Range(0, SpawnPrefabs.Length);
         Instantiate(SpawnPrefabs[_carIndex], SpawnPoses[SpawnPosIndex]).AddComponent<AutoCar>().Set(CarShowTime, CarSpeed);

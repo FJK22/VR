@@ -18,7 +18,7 @@ public class Sc2LectureHall : LevelScript
     int currentNumber = 0;
     bool posted = false;
     float startTime = 0f;
-  
+    public Camera camera;
 
     [Space]
     [Header("VR Trigger")]
@@ -33,6 +33,9 @@ public class Sc2LectureHall : LevelScript
 
     void Awake()
     {
+        camera.clearFlags = CameraClearFlags.Skybox;
+        Pointer.SetActive(true);
+
         Scene scene = SceneManager.GetActiveScene();
 
         string date = System.DateTime.Now.ToString("yyyy_MM_dd");
@@ -51,7 +54,7 @@ public class Sc2LectureHall : LevelScript
 
 
     void Update()
-     {
+    {
 
          StartBTN.onClick.AddListener(buttonIsClicked);
 
