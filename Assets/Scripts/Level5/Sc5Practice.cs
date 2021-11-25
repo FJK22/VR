@@ -20,18 +20,20 @@ public class Sc5Practice : MonoBehaviour
     public GameObject VRController;
     public GameObject Pointer;
     int count2 = 0;
-    bool playerArrived = false;
-
-
+    int count3 = 0;
+    int count4 = 0;
+    int count5 = 0;
+    public Transform cameraTransform;
+    //Set it to whatever value you think is best
+    float distanceFromCamera = 3;
     [SerializeField] GameObject phone = null;
     [SerializeField] GameObject mapPan = null;
-    [SerializeField] float mapDelay = 3;
-
+    [SerializeField] float mapDelay = 2;
+    float startTime = 0;
     public GameObject[] CarPrefabs = null;
     int mapOpenCount = 0;
     bool isMapOpened = false;
-    int currentPointIndex = 0;
-    
+    [SerializeField] float MaxLimitTime = 50f;
 
 
     [Space]
@@ -39,27 +41,43 @@ public class Sc5Practice : MonoBehaviour
     public SteamVR_Input_Sources handType;
     public SteamVR_Action_Boolean grabPinchAction = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("GrabPinch");
 
+  
     void Start()
     {
         Pointer.SetActive(true);
-        
+   
+
     }
 
-    // Update is called once per frame
+ 
     void Update()
     {
         StartPracticeBTNl.onClick.AddListener(buttonIsClicked);
+
+       
+
+        if (count5 == 1)
+        {
+            startTime = 0;
+        }
+
 
         if (praticeButtonIsClicked)
         {
             count2++;
 
+            startTime = Time.time;
+
             if (count2 == 1)
             {
-
+                
+                
+               
                 Pointer.SetActive(false);
                 VRController.GetComponent<VRController>().enabled = true;
                 buttonStartPractice.SetActive(false);
+                PracticeCanvas.enabled = false;
+               
 
             }
         }
@@ -68,39 +86,38 @@ public class Sc5Practice : MonoBehaviour
         {
             MapOpen();
         }
-        if (mapOpenCount >= 1 && playerArrived)
+        if (mapOpenCount >= 1 && count3 >= 1)
         {
             StartCoroutine(PracticeCompleted());
         }
-        else
+        if (startTime >= MaxLimitTime)
         {
-            
-            StartCoroutine(StartAgain());
+            count4++;
+            if (count4 == 1) {
+                StartCoroutine(LimitTimer());
+            }
         }
+        
 
     }
 
     void buttonIsClicked()
     {
         praticeButtonIsClicked = true;
-        PracticeCanvas.enabled = false;
+        count5++;
 
-       
 
     }
-
-    private void OnEventTrigger(int index)
+    void OnTriggerEnter(Collider other)
     {
-        mapPan.SetActive(false);
-
-        switch (index)
+        if (other.tag == "Player")
         {
-            case 0:
-                playerArrived = true;
-                break;
-
+           
+            count3++;
         }
     }
+
+ 
     public void MapOpen()
     {
         if (isMapOpened) return;
@@ -122,12 +139,17 @@ public class Sc5Practice : MonoBehaviour
         mapPan.SetActive(false);
     }
 
+
     IEnumerator PracticeCompleted()
     {
-        //transform.LookAt(transform.position + camera.transform.rotation * Vector3.back, camera.transform.rotation * Vector3.up);
+        Vector3 resultingPosition = cameraTransform.position + cameraTransform.forward * distanceFromCamera;
+        PracticeCanvas.transform.position = resultingPosition;
         PracticeCanvas.enabled = true;
+        VRController.GetComponent<VRController>().enabled = false;
+        
         CanvasText.text = "Practice completed. You will now start the calibration process.";
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(6f);
+        VRController.transform.position = new Vector3(-317.638f, 70.174f, 1.519f);
         GazeTracker.SetActive(true);
         Recorder.SetActive(true);
         ThisGameObject.gameObject.SetActive(false);
@@ -135,17 +157,16 @@ public class Sc5Practice : MonoBehaviour
         camera.clearFlags = CameraClearFlags.SolidColor;
     }
 
-    IEnumerator StartAgain()
+  
+
+    public IEnumerator LimitTimer()
     {
-
-
-        //transform.LookAt(transform.position + cticeCanvas.enabled = true;
+        Vector3 resultingPosition = cameraTransform.position + cameraTransform.forward * distanceFromCamera;
+        PracticeCanvas.transform.position = resultingPosition;
+        PracticeCanvas.enabled = true;
         CanvasText.text = "Make sure you press the trigger button of the controller at least once to open the map and cross the road.";
         yield return new WaitForSeconds(5f);
         PracticeCanvas.enabled = false;
-
-
-
     }
 
 }

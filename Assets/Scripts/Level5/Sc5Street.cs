@@ -10,6 +10,7 @@ using PupilLabs;
 
 public class Sc5Street : LevelScript
 {
+   
     [SerializeField] float MaxLimitTime = 600f;
     [SerializeField] GameObject phone = null;
     //[SerializeField] GameObject mapCanvas = null;
@@ -27,6 +28,7 @@ public class Sc5Street : LevelScript
     public static Sc5Street Instance;
     private void Awake()
     {
+        
         Instance = this;
         string date = System.DateTime.Now.ToString("yyyy_MM_dd");
 
