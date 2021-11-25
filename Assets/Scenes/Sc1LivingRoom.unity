@@ -497,41 +497,6 @@ Transform:
   m_Father: {fileID: 692057700}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: -82.156746, y: 130.71077, z: 31.152601}
---- !u!21 &263064850
-Material:
-  serializedVersion: 6
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Sprites/Default
-  m_Shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
-  m_ShaderKeywords: 
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _AlphaTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - PixelSnap: 0
-    - _EnableExternalAlpha: 0
-    m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Flip: {r: 1, g: 1, b: 1, a: 1}
-    - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
-  m_BuildTextureStacks: []
 --- !u!1 &275868723
 GameObject:
   m_ObjectHideFlags: 0
@@ -6032,7 +5997,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 441548682}
-  m_Mesh: {fileID: 1816748214}
+  m_Mesh: {fileID: 1848249516}
 --- !u!23 &441548685
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -6052,7 +6017,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 263064850}
+  - {fileID: 761993949}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -7234,6 +7199,41 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 752538248}
   m_Mesh: {fileID: 673525981579736096, guid: c0e579a77037847858d05e5293f1c2f6, type: 3}
+--- !u!21 &761993949
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Sprites/Default
+  m_Shader: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _AlphaTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - PixelSnap: 0
+    - _EnableExternalAlpha: 0
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Flip: {r: 1, g: 1, b: 1, a: 1}
+    - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
 --- !u!1 &795784004
 GameObject:
   m_ObjectHideFlags: 0
@@ -9970,7 +9970,7 @@ MonoBehaviour:
   m_DefaultLength: 5
   m_Dot: {fileID: 1592450982}
   m_InputModule: {fileID: 1316795454}
---- !u!43 &1816748214
+--- !u!43 &1848249516
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -10628,11 +10628,11 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'In this task you will be in a room and in front of you there will be a
-    television. In tv a news reporter will talk about a specific topic. Your task
-    is to focus only on the tv reporter and the topic that the reporter will talk
-    about. If you require further information, feel free to ask the experimenter.
-    Press the button to start.
+  m_Text: 'This task does not include a practice trial. In this task you will be
+    in a room and in front of you there will be a television. In tv a news reporter
+    will talk about a specific topic. Your task is to focus only on the tv reporter
+    and the topic that the reporter will talk about. If you require further information,
+    feel free to ask the experimenter. Press the button to start.
 
 '
 --- !u!222 &1915489389

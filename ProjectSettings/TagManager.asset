@@ -15,6 +15,7 @@ TagManager:
   - Exp2
   - FluidPlate
   - RightHand
+  - PracticeBeaker
   layers:
   - Default
   - TransparentFX
