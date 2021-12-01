@@ -5,13 +5,16 @@ using UnityEngine.Video;
 using Valve.VR;
 using PupilLabs;
 using UnityEngine.UI;
-
+using Looxid.Link;
+using System.IO;
+using System.Text;
 
 public class Sc1LivingRoom : LevelScript
 {
     [SerializeField] VideoPlayer video = null;
     [SerializeField] AudioSource[] audios = null;
     public GameObject Pointer;
+
 
     [Space]
     [Header("Eye Tracker")]
@@ -24,6 +27,10 @@ public class Sc1LivingRoom : LevelScript
         recorder.customPath = $"{Application.dataPath}/Data/{UserGroup}/{UserName + "_" + date}/Sc1LivingRoom/EyeTracking";
         bool connected = recorder.requestCtrl.IsConnected;
     }
+
+  
+
+   
 
     void Update()
     {
@@ -38,11 +45,7 @@ public class Sc1LivingRoom : LevelScript
 
         }
       
-        //if (connected && statusText.text == "Calibration is done." && btnIsClicked)
-        //{
-             
-
-        //}
+      
         if (isStarted && video.isPaused)
         {
             isStarted = false;
@@ -78,4 +81,6 @@ public class Sc1LivingRoom : LevelScript
         yield return new WaitForSeconds(1);
         NextScene();
     }
+
+
 }
