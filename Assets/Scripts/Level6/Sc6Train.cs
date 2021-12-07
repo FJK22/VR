@@ -131,6 +131,7 @@ public class Sc6Train : LevelScript
             Debug.LogError(www.error);
         }
         recorder.StopRecording();
+        StartCoroutine(LevelScript.SetLevel(SceneType.Sc6Questionnaire));
         NextScene();
     }
     IEnumerator GernerateTrain()

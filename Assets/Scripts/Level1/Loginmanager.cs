@@ -40,7 +40,6 @@ public class Loginmanager : MonoBehaviour
 
     public IEnumerator Login()
     {
-
         string path = "";
         string date = System.DateTime.Now.ToString("yyyy_MM_dd");
 
@@ -87,13 +86,19 @@ public class Loginmanager : MonoBehaviour
 
                 }
 
-
                 if (!Directory.Exists(path))
                 {
                     Directory.CreateDirectory(path);
                 }
-
-                LevelScript.NextScene();
+                string level = data["data"]["level"];
+                if (level == null || level == "")
+                {
+                    LevelScript.NextScene();
+                }
+                else
+                {
+                    LevelScript.LoadScene(level);
+                }
             }
             else
             {
@@ -101,8 +106,6 @@ public class Loginmanager : MonoBehaviour
                 StartCoroutine(Error(data["msg"]));
             }
         }
-
-
     }
 
     void Validate()

@@ -49,6 +49,7 @@ public class Sc4Bar : LevelScript
     {
         recorder.StopRecording();
         yield return new WaitForSeconds(2);
+        StartCoroutine(SetLevel(SceneType.Sc4Questionnaire));
         NextScene();
     }
 }

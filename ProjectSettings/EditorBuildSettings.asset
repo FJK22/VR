@@ -8,10 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ID.unity
     guid: d446ace8fe2861b459206c9722f24756
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Sc1LivingRoom.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Sc1Questionnaire.unity
     guid: 26099a504c9c59541adb53e255d5b2e7
   - enabled: 0
@@ -50,19 +50,19 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Sc6Questionnaire.unity
     guid: 7b4e17fcdd695f64db352b12d5f557da
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Sc7Elevator.unity
     guid: 5c7139932090e264ba7b4a16ce80a28c
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Sc7Questionnaire.unity
     guid: b8520176fbcc86245a1dafdcf60eb279
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Sc8ChemistryLab.unity
     guid: 20eee4da9ec75d349a1690969257eade
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Sc8Questionnaire.unity
     guid: 9954b35612102ca4f90f426df97b5cd3
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/End.unity
     guid: 8bc6c53e3d9fda444a71ecf5a415ebec
   m_configObjects:

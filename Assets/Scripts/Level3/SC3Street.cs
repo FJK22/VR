@@ -61,6 +61,7 @@ public class SC3Street : LevelScript
     new public void StartTask()
     {
         base.StartTask();
+        StartCoroutine(ClearData(Correspond ? "sc3a_data" : "sc3b_data"));
         StartCoroutine(ShowCar());
     }
     private void Update()
@@ -108,6 +109,7 @@ public class SC3Street : LevelScript
 
     IEnumerator Post(bool IsLeft)
     {
+        
         isPressed = true;
         List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
         formData.Add(new MultipartFormDataSection("username", UserName));
@@ -142,6 +144,7 @@ public class SC3Street : LevelScript
         else
         {
             recorder.StopRecording();
+            StartCoroutine(SetLevel((Correspond) ? SceneType.Sc3BStreet : SceneType.Sc3Questionnaire));
             NextScene();
         }
     }

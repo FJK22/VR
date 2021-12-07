@@ -153,6 +153,7 @@ public class Sc2Practice : MonoBehaviour
 
     IEnumerator PracticeCompleted()
     {
+        
         CanvasText.text = "Practice completed. You will now start the calibration process.";
         yield return new WaitForSeconds(5f);
         GazeTracker.SetActive(true);

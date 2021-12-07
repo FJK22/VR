@@ -28,6 +28,7 @@ public class Sc4Question : MonoBehaviour
     }
     IEnumerator PostData()
     {
+        
         BtSubmit.interactable = false;
         List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
         formData.Add(new MultipartFormDataSection("username", LevelScript.UserName));
@@ -48,6 +49,7 @@ public class Sc4Question : MonoBehaviour
             Debug.Log(www.downloadHandler.text);
             if (data["status"] == "success")
             {
+                StartCoroutine(LevelScript.SetLevel(SceneType.Sc5StreetPedestrian));
                 LevelScript.NextScene();
             }
             else

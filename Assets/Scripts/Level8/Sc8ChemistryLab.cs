@@ -142,6 +142,7 @@ public class Sc8ChemistryLab : LevelScript
             Debug.LogError(www.error);
         }
         yield return new WaitForSeconds(5);
+        StartCoroutine(LevelScript.SetLevel(SceneType.Sc8Questionnaire));
         NextScene();
     }
 

@@ -51,6 +51,7 @@ public class Sc7Question : MonoBehaviour
             Debug.Log(www.downloadHandler.text);
             if (data["status"] == "success")
             {
+                StartCoroutine(LevelScript.SetLevel(SceneType.Sc8ChemistryLab));
                 LevelScript.NextScene();
             }
             else

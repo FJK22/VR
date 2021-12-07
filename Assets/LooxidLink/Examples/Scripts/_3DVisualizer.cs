@@ -88,8 +88,8 @@ namespace Looxid.Link
         void OnEnable()
         {
             LooxidLinkData.OnReceiveEEGSensorStatus += OnReceiveEEGSensorStatus;
-            LooxidLinkData.OnReceiveEEGRawSignals += OnReceiveEEGRawSignals;
-            LooxidLinkData.OnReceiveMindIndexes += OnReceiveMindIndexes;
+            LooxidLinkData.OnReceiveEEGRawSignals += OnReceiveEEGRawSignals; //this is to receive data
+            LooxidLinkData.OnReceiveMindIndexes += OnReceiveMindIndexes; //this is to receive data too
 
             StartCoroutine(DisplayData());
         }

@@ -1,6 +1,10 @@
-﻿public class Constant
+﻿using System.Collections.Generic;
+
+public class Constant
 {
     public const string DOMAIN = @"https://www.oxforia.com/api/apifjm82/vrenvironments/";
+    public const string Level = @"common/save_level";
+    public const string Clear = @"common/clear_data";
     public const string USER = @"user/save_user";
     public const string SC1Data = @"sc1data/save_sc1data";
     public const string SC1QS = @"sc1qs/save_sc1qs";
@@ -19,5 +23,24 @@
     public const string SC7QS = @"sc7qs/save_sc7qs ";
     public const string SC8Data = @"sc8data/save_sc8data ";
     public const string SC8QS = @"sc8qs/save_sc8qs ";
-
+}
+public enum SceneType
+{
+    Sc1Questionnaire,
+    Sc2LectureHall,
+    Sc2BLectureHall,
+    Sc2Questionnaire,
+    Sc3AStreet,
+    Sc3BStreet,
+    Sc3Questionnaire,
+    Sc4Bar,
+    Sc4Questionnaire,
+    Sc5StreetPedestrian,
+    Sc5Questionnaire,
+    Sc6TrainStation,
+    Sc6Questionnaire,
+    Sc7Elevator,
+    Sc7Questionnaire,
+    Sc8ChemistryLab,
+    Sc8Questionnaire
 }

@@ -8,6 +8,8 @@ using UnityEngine.UI;
 using Looxid.Link;
 using System.IO;
 using System.Text;
+using UnityEngine.Networking;
+using SimpleJSON;
 
 public class Sc1LivingRoom : LevelScript
 {
@@ -27,10 +29,6 @@ public class Sc1LivingRoom : LevelScript
         recorder.customPath = $"{Application.dataPath}/Data/{UserGroup}/{UserName + "_" + date}/Sc1LivingRoom/EyeTracking";
         bool connected = recorder.requestCtrl.IsConnected;
     }
-
-  
-
-   
 
     void Update()
     {
@@ -52,8 +50,6 @@ public class Sc1LivingRoom : LevelScript
             
             StartCoroutine(EndTask());
         }
-
-      
     }
 
 
@@ -75,12 +71,12 @@ public class Sc1LivingRoom : LevelScript
         btnIsClicked = true;
     }
 
+    
     IEnumerator EndTask()
     {
         recorder.StopRecording();
+        StartCoroutine(SetLevel(SceneType.Sc1Questionnaire)); 
         yield return new WaitForSeconds(1);
         NextScene();
     }
-
-
 }

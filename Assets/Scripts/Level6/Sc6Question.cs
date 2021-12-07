@@ -51,6 +51,7 @@ public class Sc6Question : MonoBehaviour
             Debug.Log(www.downloadHandler.text);
             if (data["status"] == "success")
             {
+                StartCoroutine(LevelScript.SetLevel(SceneType.Sc7Elevator));
                 LevelScript.NextScene();
             }
             else

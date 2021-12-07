@@ -13,8 +13,7 @@ public class Sc3Practice : MonoBehaviour
     bool praticeButtonIsClicked = false;
     public Canvas PracticeCanvas;
     public Text CanvasText;
-    public GameObject GazeTracker;
-    public GameObject Recorder;
+    public GameObject EEG;
     public GameObject Hand;
     public Camera camera;
     
@@ -164,14 +163,13 @@ public class Sc3Practice : MonoBehaviour
 
     IEnumerator PracticeCompleted()
     {
-
+        StartCoroutine(LevelScript.SetLevel(SceneType.Sc3BStreet));
         SpawnPoses = null;
         SpawnPrefabs = null;
         PracticeCanvas.enabled = true;
         CanvasText.text = "Practice completed. You will now start the calibration process.";
         yield return new WaitForSeconds(5f);
-        GazeTracker.SetActive(true);
-        Recorder.SetActive(true);
+        EEG.SetActive(true);
         ThisGameObject.gameObject.SetActive(false);
         Hand.SetActive(false);
         camera.clearFlags = CameraClearFlags.SolidColor;

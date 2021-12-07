@@ -219,6 +219,7 @@ public class Sc5Street : LevelScript
             Debug.LogError(www.error);
         }
         recorder.StopRecording();
+        StartCoroutine(LevelScript.SetLevel(SceneType.Sc5Questionnaire));
         NextScene();
     }
     IEnumerator MapClose()

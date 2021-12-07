@@ -55,15 +55,12 @@ public class Sc2LectureHall : LevelScript
 
     void Update()
     {
-
-         StartBTN.onClick.AddListener(buttonIsClicked);
-
          if (btnIsClicked && !isStarted) 
          {
-             
             StartTask();
             recorder.StartRecording();
             Pointer.SetActive(false);
+            
 
          }
 
@@ -79,17 +76,15 @@ public class Sc2LectureHall : LevelScript
     new public void StartTask()
     {
         base.StartTask();
+        StartCoroutine(ClearData(isReverse ? "sc2b_data" : "sc2_data"));
         StartCoroutine(ShowNumber(true));
     }
 
-    void buttonIsClicked()
-    {
-        btnIsClicked = true;
-        //Debug.Log("Button is pressed");
-    }
+    
 
     IEnumerator Post(bool pressed)
     {
+        
         posted = true;
         List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
         formData.Add(new MultipartFormDataSection("username", LevelScript.UserName));
@@ -138,6 +133,7 @@ public class Sc2LectureHall : LevelScript
         else
         {
             recorder.StopRecording();
+            StartCoroutine(SetLevel((isReverse) ? SceneType.Sc2Questionnaire:SceneType.Sc2BLectureHall));
             yield return new WaitForSeconds(2f);
             NextScene();
         }

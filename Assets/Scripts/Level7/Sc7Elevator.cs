@@ -409,6 +409,7 @@ public class Sc7Elevator : LevelScript {
             Debug.LogError(www.error);
         }
         recorder.StopRecording();
+        StartCoroutine(LevelScript.SetLevel(SceneType.Sc7Questionnaire));
         NextScene();
     }
 

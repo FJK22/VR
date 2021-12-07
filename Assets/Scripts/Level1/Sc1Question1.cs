@@ -26,6 +26,7 @@ public class Sc1Question1 : MonoBehaviour
     }
     IEnumerator PostData()
     {
+       
         BtSubmit.interactable = false;
         List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
         formData.Add(new MultipartFormDataSection("username", LevelScript.UserName));
@@ -45,6 +46,7 @@ public class Sc1Question1 : MonoBehaviour
             JSONNode data = JSON.Parse(www.downloadHandler.text);
             if (data["status"] == "success")
             {
+                StartCoroutine(LevelScript.SetLevel(SceneType.Sc2LectureHall));
                 LevelScript.NextScene();
             }
             else

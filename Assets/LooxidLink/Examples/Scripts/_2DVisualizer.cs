@@ -1,15 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Valve.VR.InteractionSystem;
-using Valve.VR.InteractionSystem.Sample;
-using UnitySimpleLiquid;
-using SimpleJSON;
-using UnityEngine.Networking;
-using PupilLabs;
 
 namespace Looxid.Link
 {
@@ -21,7 +14,7 @@ namespace Looxid.Link
         RAW_SIGNAL = 3
     }
 
-    public class _2DVisualizer : LevelScript
+    public class _2DVisualizer : MonoBehaviour
     {
         [Header("Tabs")]
         public Tab2DVisualizer SelectTab = Tab2DVisualizer.SENSOR_STATUS;
@@ -82,7 +75,7 @@ namespace Looxid.Link
 
         private LinkDataValue leftActivity;
         private LinkDataValue rightActivity;
-        public static LinkDataValue attention;
+        private LinkDataValue attention;
         private LinkDataValue relaxation;
 
         private LinkDataValue delta;
@@ -91,58 +84,6 @@ namespace Looxid.Link
         private LinkDataValue beta;
         private LinkDataValue gamma;
 
-        public Button TablePan;
-        public Button startButton;
-
-        [Space]
-        [Header("Experiment 1")]
-       // public GameObject Plate;
-        public GameObject PotassiumStone;
-        public GameObject MiniPotassiumStone;
-        //public Renderer plate_renderer;
-        public MeshCollider meshColliderPotassium;
-        
-        [Space]
-        [Header("Experiment 2")]
-        public GameObject Beaker;
-        public GameObject Aluminum;
-        public GameObject MiniAluminum;
-        public MeshCollider meshColliderAluminum;
-        public MeshCollider meshColliderBromine;
-        public MeshCollider meshColliderBromineFluid;
-        public CapsuleCollider capsuleColliderBromine;
-
-        [Space]
-        [Header("Experiment 3")]
-        public GameObject FluidPlate;
-        public MeshCollider meshColliderNitromethane;
-        public MeshCollider meshColliderNitromethaneFluid;
-        public CapsuleCollider capsuleColliderNitromethane;
-        public MeshCollider meshColliderMethanol;
-        public MeshCollider meshColliderMethanolFluid;
-        public CapsuleCollider capsuleColliderMethanol;
-        public MeshCollider meshColliderLighter;
-        public BoxCollider boxColliderLighter;
-        public GameObject BurnerFlame;
-
-        [Space]
-        [SerializeField] TextMeshProUGUI Txt_Instruction;
-        public GameObject ExperimentManager;
-        private bool exp1finished = false;
-        private bool attentionChecking = false;
-
-        float startTime = 0;
-        public Button startExperimentBTN;
-        [SerializeField] int TimeLimit = 600;
-        //bool startExButtonClicked;
-        [HideInInspector] public bool startExButtonClicked = false;
-        private int count;
-        private float attentionAverage;
-        bool burnFLameIsActive;
-        int countBool = 0;
-        int countBool2 = 0;
-
-      
 
         void Start()
         {
@@ -163,39 +104,7 @@ namespace Looxid.Link
             alpha = new LinkDataValue();
             beta = new LinkDataValue();
             gamma = new LinkDataValue();
-
-            startExperimentBTN.interactable = false;
-
-            //plate_renderer = Plate.GetComponent<Renderer>();
-            meshColliderPotassium = PotassiumStone.GetComponent<MeshCollider>();
-            meshColliderAluminum = Aluminum.GetComponent<MeshCollider>();
-
-            burnFLameIsActive = false;
-
         }
-        void buttonIsClicked()
-        {
-            btnIsClicked = true;
-            TaskCanvas.GetComponent<Canvas>().enabled = false;
-            TaskCanvas.GetComponent<GraphicRaycaster>().enabled = false;
-        }
-        public void buttonExpIsClicked()
-        {
-            StartTask();
-            //Debug.Log("Task started");
-        }
-
-        new public void StartTask()
-        {
-            base.StartTask();
-           
-            StartCoroutine(Experiments());
-            StartCoroutine(LimitTimeCounter());
-        }
-
-        
-
-        
 
         void OnEnable()
         {
@@ -343,15 +252,15 @@ namespace Looxid.Link
                         Fp2SensorImage.color = sensorStatusData.IsSensorOn(EEGSensorID.Fp2) ? (Color)LooxidLinkManager.linkColor : (Color)offColor;
                         AF7SensorImage.color = sensorStatusData.IsSensorOn(EEGSensorID.AF7) ? (Color)LooxidLinkManager.linkColor : (Color)offColor;
                         AF8SensorImage.color = sensorStatusData.IsSensorOn(EEGSensorID.AF8) ? (Color)LooxidLinkManager.linkColor : (Color)offColor;
-                        LeftActivityIndicator.SetValue((float)leftActivity.value);
-                        RightActivityIndicator.SetValue((float)rightActivity.value);
-                        AttentionIndicator.SetValue((float)attention.value);
-                        RelaxationIndicator.SetValue((float)relaxation.value);
-
-
                     }
                 }
-                
+                else if (this.SelectTab == Tab2DVisualizer.MIND_INDEX)
+                {
+                    LeftActivityIndicator.SetValue((float)leftActivity.value);
+                    RightActivityIndicator.SetValue((float)rightActivity.value);
+                    AttentionIndicator.SetValue((float)attention.value);
+                    RelaxationIndicator.SetValue((float)relaxation.value);
+                }
                 else if (this.SelectTab == Tab2DVisualizer.FEATURE_INDEX)
                 {
                     List<EEGFeatureIndex> featureIndexList = LooxidLinkData.Instance.GetEEGFeatureIndexData(10.0f);
@@ -398,9 +307,11 @@ namespace Looxid.Link
         public void OnClickTabSensorStatus()
         {
             this.SelectTab = Tab2DVisualizer.SENSOR_STATUS;
+        }
+        public void OnClickTabMindIndex()
+        {
             this.SelectTab = Tab2DVisualizer.MIND_INDEX;
         }
-      
         public void OnClickTabFeatureIndex()
         {
             this.SelectTab = Tab2DVisualizer.FEATURE_INDEX;
@@ -422,27 +333,6 @@ namespace Looxid.Link
 
         void Update()
         {
-            StartBTN.onClick.AddListener(buttonIsClicked);
-           
-            attention.value = Mathf.Lerp((float)attention.value, (float)attention.target, 0.2f);
-            attentionAverage = (float)(attentionAverage * count + attention.value) / (count + 1);
-            count++;
-            //Debug.Log(attention.value + " && " + attentionAverage);
-
-            if (!isStarted && btnIsClicked)
-            {
-                //if (sensorStatusData != null)
-                //{
-                startExperimentBTN.interactable = true;
-                startExperimentBTN.onClick.AddListener(buttonExpIsClicked);
-                //}
-
-
-            }
-
-            
-
-
             if (Panels != null)
             {
                 for (int i = 0; i < Panels.Length; i++)
@@ -487,169 +377,6 @@ namespace Looxid.Link
             leftActivity.value = Mathf.Lerp((float)leftActivity.value, (float)leftActivity.target, 0.2f);
             rightActivity.value = Mathf.Lerp((float)rightActivity.value, (float)rightActivity.target, 0.2f);
             attention.value = Mathf.Lerp((float)attention.value, (float)attention.target, 0.2f);
-            burnFLameIsActive = false;
-
-            // PeriodTable.isInteractable = attention.value >= 0.4;
-            //startButton.interactable = attention.value >= 0.4;
-
-
-
-
-            if (ExperimentManager.GetComponent<ExperimentManager>().CurrentExperiment1 == true)
-            {
-                if (MiniPotassiumStone.activeSelf == false)
-                {
-
-                    if (attention.value < 0.4)
-                    {
-                        meshColliderPotassium.enabled = false;
-                        Txt_Instruction.text = "Your attention level is low. You can only complete this experiment with higher attention levels.";
-                        attentionChecking = true;
-                    }
-                    else
-                    {
-                        meshColliderPotassium.enabled = true;
-                        Txt_Instruction.text = "Grab the Potassium and add it into the water of the beaker.";
-                    }
-
-                }
-                else
-                {
-                    attentionChecking = false;
-                    Txt_Instruction.text = "This is a chemical reaction of potassium in the water. Well done for completing this experiment.";
-                    Destroy(PotassiumStone);
-                    StartCoroutine("Experiment2");
-                }
-
-            }
-            if (ExperimentManager.GetComponent<ExperimentManager>().CurrentExperiment2 == true)
-            {
-                if(Beaker.GetComponent<LiquidContainer>().fillAmountPercent > 0.5f) meshColliderAluminum.enabled = (attention.value >= 0.4f);
-                
-                if (attention.value < 0.4)
-                {
-                    if (attentionChecking)
-                    {
-                        meshColliderBromine.enabled = false;
-                        meshColliderBromineFluid.enabled = false;
-                        capsuleColliderBromine.enabled = false;
-                        Txt_Instruction.text = "Your attention level is low. You can only complete this experiment with higher attention levels.";
-                    }
-                } 
-                else if (MiniAluminum.activeSelf == false)
-                {
-                    if (Beaker.GetComponent<LiquidContainer>().fillAmountPercent < 0.5f)
-                    {
-                        meshColliderBromine.enabled = true;
-                        meshColliderBromineFluid.enabled = true;
-                        capsuleColliderBromine.enabled = true;
-                        Txt_Instruction.text = "Pour Bromine to the beaker container.";
-                    }
-                    else
-                    {
-                        Txt_Instruction.text = "Put the alimunium into the beaker with bromine.";
-                    }
-                }
-                else
-                {
-                    attentionChecking = false;
-                    Destroy(Aluminum);
-                    Txt_Instruction.text = "This is a chemical reaction of aliminum and bromine. Well done for completing this experiment."; 
-                    StartCoroutine("Experiment3");
-                }
-            }
-            if (ExperimentManager.GetComponent<ExperimentManager>().CurrentExperiment3 == true)
-            {
-
-                if (FluidPlate.GetComponent<LiquidContainer>().fillAmountPercent > 0.9f) meshColliderLighter.enabled = (attention.value >= 0.4f);
-                if (FluidPlate.GetComponent<LiquidContainer>().fillAmountPercent > 0.9f) boxColliderLighter.enabled = (attention.value >= 0.4f);
-
-                if (attention.value < 0.4)
-                {
-                    if (attentionChecking)
-                    {
-                        meshColliderNitromethane.enabled = false;
-                        meshColliderNitromethaneFluid.enabled = false;
-                        capsuleColliderNitromethane.enabled = false;
-
-                        meshColliderMethanol.enabled = false;
-                        meshColliderMethanolFluid.enabled = false;
-                        capsuleColliderMethanol.enabled = false;
-
-                        meshColliderLighter.enabled = false;
-                        boxColliderLighter.enabled = false;
-                        Txt_Instruction.text = "Your attention level is low. You can only complete this experiment with higher attention levels.";
-                    }
-                }
-                else if (BurnerFlame.activeSelf == false)
-                {
-                    if (FluidPlate.GetComponent<LiquidContainer>().fillAmountPercent == 0.0f)
-                    {
-                        meshColliderNitromethane.enabled = true;
-                        meshColliderNitromethaneFluid.enabled = true;
-                        capsuleColliderNitromethane.enabled = true;
-
-                        meshColliderMethanol.enabled = false;
-                        meshColliderMethanolFluid.enabled = false;
-                        capsuleColliderMethanol.enabled = false;
-
-                        meshColliderLighter.enabled = false;
-                        boxColliderLighter.enabled = false;
-                        Txt_Instruction.text = "Pour the Nitromethane into the glass plate.";
-                    }
-
-                    else if (FluidPlate.GetComponent<LiquidContainer>().fillAmountPercent <= 0.3f)
-                    {
-                        meshColliderNitromethane.enabled = false;
-                        meshColliderNitromethaneFluid.enabled = false;
-                        capsuleColliderNitromethane.enabled = false;
-
-                        meshColliderMethanol.enabled = true;
-                        meshColliderMethanolFluid.enabled = true;
-                        capsuleColliderMethanol.enabled = true;
-
-                        meshColliderLighter.enabled = false;
-                        boxColliderLighter.enabled = false;
-                        Txt_Instruction.text = "Pour the Methanol that is in the tube into the glass plate.";
-                    }
-                    else
-                    {
-                        Txt_Instruction.text = "Add the lighter into the glass plate.";
-                    }
-                }
-
-                else
-                {
-                    attentionChecking = false;
-                    Txt_Instruction.text = "This is a chemical reaction of Nitromethane combnined with Methanol. Well done for completing this experiment.";
-                    burnFLameIsActive = true;
-                    countBool++;
-
-                    if (burnFLameIsActive && countBool == 1)
-                    {
-                        StartCoroutine(PostData());
-                        burnFLameIsActive = false;
-                    }
-
-
-                }
-
-                /*if (Time.time > TimeLimit)
-                {
-                    StartCoroutine(Post());
-
-                    countBool2++;
-                    if (countBool2 == 1)
-                    {
-                    }
-                }*/
-            }
-
-            
-
-
-
-
             relaxation.value = Mathf.Lerp((float)relaxation.value, (float)relaxation.target, 0.2f);
 
             delta.value = Mathf.Lerp((float)delta.value, (float)delta.target, 0.2f);
@@ -658,81 +385,6 @@ namespace Looxid.Link
             beta.value = Mathf.Lerp((float)beta.value, (float)beta.target, 0.2f);
             gamma.value = Mathf.Lerp((float)gamma.value, (float)gamma.target, 0.2f);
         }
-
-        IEnumerator Experiment2()
-        {
-            if (!exp1finished)
-            {
-                exp1finished = true;
-                yield return new WaitForSeconds(10);
-                attentionChecking = true;
-                ExperimentManager.GetComponent<ExperimentManager>().StartExperiment2();
-            }
-        }
-
-
-        IEnumerator Experiment3()
-        {
-            yield return new WaitForSeconds(15);
-            attentionChecking = true;
-            ExperimentManager.GetComponent<ExperimentManager>().StartExperiment3();
-
-        }
-
-        IEnumerator Experiments()
-        {
-            yield return new WaitForSeconds(0.1f);
-            startTime = Time.time;
-
-            
-           // StartCoroutine(LimitTimeCounter());
-
-         
-        }
-        public IEnumerator LimitTimeCounter()
-        {
-            startTime = Time.time;
-            yield return new WaitForSeconds(TimeLimit);
-            countBool2++;
-            if (countBool2 == 1) {
-                StartCoroutine(Post());
-            }
-        }
-
-        IEnumerator PostData()
-        {
-            yield return new WaitForSeconds(7);
-            StartCoroutine(Post());
-            
-        }
-
-     
-
-        IEnumerator Post()
-        {
-            
-                float time = Time.time - startTime;
-                float score = Mathf.Clamp((float)(20 - time * 2 / TimeLimit) + (attentionAverage * 100), 0, 100); 
-                string accuracy = "High"; 
-                if (score < 60f) accuracy = "Medium";
-                if (score < 20f) accuracy = "Low";
-                List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
-                formData.Add(new MultipartFormDataSection("username", UserName));
-                formData.Add(new MultipartFormDataSection("attention_average", attentionAverage.ToString()));
-                formData.Add(new MultipartFormDataSection("score", score.ToString()));
-                formData.Add(new MultipartFormDataSection("accuracy", accuracy));
-                formData.Add(new MultipartFormDataSection("reaction_time", (time * 1000).ToString("0.0")));
-                UnityWebRequest www = UnityWebRequest.Post(Constant.DOMAIN + Constant.SC8Data, formData);
-                yield return www.SendWebRequest();
-                if (www.result != UnityWebRequest.Result.Success)
-                {
-                    Debug.LogError(www.error);
-                }
-           
-            NextScene();
-            
-        }
-
 
         public void OnSelectChannel(int num)
         {

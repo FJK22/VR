@@ -15,8 +15,7 @@ public class Sc8Practice : MonoBehaviour
     bool praticeButtonIsClicked = false;
     public Canvas PracticeCanvas;
     public Text CanvasText;
-    public GameObject GazeTracker;
-    public GameObject Recorder;
+    public GameObject EEG;
     public GameObject Hand;
     public GameObject buttonStartPractice;
     int count2 = 0;
@@ -82,8 +81,7 @@ public class Sc8Practice : MonoBehaviour
         PracticeCanvas.enabled = true;
         CanvasText.text = "Practice completed. You will now start the calibration process.";
         yield return new WaitForSeconds(10f);
-        GazeTracker.SetActive(true);
-        Recorder.SetActive(true);
+        EEG.SetActive(true);
         this.gameObject.SetActive(false);
         Hand.SetActive(false);
        
