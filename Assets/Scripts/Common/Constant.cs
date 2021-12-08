@@ -42,5 +42,6 @@ public enum SceneType
     Sc7Elevator,
     Sc7Questionnaire,
     Sc8ChemistryLab,
-    Sc8Questionnaire
+    Sc8Questionnaire,
+    End
 }

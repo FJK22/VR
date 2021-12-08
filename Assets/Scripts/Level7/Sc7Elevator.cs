@@ -115,10 +115,17 @@ public class Sc7Elevator : LevelScript {
         AnimName = DoorsAnim.clip.name;
         ButtonInit(29);
     }
+    void OnDestroy()
+    {
+        recorder.StopRecording();
+    }
+
+
     new void StartTask()
     {
         base.StartTask();
-        foreach(var a in characters)
+        EEG.Instance.Init("Sc9Elevator");
+        foreach (var a in characters)
         {
             a.enabled = true;
         }
@@ -409,7 +416,7 @@ public class Sc7Elevator : LevelScript {
             Debug.LogError(www.error);
         }
         recorder.StopRecording();
-        StartCoroutine(LevelScript.SetLevel(SceneType.Sc7Questionnaire));
+        StartCoroutine(SetLevel(SceneType.Sc7Questionnaire));
         NextScene();
     }
 

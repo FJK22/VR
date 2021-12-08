@@ -69,6 +69,10 @@ public class Sc5Street : LevelScript
         camera.clearFlags = CameraClearFlags.Skybox;
     }
 
+    void OnDestroy()
+    {
+        recorder.StopRecording();
+    }
 
 
     void Update()
@@ -124,14 +128,15 @@ public class Sc5Street : LevelScript
     {
         
         base.StartTask();
+        EEG.Instance.Init("Sc7StreetPedestrian");
         //if (IsVR)
         //{
         //    Vector3 phonePos = phone.transform.localPosition;
-         //   Quaternion phoneRot = phone.transform.localRotation;
+        //   Quaternion phoneRot = phone.transform.localRotation;
 
-            //phone.transform.SetParent(VRCamera.transform.Find("Camera"));
-          //  phone.transform.localRotation = phoneRot;
-          //  phone.transform.localPosition = phonePos;
+        //phone.transform.SetParent(VRCamera.transform.Find("Camera"));
+        //  phone.transform.localRotation = phoneRot;
+        //  phone.transform.localPosition = phonePos;
         //}
         //mapCanvas.SetActive(true);
         StartCoroutine(LimitTimer());
@@ -219,7 +224,7 @@ public class Sc5Street : LevelScript
             Debug.LogError(www.error);
         }
         recorder.StopRecording();
-        StartCoroutine(LevelScript.SetLevel(SceneType.Sc5Questionnaire));
+        StartCoroutine(SetLevel(SceneType.Sc5Questionnaire));
         NextScene();
     }
     IEnumerator MapClose()

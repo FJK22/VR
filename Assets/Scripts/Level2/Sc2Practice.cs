@@ -18,8 +18,7 @@ public class Sc2Practice : MonoBehaviour
     bool praticeButtonIsClicked = false;
     public Canvas PracticeCanvas;
     public Text CanvasText;
-    public GameObject GazeTracker;
-    public GameObject Recorder;
+    public GameObject EEG;
     public GameObject Hand;
     public GameObject buttonStartPractice;
     public Camera camera;
@@ -156,8 +155,7 @@ public class Sc2Practice : MonoBehaviour
         
         CanvasText.text = "Practice completed. You will now start the calibration process.";
         yield return new WaitForSeconds(5f);
-        GazeTracker.SetActive(true);
-        Recorder.SetActive(true);
+        EEG.SetActive(true);
         this.gameObject.SetActive(false);
         Hand.SetActive(false);
         camera.clearFlags = CameraClearFlags.SolidColor;

@@ -26,7 +26,7 @@ public class Sc3Question : MonoBehaviour
     }
     IEnumerator PostData()
     {
-        StartCoroutine(LevelScript.SetLevel(SceneType.Sc4Bar));
+        
         BtSubmit.interactable = false;
         List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
         formData.Add(new MultipartFormDataSection("username", LevelScript.UserName));
@@ -46,6 +46,7 @@ public class Sc3Question : MonoBehaviour
             Debug.Log(www.downloadHandler.text);
             if (data["status"] == "success")
             {
+                StartCoroutine(LevelScript.SetLevel(SceneType.Sc4Bar));
                 LevelScript.NextScene();
             }
             else

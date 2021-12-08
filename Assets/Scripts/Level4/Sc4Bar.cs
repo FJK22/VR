@@ -20,6 +20,10 @@ public class Sc4Bar : LevelScript
         bool connected = recorder.requestCtrl.IsConnected;
     }
 
+    void OnDestroy()
+    {
+        recorder.StopRecording();
+    }
 
     void Update()
     {
@@ -41,6 +45,7 @@ public class Sc4Bar : LevelScript
     new public void StartTask()
     {
         base.StartTask();
+        EEG.Instance.Init("Sc6Club");
         foreach (var a in audios)
             a.Play();
     }
@@ -48,8 +53,8 @@ public class Sc4Bar : LevelScript
     IEnumerator EndTask()
     {
         recorder.StopRecording();
-        yield return new WaitForSeconds(2);
         StartCoroutine(SetLevel(SceneType.Sc4Questionnaire));
+        yield return new WaitForSeconds(2);
         NextScene();
     }
 }

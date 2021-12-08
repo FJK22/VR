@@ -52,7 +52,10 @@ public class Sc2LectureHall : LevelScript
         bool connected = recorder.requestCtrl.IsConnected;
     }
 
-
+    void OnDestroy()
+    {
+        recorder.StopRecording();
+    }
     void Update()
     {
          if (btnIsClicked && !isStarted) 
@@ -78,6 +81,15 @@ public class Sc2LectureHall : LevelScript
         base.StartTask();
         StartCoroutine(ClearData(isReverse ? "sc2b_data" : "sc2_data"));
         StartCoroutine(ShowNumber(true));
+
+        if (SceneManager.GetActiveScene().name == "Sc2LectureHall")
+        {
+            EEG.Instance.Init("Sc2LectureHall");
+        }
+        if (SceneManager.GetActiveScene().name == "Sc2BLectureHall")
+        {
+            EEG.Instance.Init("Sc3LectureHall");
+        }
     }
 
     

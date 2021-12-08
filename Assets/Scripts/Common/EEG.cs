@@ -10,10 +10,9 @@ using System.IO;
 using System.Text;
 using System;
 
-public class EEGSc3 : MonoBehaviour
+public class EEG : MonoBehaviour
 {
     public Button startButton;
-    public LevelScript level;
     [Space]
     [Header("EEG")]
     private EEGSensor sensorStatusData;
@@ -32,27 +31,40 @@ public class EEGSc3 : MonoBehaviour
     public GameObject GazeTracker;
     public GameObject Recorder;
 
-    EGGData eegData;
+    bool isStarted = false;
+    EGGData eegData = null;
+    public static EEG Instance = null;
 
+    void Awake()
+    {
+        if (Instance)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
     void Start()
     {
 
         LooxidLinkManager.Instance.SetDebug(true);
         LooxidLinkManager.Instance.Initialize();
-
         leftActivity = new LinkDataValue();
         rightActivity = new LinkDataValue();
         attention = new LinkDataValue();
         relaxation = new LinkDataValue();
         asymmetry = new LinkDataValue();
+    }
 
-        // string path = GetRecordingPath();
-        //StreamWriter writer = new StreamWriter(path);
-        //writer.WriteLine("AF3,AF4,FP1,FP2,AF7,AF8");
+    public void Init(string path)
+    {
         string date = System.DateTime.Now.ToString("yyyy_MM_dd");
         eegData = new EGGData(
-            $"{Application.dataPath}/Data/{LevelScript.UserGroup}/{LevelScript.UserName + "_" + date}/Sc3LectureHall/EEG/"
+            $"{Application.dataPath}/Data/{LevelScript.UserGroup}/{LevelScript.UserName + "_" + date}/{path}/EEG/"
             , LevelScript.UserName + "_" + "EEGData.csv");
+        isStarted = true;
     }
     
    
@@ -68,7 +80,7 @@ public class EEGSc3 : MonoBehaviour
 
     private void OnReceiveEEGFeatureIndexes(EEGFeatureIndex feature)
     {
-        if (level.isStarted)
+        if (isStarted && eegData!=null)
         {
             eegData.SetFeature(feature);
         }
@@ -121,7 +133,7 @@ public class EEGSc3 : MonoBehaviour
         attention.target = double.IsNaN(mindIndexData.attention) ? 0.0f : (float)LooxidLinkUtility.Scale(LooxidLink.MIND_INDEX_SCALE_MIN, LooxidLink.MIND_INDEX_SCALE_MAX, 0.0f, 1.0f, mindIndexData.attention);
         relaxation.target = double.IsNaN(mindIndexData.relaxation) ? 0.0f : (float)LooxidLinkUtility.Scale(LooxidLink.MIND_INDEX_SCALE_MIN, LooxidLink.MIND_INDEX_SCALE_MAX, 0.0f, 1.0f, mindIndexData.relaxation);
         asymmetry.target = double.IsNaN(mindIndexData.asymmetry) ? 0.0f : (float)LooxidLinkUtility.Scale(LooxidLink.MIND_INDEX_SCALE_MIN, LooxidLink.MIND_INDEX_SCALE_MAX, 0.0f, 1.0f, mindIndexData.asymmetry);
-        if (level.isStarted)
+        if (isStarted && eegData != null)
         {
             mindIndexData.leftActivity = leftActivity.target;
             mindIndexData.rightActivity = rightActivity.target;
@@ -162,27 +174,11 @@ public class EEGSc3 : MonoBehaviour
         GazeTracker.SetActive(true);
         Recorder.SetActive(true);
     }
-    private string GetRecordingPath()
-    {
-        string path = "";
-        string file = "";
-        string filePath = "";
-
-        string date = System.DateTime.Now.ToString("yyyy_MM_dd");
-        path = $"{Application.dataPath}/Data/{LevelScript.UserGroup}/{LevelScript.UserName + "_" + date}/Sc3LectureHall/EEG/"; 
-        file = LevelScript.UserName + "_" + "EEGData.csv";
-        filePath = path + file;
-
-        if (!System.IO.Directory.Exists(path))
-        {
-            System.IO.Directory.CreateDirectory(path);
-        }
-
-        return filePath;
-    }
+    
 }
 
-public class EGGData3{
+[Serializable]
+public class EGGData{
     public enum EGGDataStatus
     {
         NotSet,
@@ -231,7 +227,7 @@ public class EGGData3{
         File.AppendAllText(_filePath, values);
         status = EGGDataStatus.NotSet;
     }
-    public EGGData3(string path, string file)
+    public EGGData(string path, string file)
     {
         if (!Directory.Exists(path))
         {

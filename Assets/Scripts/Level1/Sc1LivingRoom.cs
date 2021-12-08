@@ -29,6 +29,11 @@ public class Sc1LivingRoom : LevelScript
         recorder.customPath = $"{Application.dataPath}/Data/{UserGroup}/{UserName + "_" + date}/Sc1LivingRoom/EyeTracking";
         bool connected = recorder.requestCtrl.IsConnected;
     }
+    
+    void OnDestroy()
+    {
+        recorder.StopRecording();
+    }
 
     void Update()
     {
@@ -38,7 +43,7 @@ public class Sc1LivingRoom : LevelScript
         if (!isStarted && btnIsClicked)
         {
             StartTask();
-            recorder.StartRecording();
+            recorder.StartRecording(); 
             Pointer.SetActive(false);
 
         }
@@ -53,12 +58,11 @@ public class Sc1LivingRoom : LevelScript
     }
 
 
-
     new public void StartTask()
     {
         
         base.StartTask();
-        
+        EEG.Instance.Init("Sc1LivingRoom");
         video.Play();
         foreach (var a in audios)
             a.Play();

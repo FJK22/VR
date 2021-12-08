@@ -60,10 +60,15 @@ public class Sc6Train : LevelScript
         bool connected = recorder.requestCtrl.IsConnected;
     }
 
+    void OnDestroy()
+    {
+        recorder.StopRecording();
+    }
     new void StartTask()
     {
         //PlayerFreeze = true;
         base.StartTask();
+        EEG.Instance.Init("Sc8TrainStation");
         arrivePos = new Transform[2];
         targetPos = new Transform[2];
         for (int i = 0; i < 2; i++)
@@ -131,7 +136,7 @@ public class Sc6Train : LevelScript
             Debug.LogError(www.error);
         }
         recorder.StopRecording();
-        StartCoroutine(LevelScript.SetLevel(SceneType.Sc6Questionnaire));
+        StartCoroutine(SetLevel(SceneType.Sc6Questionnaire));
         NextScene();
     }
     IEnumerator GernerateTrain()

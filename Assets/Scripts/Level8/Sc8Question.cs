@@ -48,6 +48,7 @@ public class Sc8Question : MonoBehaviour
             Debug.Log(www.downloadHandler.text);
             if (data["status"] == "success")
             {
+                StartCoroutine(LevelScript.SetLevel(SceneType.End));
                 LevelScript.NextScene();
             }
             else

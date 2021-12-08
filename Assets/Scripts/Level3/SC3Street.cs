@@ -58,11 +58,25 @@ public class SC3Street : LevelScript
         camera.clearFlags = CameraClearFlags.Skybox;
     }
 
+    void OnDestroy()
+    {
+        recorder.StopRecording();
+    }
+
     new public void StartTask()
     {
         base.StartTask();
         StartCoroutine(ClearData(Correspond ? "sc3a_data" : "sc3b_data"));
         StartCoroutine(ShowCar());
+
+        if (SceneManager.GetActiveScene().name == "Sc3AStreet")
+        {
+            EEG.Instance.Init("Sc4Street");
+        }
+        if (SceneManager.GetActiveScene().name == "Sc3BStreet")
+        {
+            EEG.Instance.Init("Sc5Street");
+        }
     }
     private void Update()
     {
