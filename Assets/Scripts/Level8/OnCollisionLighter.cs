@@ -14,14 +14,9 @@ public class OnCollisionLighter : MonoBehaviour
 
     void OnTriggerEnter(Collider col)
     {
-
         if (col.gameObject.tag == "FluidPlate")
         {
-
             BurnerFlame.SetActive(true);
-
-
-
         }
     }
 }

@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using System;
 namespace Looxid.Link
 {
+    [Serializable]
     public class LinkDataValue
     {
         public double value;

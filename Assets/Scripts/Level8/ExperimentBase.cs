@@ -38,7 +38,5 @@ public class ExperimentBase : MonoBehaviour
     public void UpdateInstruction3()
     {
         ExperimentManager.instance.UpdateInstruction3(Instructions[currentInstIndex]);
-
-
     }
 }

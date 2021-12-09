@@ -18,7 +18,7 @@ public class EEG : MonoBehaviour
     private EEGSensor sensorStatusData;
     private LinkDataValue leftActivity;
     private LinkDataValue rightActivity;
-    [HideInInspector] public LinkDataValue attention;
+    public LinkDataValue attention;
     private LinkDataValue relaxation;
     private LinkDataValue asymmetry;
     public List<string[]> EEGData = new List<string[]>();
@@ -48,7 +48,7 @@ public class EEG : MonoBehaviour
     }
     void Start()
     {
-        LooxidLinkManager.Instance.SetDebug(true);
+        LooxidLinkManager.Instance.SetDebug(false);
         LooxidLinkManager.Instance.Initialize();
         leftActivity = new LinkDataValue();
         rightActivity = new LinkDataValue();
@@ -73,7 +73,6 @@ public class EEG : MonoBehaviour
         LooxidLinkData.OnReceiveEEGRawSignals += OnReceiveEEGRawSignals;
         LooxidLinkData.OnReceiveMindIndexes += OnReceiveMindIndexes;
         LooxidLinkData.OnReceiveEEGFeatureIndexes += OnReceiveEEGFeatureIndexes;
-        Debug.Log("event listener added");
         // StartCoroutine(DisplayData());
     }
 
@@ -91,7 +90,6 @@ public class EEG : MonoBehaviour
         LooxidLinkData.OnReceiveEEGRawSignals -= OnReceiveEEGRawSignals;
         LooxidLinkData.OnReceiveMindIndexes -= OnReceiveMindIndexes;
         LooxidLinkData.OnReceiveEEGFeatureIndexes -= OnReceiveEEGFeatureIndexes;
-        Debug.Log("event listener removed");
     }
     void Update()
     {

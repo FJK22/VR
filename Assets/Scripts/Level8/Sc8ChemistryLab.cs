@@ -142,37 +142,22 @@ public class Sc8ChemistryLab : LevelScript
 
         if (!isStarted && btnIsClicked)
         {
-
             recorder.StartRecording();
             startExperimentBTN.interactable = true;
             startExperimentBTN.onClick.AddListener(buttonExpIsClicked);
-
-
-
         }
         if (ExperimentManager.GetComponent<ExperimentManager>().CurrentExperiment1 == true)
         {
             StartCoroutine(CurrentExpt1());
-
-            
-
         }
         if (ExperimentManager.GetComponent<ExperimentManager>().CurrentExperiment2 == true)
         {
-
-
             StartCoroutine(CurrentExpt2());
-
-            
         }
         if (ExperimentManager.GetComponent<ExperimentManager>().CurrentExperiment3 == true)
         {
-
             StartCoroutine(CurrentExpt3());
-
         }
-
-      
     }
 
     IEnumerator CurrentExpt1()
@@ -247,13 +232,12 @@ public class Sc8ChemistryLab : LevelScript
     IEnumerator CurrentExpt3()
     {
         yield return new WaitForSeconds(0.1f);
-
         if (FluidPlate.GetComponent<LiquidContainer>().fillAmountPercent > 0.9f) meshColliderLighter.enabled = (EEG.Instance.attention.value >= 0.4f);
         if (FluidPlate.GetComponent<LiquidContainer>().fillAmountPercent > 0.9f) boxColliderLighter.enabled = (EEG.Instance.attention.value >= 0.4f);
 
-
         if (EEG.Instance.attention.value < 0.4)
         {
+            Debug.Log("attention < 0.4");
             if (attentionChecking)
             {
                 meshColliderNitromethane.enabled = false;
@@ -269,11 +253,11 @@ public class Sc8ChemistryLab : LevelScript
                 Txt_Instruction.text = "Your attention level is low. You can only complete this experiment with higher attention levels.";
             }
         }
-        else if (BurnerFlame.activeSelf == false)
+        else if (!BurnerFlame.activeSelf) 
         {
             if (FluidPlate.GetComponent<LiquidContainer>().fillAmountPercent == 0.0f)
             {
-                meshColliderNitromethane.enabled = true;
+                meshColliderNitromethane.enabled = true; //we enable here first liquid
                 meshColliderNitromethaneFluid.enabled = true;
                 capsuleColliderNitromethane.enabled = true;
 
@@ -285,14 +269,13 @@ public class Sc8ChemistryLab : LevelScript
                 boxColliderLighter.enabled = false;
                 Txt_Instruction.text = "Pour the Nitromethane into the glass plate.";
             }
-
-            else if (FluidPlate.GetComponent<LiquidContainer>().fillAmountPercent <= 0.3f)
+            else if (FluidPlate.GetComponent<LiquidContainer>().fillAmountPercent <= 0.3f) //if we pour first liquid into plate
             {
                 meshColliderNitromethane.enabled = false;
                 meshColliderNitromethaneFluid.enabled = false;
                 capsuleColliderNitromethane.enabled = false;
 
-                meshColliderMethanol.enabled = true;
+                meshColliderMethanol.enabled = true; //we enable second liquid
                 meshColliderMethanolFluid.enabled = true;
                 capsuleColliderMethanol.enabled = true;
 
@@ -302,15 +285,15 @@ public class Sc8ChemistryLab : LevelScript
             }
             else
             {
-                Txt_Instruction.text = "Add the lighter into the glass plate.";
+                Txt_Instruction.text = "Add the lighter into the glass plate."; 
             }
         }
-
         else
         {
+            Debug.Log("exp3 finish");
             attentionChecking = false;
             Txt_Instruction.text = "This is a chemical reaction of Nitromethane combnined with Methanol. Well done for completing this experiment.";
-            burnFLameIsActive = true;
+            burnFLameIsActive = true; 
             countBool++;
 
             if (burnFLameIsActive && countBool == 1)
@@ -318,12 +301,9 @@ public class Sc8ChemistryLab : LevelScript
                 burnFLameIsActive = false;
                 recorder.StopRecording();
                 StartCoroutine(PostData());
+                Debug.Log("posted");
             }
-
-
         }
-
-
     }
 
 
@@ -344,16 +324,12 @@ public class Sc8ChemistryLab : LevelScript
         yield return new WaitForSeconds(15);
         attentionChecking = true;
         ExperimentManager.GetComponent<ExperimentManager>().StartExperiment3();
-
     }
 
     IEnumerator Experiments()
     {
         yield return new WaitForSeconds(0.1f);
         startTime = Time.time;
-
-
-
 
     }
     public IEnumerator LimitTimeCounter()
@@ -371,7 +347,6 @@ public class Sc8ChemistryLab : LevelScript
     {
         yield return new WaitForSeconds(7);
         StartCoroutine(Post());
-
     }
 
 

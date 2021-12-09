@@ -94,8 +94,6 @@ public class ExperimentManager : MonoBehaviour
         CurrentExperiment2 = false;
         CurrentExperiment3 = true;
 
-       
-
         Txt_Instruction.transform.parent.gameObject.SetActive(true);
 
         CurrentExperiment = AllExperiments[2];
@@ -105,15 +103,11 @@ public class ExperimentManager : MonoBehaviour
     public void UpdateInstruction3(string msg)
     {
         Txt_Instruction.text = msg;
-
-
         if (CurrentExperiment.tag == "Exp3")
         {
             Exam1VR.SetActive(false);
             Exam2VR.SetActive(false);
             Exam3VR.SetActive(true);
-            
-
         }
     }
 }
