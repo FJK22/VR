@@ -81,6 +81,8 @@ public class Sc8Practice : MonoBehaviour
         PracticeCanvas.enabled = true;
         CanvasText.text = "Practice completed. You will now start the calibration process.";
         yield return new WaitForSeconds(10f);
+        Destroy(liquidBeaker);
+        Destroy(emptyBeaker);
         EEG.SetActive(true);
         this.gameObject.SetActive(false);
         Hand.SetActive(false);
