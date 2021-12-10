@@ -66,7 +66,7 @@ public class SC3Street : LevelScript
     new public void StartTask()
     {
         base.StartTask();
-        StartCoroutine(ClearData(Correspond ? "sc3a_data" : "sc3b_data"));
+        StartCoroutine(ClearData(Correspond ? "sc3b_data" : "sc3a_data"));
         StartCoroutine(ShowCar());
 
         if (SceneManager.GetActiveScene().name == "Sc3AStreet")
@@ -158,7 +158,8 @@ public class SC3Street : LevelScript
         else
         {
             recorder.StopRecording();
-            StartCoroutine(SetLevel((Correspond) ? SceneType.Sc3BStreet : SceneType.Sc3Questionnaire));
+            StartCoroutine(SetLevel((Correspond) ? SceneType.Sc3Questionnaire : SceneType.Sc3BStreet)); 
+            yield return new WaitForSeconds(2f);
             NextScene();
         }
     }

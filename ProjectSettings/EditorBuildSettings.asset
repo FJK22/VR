@@ -23,13 +23,13 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Sc2Questionnaire.unity
     guid: 775bac8e1cf02b246b92d19b4a748541
-  - enabled: 0
-    path: Assets/Scenes/Sc3AStreet.unity
+  - enabled: 1
+    path: Assets/Scenes/SC3AStreet.unity
     guid: e0e1f6607cfde3146b8325904f8f75fe
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Sc3BStreet.unity
     guid: 88a64906fa15b6a46907a86eb05966aa
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Sc3Questionnaire.unity
     guid: 2973ac654407643489a59d7288bf2230
   - enabled: 0
@@ -56,10 +56,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Sc7Questionnaire.unity
     guid: b8520176fbcc86245a1dafdcf60eb279
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Sc8ChemistryLab.unity
     guid: 20eee4da9ec75d349a1690969257eade
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Sc8Questionnaire.unity
     guid: 9954b35612102ca4f90f426df97b5cd3
   - enabled: 1

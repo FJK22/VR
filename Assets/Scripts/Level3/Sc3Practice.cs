@@ -163,7 +163,7 @@ public class Sc3Practice : MonoBehaviour
 
     IEnumerator PracticeCompleted()
     {
-        StartCoroutine(LevelScript.SetLevel(SceneType.Sc3BStreet));
+        
         SpawnPoses = null;
         SpawnPrefabs = null;
         PracticeCanvas.enabled = true;

@@ -23,7 +23,6 @@ public class Sc5Practice : MonoBehaviour
     int count4 = 0;
     int count5 = 0;
     public Transform cameraTransform;
-    //Set it to whatever value you think is best
     float distanceFromCamera = 3;
     [SerializeField] GameObject phone = null;
     [SerializeField] GameObject mapPan = null;
