@@ -68,7 +68,7 @@ namespace PupilLabs
             SetStatusText("Calibration succeeded.");
 
             StartCoroutine(DisableTextAfter(1));
-            Scene.SetActive(true);
+            Scene.SetActive(true); //I make it active here. Used to work
             Hand.SetActive(true);
         }
 

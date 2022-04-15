@@ -1,13 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Video;
-using Valve.VR;
-using PupilLabs;
 using UnityEngine.UI;
 using Looxid.Link;
 using System.IO;
-using System.Text;
 using System;
 
 public class EEG : MonoBehaviour
@@ -37,19 +33,15 @@ public class EEG : MonoBehaviour
 
     void Awake()
     {
-        if (Instance)
-        {
-            Destroy(this);
-        }
-        else
-        {
-            Instance = this;
-        }
+        Instance = this;
     }
     void Start()
     {
-        LooxidLinkManager.Instance.SetDebug(false);
-        LooxidLinkManager.Instance.Initialize();
+        if (!LooxidLinkManager.Instance.isLinkCoreConnected)
+        {
+            LooxidLinkManager.Instance.SetDebug(false);
+            LooxidLinkManager.Instance.Initialize();
+        }
         leftActivity = new LinkDataValue();
         rightActivity = new LinkDataValue();
         attention = new LinkDataValue();
@@ -227,6 +219,7 @@ public class EGGData{
     }
     public EGGData(string path, string file)
     {
+        Debug.Log("EEG Constrator" + path + file);
         if (!Directory.Exists(path))
         {
             Directory.CreateDirectory(path);

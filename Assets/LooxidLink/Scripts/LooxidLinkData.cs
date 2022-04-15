@@ -71,7 +71,7 @@ namespace Looxid.Link
                     if (_instance == null)
                     {
                         _instance = new GameObject("LooxidLinkData").AddComponent<LooxidLinkData>();
-                        DontDestroyOnLoad(_instance.gameObject);
+                        //DontDestroyOnLoad(_instance.gameObject);
                     }
                 }
                 return _instance;

@@ -51,9 +51,9 @@ public class Sc1LivingRoom : LevelScript
       
         if (isStarted && video.isPaused)
         {
-            isStarted = false;
-            
-            StartCoroutine(EndTask());
+            isStarted = false; 
+            btnIsClicked = false;
+            StartCoroutine(EndTask()); 
         }
     }
 

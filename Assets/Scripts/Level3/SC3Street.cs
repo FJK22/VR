@@ -44,7 +44,7 @@ public class SC3Street : LevelScript
 
         string date = System.DateTime.Now.ToString("yyyy_MM_dd");
 
-        if (scene.name == "Sc3AStreet")
+        if (scene.name == "SC3AStreet")
         {
             recorder.customPath = $"{Application.dataPath}/Data/{UserGroup}/{UserName + "_" + date}/Sc4Street/EyeTracking";
         }
@@ -66,10 +66,10 @@ public class SC3Street : LevelScript
     new public void StartTask()
     {
         base.StartTask();
-        StartCoroutine(ClearData(Correspond ? "sc3b_data" : "sc3a_data"));
+        StartCoroutine(ClearData(Correspond ? "sc3a_data" : "sc3b_data"));
         StartCoroutine(ShowCar());
 
-        if (SceneManager.GetActiveScene().name == "Sc3AStreet")
+        if (SceneManager.GetActiveScene().name == "SC3AStreet")
         {
             EEG.Instance.Init("Sc4Street");
         }
@@ -86,7 +86,7 @@ public class SC3Street : LevelScript
         {
 
             StartTask();
-            recorder.StartRecording();
+            recorder.StartRecording(); 
             Pointer.SetActive(false);
 
         }
@@ -133,6 +133,7 @@ public class SC3Street : LevelScript
         formData.Add(new MultipartFormDataSection("reaction_time", ((Time.time - startTime) * 1000).ToString("0.0")));
 
         string url = Constant.DOMAIN + ((Correspond) ? Constant.SC3AData : Constant.SC3BData);
+
         //Debug.Log(url);
         UnityWebRequest www = UnityWebRequest.Post(url, formData);
         yield return www.SendWebRequest();
@@ -158,7 +159,7 @@ public class SC3Street : LevelScript
         else
         {
             recorder.StopRecording();
-            StartCoroutine(SetLevel((Correspond) ? SceneType.Sc3Questionnaire : SceneType.Sc3BStreet)); 
+            StartCoroutine(SetLevel((Correspond) ? SceneType.Sc3Questionnaire : SceneType.Sc3BStreet));
             yield return new WaitForSeconds(2f);
             NextScene();
         }

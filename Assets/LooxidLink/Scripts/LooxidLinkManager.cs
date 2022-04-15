@@ -13,6 +13,7 @@ namespace Looxid.Link
 {
     public class LooxidLinkManager : MonoBehaviour
     {
+        public bool TestBool = false;
         #region Singleton
 
         private static LooxidLinkManager _instance;
@@ -26,7 +27,7 @@ namespace Looxid.Link
                     if (_instance == null)
                     {
                         _instance = new GameObject("LooxidLinkManager").AddComponent<LooxidLinkManager>();
-                        DontDestroyOnLoad(_instance.gameObject);
+                        //DontDestroyOnLoad(_instance.gameObject); 
                     }
                 }
                 return _instance;
@@ -41,8 +42,8 @@ namespace Looxid.Link
 
         private NetworkManager networkManager;
 
-        private LinkCoreStatus linkCoreStatus = LinkCoreStatus.Disconnected;
-        private LinkHubStatus linkHubStatus = LinkHubStatus.Disconnected;
+        public LinkCoreStatus linkCoreStatus = LinkCoreStatus.Disconnected;
+        public LinkHubStatus linkHubStatus = LinkHubStatus.Disconnected;
 
         private bool isInitialized = false;
 
@@ -123,6 +124,7 @@ namespace Looxid.Link
         }
         void OnNetworkLinkCoreDisconnected()
         {
+            Debug.Log("core disconnected");
             if (OnLinkCoreDisconnected != null) OnLinkCoreDisconnected.Invoke();
         }
         void OnNetworkLinkHubConnected()
@@ -141,8 +143,11 @@ namespace Looxid.Link
 
         void Update()
         {
-            if (networkManager == null) return;
-
+            if (networkManager == null)
+            {
+                linkCoreStatus = LinkCoreStatus.Disconnected;
+                return;
+            }
             linkCoreStatus = networkManager.LinkCoreStatus;
             isLinkCoreConnected = (linkCoreStatus == LinkCoreStatus.Connected);
 
@@ -242,10 +247,11 @@ namespace Looxid.Link
         {
             while (true)
             {
-                if (isInitialized && linkCoreStatus == LinkCoreStatus.Disconnected)
+                if (TestBool || (isInitialized && linkCoreStatus == LinkCoreStatus.Disconnected))
                 {
                     networkManager.ClearNetwork();
                     networkManager.Connect(OnLinkCoreStatus, OnOnLinkHubStatus);
+                    TestBool = false;
                 }
                 yield return new WaitForSeconds(3.0f);
             }
