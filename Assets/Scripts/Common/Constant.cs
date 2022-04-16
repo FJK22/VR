@@ -10,10 +10,12 @@ public class Constant
     public const string SC1QS = @"sc1qs/save_sc1qs";
     public const string SC2Data = @"sc2data/save_sc2data";
     public const string SC2BData = @"sc2bdata/save_sc2bdata";
-    public const string SC2QS = @"sc2qs/save_sc2qs";
+    public const string SC2AQS = @"sc2aqs/save_sc2aqs";
+    public const string SC2BQS = @"sc2bqs/save_sc2bqs";
     public const string SC3AData = @"sc3adata/save_sc3adata"; 
     public const string SC3BData = @"sc3bdata/save_sc3bdata";
-    public const string SC3QS = @"sc3qs/save_sc3qs";
+    public const string SC3AQS = @"sc3aqs/save_sc3aqs";
+    public const string SC3BQS = @"sc3bqs/save_sc3bqs";
     public const string SC4QS = @"sc4qs/save_sc4qs";
     public const string SC5Data = @"sc5data/save_sc5data";
     public const string SC5QS = @"sc5qs/save_sc5qs";
