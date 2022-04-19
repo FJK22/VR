@@ -23,7 +23,7 @@ public class Sc2Practice : MonoBehaviour
     public GameObject buttonStartPractice;
     public Camera camera;
     int count2 = 0;
-
+    List<int> mylist = new List<int>();
 
     [Space]
     [Header("VR Trigger")]
@@ -50,12 +50,45 @@ public class Sc2Practice : MonoBehaviour
 
             if (count2 == 1) {
 
+
+                mylist.Clear();
+                mylist.Add(1);
+                mylist.Add(2);
+                mylist.Add(3);
+                mylist.Add(4);
+                mylist.Add(5);
+                mylist.Add(6);
+                mylist.Add(7);
+                mylist.Add(3);
+                mylist.Add(8);
+                mylist.Add(9);
+                mylist.Add(1);
+                mylist.Add(2);
+                mylist.Add(3);
+                mylist.Add(4);
+                mylist.Add(5);
+                mylist.Add(6);
+                mylist.Add(7);
+                mylist.Add(3);
+                mylist.Add(8);
+                mylist.Add(9);
+                mylist.Add(1);
+                mylist.Add(2);
+                mylist.Add(3);
+                mylist.Add(4);
+                mylist.Add(5);
+                mylist.Add(6);
+                mylist.Add(7);
+                mylist.Add(3);
+                mylist.Add(8);
+                mylist.Add(9);
                 StartPractice();
                 Pointer.SetActive(false);
                 buttonStartPractice.SetActive(false);
+                
 
-                
-                
+
+
             }
             if (currentNumber == 3 && grabPinchAction.GetStateDown(handType))
             {
@@ -76,7 +109,8 @@ public class Sc2Practice : MonoBehaviour
 
         }
 
-      
+
+       
 
         
 
@@ -92,6 +126,8 @@ public class Sc2Practice : MonoBehaviour
 
     void StartPractice()
     {
+
+        
         text.enabled = true;
         StartCoroutine(ShowNumber());
 
@@ -105,37 +141,42 @@ public class Sc2Practice : MonoBehaviour
         {
             yield return new WaitForSeconds(3);
         }
-        // this is for remove repeat
-        while (true)
+        do
         {
-            int newNumber = Random.Range(1, 10);
+            int newNumber = mylist[Random.Range(0, mylist.Count)];
+
             if (newNumber != currentNumber)
             {
                 currentNumber = newNumber;
                 break;
+
             }
-            
-        }
+
+        } while (mylist.Count > 0);
+
+
         text.text = currentNumber.ToString();
-
+        mylist.Remove(currentNumber);
         yield return new WaitForSeconds(delay);
-     
-        count++;
-        if (count < 25)
-        {
-            StartCoroutine(ShowNumber());
+        StartCoroutine(ShowNumber());
 
-        }
-        else if (countPress <= 1 && count == 25)
+        if (mylist.Count == 0 && countPress <= 1)
         {
+
+            //addToLisit();
 
             StartCoroutine(StartAgain());
+
         }
+ 
     }
+
+    
 
     IEnumerator StartAgain()
     {
-        
+
+
         CanvasText.text = "Please start again. Make sure you press the trigger button of the controller when digit 3 is shown.";
         buttonStartPractice.SetActive(true);
         praticeButtonIsClicked = false;
@@ -144,10 +185,13 @@ public class Sc2Practice : MonoBehaviour
         count2 = 0;
         count = 0;
         text.enabled = false;
+        
+
         yield return new WaitForSeconds(1f);
+       
         //StartCoroutine(ShowNumber(false));
 
-        
+
     }
 
     IEnumerator PracticeCompleted()

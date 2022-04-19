@@ -55,7 +55,7 @@ public class Sc2aQuestion : MonoBehaviour
             Debug.Log(www.downloadHandler.text);
             if (data["status"] == "success")
             {
-                StartCoroutine(LevelScript.SetLevel(SceneType.Sc3AStreet));
+                StartCoroutine(LevelScript.SetLevel(SceneType.Sc2BLectureHall));
                 LevelScript.NextScene();
             }
             else

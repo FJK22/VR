@@ -20,6 +20,7 @@ namespace PupilLabs
         {
             SetStatusText("Not connected");
             calibrationController = GetComponent<CalibrationController>();
+            Hand.SetActive(false);
         }
 
         void OnEnable()

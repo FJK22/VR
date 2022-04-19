@@ -20,10 +20,11 @@ public class Sc3Practice : MonoBehaviour
 
     [SerializeField] Transform[] SpawnPoses = null;
     [SerializeField] GameObject[] SpawnPrefabs = null;
-    [SerializeField] float CarShowTime = 1f;
-    [SerializeField] float CarSpeed = 50f;
+    [SerializeField] float CarShowTime = 0.5f;
+    [SerializeField] float CarSpeed = 55f;
     [SerializeField] float Delay = 1f;
     [SerializeField] int TotalCount = 10;
+    List<int> mylist = new List<int>();
 
 
     int SpawnPosIndex;
@@ -43,8 +44,6 @@ public class Sc3Practice : MonoBehaviour
     public SteamVR_Action_Boolean touchPadClick = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("TouchpadClick");
 
 
-
-
     void Start()
     {
         Pointer.SetActive(true);
@@ -59,6 +58,18 @@ public class Sc3Practice : MonoBehaviour
         {
             count2++;
             if (count2 == 1) {
+
+                mylist.Clear();
+                mylist.Add(0);
+                mylist.Add(1);
+                mylist.Add(0);
+                mylist.Add(1);
+                mylist.Add(0);
+                mylist.Add(1);
+                mylist.Add(0);
+                mylist.Add(1);
+                mylist.Add(0);
+                mylist.Add(1);
 
                 StartPractice();
                 Pointer.SetActive(false);
@@ -123,25 +134,27 @@ public class Sc3Practice : MonoBehaviour
     {
 
         yield return new WaitForSeconds(2);
-        SpawnPosIndex = Random.Range(0, 2);
-        int _carIndex = Random.Range(0, SpawnPrefabs.Length);
-        Instantiate(SpawnPrefabs[_carIndex], SpawnPoses[SpawnPosIndex]).AddComponent<AutoCar>().Set(CarShowTime, CarSpeed);
 
-        yield return new WaitForSeconds(CarShowTime + Delay);
-        count++;
-        if (count < TotalCount)
+        if (mylist.Count > 0)
         {
+            SpawnPosIndex = mylist[Random.Range(0, mylist.Count)];
+            int _carIndex = Random.Range(0, SpawnPrefabs.Length);
+            Instantiate(SpawnPrefabs[_carIndex], SpawnPoses[SpawnPosIndex]).AddComponent<AutoCar>().Set(CarShowTime, CarSpeed);
+            mylist.Remove(SpawnPosIndex);
+            yield return new WaitForSeconds(CarShowTime + Delay);
             StartCoroutine(ShowCar());
-        }
-        else if(PressCorrect1 <1 && PressCorrect2 < 1 && count == TotalCount)
-        {
 
-            StartCoroutine(StartAgain());
         }
         else
         {
-            StartCoroutine(StartAgain());
+            if ((PressCorrect1 <= 1 && PressCorrect2 <= 1) || (PressCorrect1 >= 1 && PressCorrect2 <= 1) || (PressCorrect1 <= 1 && PressCorrect2 >= 1))
+            {
+                StartCoroutine(StartAgain());
+            }
+            
         }
+        
+
     }
     IEnumerator StartAgain()
     {
