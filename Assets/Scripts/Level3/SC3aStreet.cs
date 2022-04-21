@@ -205,6 +205,7 @@ public class SC3aStreet : LevelScript
     {
         isPressed = false;
         yield return new WaitForSeconds(2);
+
         SpawnPosIndex = mylist[Random.Range(0, mylist.Count)];
         int _carIndex = Random.Range(0, SpawnPrefabs.Length);
         Instantiate(SpawnPrefabs[_carIndex], SpawnPoses[SpawnPosIndex]).AddComponent<AutoCar>().Set(CarShowTime, CarSpeed);
@@ -212,7 +213,7 @@ public class SC3aStreet : LevelScript
         startTime = Time.time;
         yield return new WaitForSeconds(CarShowTime + Delay);
         count++;
-        if(count < TotalCount)
+        if (count < TotalCount)
         {
             StartCoroutine(ShowCar());
         }

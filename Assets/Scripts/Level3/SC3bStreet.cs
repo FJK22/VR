@@ -210,7 +210,7 @@ public class SC3bStreet : LevelScript
         Instantiate(SpawnPrefabs[_carIndex], SpawnPoses[SpawnPosIndex]).AddComponent<AutoCar>().Set(CarShowTime, CarSpeed);
         mylist.Remove(SpawnPosIndex);
         startTime = Time.time;
-        yield return new WaitForSeconds(CarShowTime + Delay);
+        yield return new WaitForSeconds(CarShowTime + Delay); 
         count++;
         if(count < TotalCount)
         {

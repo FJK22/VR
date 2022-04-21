@@ -143,26 +143,22 @@ public class Sc3aPractice : MonoBehaviour
 
         if (count < TotalCount)
         {
-            
+
             StartCoroutine(ShowCar());
 
         }
         else if ((PressCorrect1 <= 1 && PressCorrect2 <= 1) || (PressCorrect1 >= 1 && PressCorrect2 <= 1) || (PressCorrect1 <= 1 && PressCorrect2 >= 1))
         {
-            
-           
             StartCoroutine(StartAgain());
-           
-            
+
         }
         
 
     }
-    
     IEnumerator StartAgain()
     {
         PracticeCanvas.enabled = true;
-        CanvasText.text = "Please start again. Make sure you press the correct direction of the rounded button of the controller when the car is shown.";
+        CanvasText.text = "Please start again. Make sure you press the corresponding correct direction in the rounded button of the controller depending where the car is shown.";
         buttonStartPractice.SetActive(true);
         praticeButtonIsClicked = false;
         Pointer.SetActive(true);

@@ -160,7 +160,7 @@ public class Sc3bPractice : MonoBehaviour
     IEnumerator StartAgain()
     {
         PracticeCanvas.enabled = true;
-        CanvasText.text = "Please start again. Make sure you press the correct direction of the rounded button of the controller when the car is shown.";
+        CanvasText.text = "Please start again. Make sure you press the opposite correct direction in the rounded button of the controller depending where the car is shown.";
         buttonStartPractice.SetActive(true);
         praticeButtonIsClicked = false;
         Pointer.SetActive(true);
