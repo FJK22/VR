@@ -147,10 +147,12 @@ public class Sc2aPractice : MonoBehaviour
         while (true)
         {
             int newNumber = mylist[Random.Range(0, mylist.Count)];
+            
 
             if (newNumber != currentNumber)
             {
                 currentNumber = newNumber;
+                
                 break;
 
 
@@ -161,18 +163,19 @@ public class Sc2aPractice : MonoBehaviour
 
 
         text.text = currentNumber.ToString();
+        
         mylist.Remove(currentNumber);
         yield return new WaitForSeconds(delay);
-        if (mylist.Count > 0)
+        count++;
+        
+        if (count < 30)
         {
             StartCoroutine(ShowNumber());
         }
-        else if (mylist.Count == 0 && countPress <= 1)
+        else if (countPress <= 1 && count == 30)
         {
             StartCoroutine(StartAgain());
         }
-
-       
 
     }
 

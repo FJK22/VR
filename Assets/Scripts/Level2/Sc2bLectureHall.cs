@@ -354,19 +354,18 @@ public class Sc2bLectureHall : LevelScript
         yield return new WaitForSeconds(delay);
         posted = false;
 
-        if (mylist.Count > 0)
+        count++;
+
+        if (count < 225)
         {
             StartCoroutine(ShowNumber());
         }
-
-        else if (mylist.Count == 0)
+        else
         {
-
             recorder.StopRecording();
             StartCoroutine(SetLevel(SceneType.Sc2bQuestionnaire));
             yield return new WaitForSeconds(2f);
             NextScene();
-
         }
 
 

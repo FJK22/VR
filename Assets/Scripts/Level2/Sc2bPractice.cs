@@ -159,17 +159,18 @@ public class Sc2bPractice : MonoBehaviour
         text.text = currentNumber.ToString();
         mylist.Remove(currentNumber);
         yield return new WaitForSeconds(delay);
-        if (mylist.Count > 0)
+        count++;
+
+        if (count < 30)
         {
             StartCoroutine(ShowNumber());
         }
-        else if (mylist.Count == 0 && countPress < 4)
+        else if (countPress < 4 && count == 30)
         {
-
-
             StartCoroutine(StartAgain());
-
         }
+
+        
  
     }
 

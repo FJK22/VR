@@ -134,23 +134,24 @@ public class Sc3bPractice : MonoBehaviour
     {
 
         yield return new WaitForSeconds(2);
+        SpawnPosIndex = mylist[Random.Range(0, mylist.Count)];
+        int _carIndex = Random.Range(0, SpawnPrefabs.Length);
+        Instantiate(SpawnPrefabs[_carIndex], SpawnPoses[SpawnPosIndex]).AddComponent<AutoCar>().Set(CarShowTime, CarSpeed);
+        mylist.Remove(SpawnPosIndex);
+        yield return new WaitForSeconds(CarShowTime + Delay);
+        count++;
 
-        if (mylist.Count > 0)
+        if (count < TotalCount)
         {
-            SpawnPosIndex = mylist[Random.Range(0, mylist.Count)];
-            int _carIndex = Random.Range(0, SpawnPrefabs.Length);
-            Instantiate(SpawnPrefabs[_carIndex], SpawnPoses[SpawnPosIndex]).AddComponent<AutoCar>().Set(CarShowTime, CarSpeed);
-            mylist.Remove(SpawnPosIndex);
-            yield return new WaitForSeconds(CarShowTime + Delay);
+
             StartCoroutine(ShowCar());
 
         }
-        else
+        else if((PressCorrect1 <= 1 && PressCorrect2 <= 1) || (PressCorrect1 >= 1 && PressCorrect2 <= 1) || (PressCorrect1 <= 1 && PressCorrect2 >= 1))
         {
-            if ((PressCorrect1 <= 1 && PressCorrect2 <= 1) || (PressCorrect1 >= 1 && PressCorrect2 <= 1) || (PressCorrect1 <= 1 && PressCorrect2 >= 1))
-            {
-                StartCoroutine(StartAgain());
-            }
+
+            StartCoroutine(StartAgain());
+            
             
         }
         

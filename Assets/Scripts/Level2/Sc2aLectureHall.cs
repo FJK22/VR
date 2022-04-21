@@ -15,6 +15,7 @@ public class Sc2aLectureHall : LevelScript
     [SerializeField] TextMeshPro text = null;
     [SerializeField] float delay = 1.15f;
     [SerializeField] bool isReverse = false;
+    int count = 0;
     int currentNumber = 0;
     bool posted = false;
     float startTime = 0f;
@@ -363,18 +364,18 @@ public class Sc2aLectureHall : LevelScript
         startTime = Time.time;
         yield return new WaitForSeconds(delay);
         posted = false;
-        if (mylist.Count > 0)
+        count++;
+
+        if (count < 225)
         {
             StartCoroutine(ShowNumber());
         }
-        else if (mylist.Count == 0)
+        else
         {
-
             recorder.StopRecording();
             StartCoroutine(SetLevel(SceneType.Sc2aQuestionnaire));
             yield return new WaitForSeconds(2f);
             NextScene();
-
         }
 
 
