@@ -294,7 +294,7 @@ public class Sc2aLectureHall : LevelScript
             recorder.StartRecording();
             Pointer.SetActive(false);
 
-
+            
         }
 
         if (!posted)
@@ -304,6 +304,8 @@ public class Sc2aLectureHall : LevelScript
                 StartCoroutine(Post(true));
             }
         }
+
+        
     }
 
     new public void StartTask()
@@ -342,7 +344,7 @@ public class Sc2aLectureHall : LevelScript
             yield return new WaitForSeconds(3);
         }
         // this is for remove repeat
-        do
+        while (true)
         {
             int newNumber = mylist[Random.Range(0, mylist.Count)];
 
@@ -351,20 +353,23 @@ public class Sc2aLectureHall : LevelScript
                 currentNumber = newNumber;
                 break;
 
+
             }
 
-        } while (mylist.Count > 0);
+        }
 
         text.text = currentNumber.ToString();
         mylist.Remove(currentNumber);
         startTime = Time.time;
         yield return new WaitForSeconds(delay);
         posted = false;
-        StartCoroutine(ShowNumber());
-
-        if (mylist.Count == 0)
+        if (mylist.Count > 0)
         {
-        
+            StartCoroutine(ShowNumber());
+        }
+        else if (mylist.Count == 0)
+        {
+
             recorder.StopRecording();
             StartCoroutine(SetLevel(SceneType.Sc2aQuestionnaire));
             yield return new WaitForSeconds(2f);

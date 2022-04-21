@@ -295,7 +295,7 @@ public class Sc2bLectureHall : LevelScript
                 StartCoroutine(Post(true));
             }
         }
-     }
+    }
 
     new public void StartTask()
     {
@@ -334,7 +334,7 @@ public class Sc2bLectureHall : LevelScript
             yield return new WaitForSeconds(3);
         }
         // this is for remove repeat
-        do
+        while (true)
         {
             int newNumber = mylist[Random.Range(0, mylist.Count)];
 
@@ -343,18 +343,23 @@ public class Sc2bLectureHall : LevelScript
                 currentNumber = newNumber;
                 break;
 
+
             }
 
-        } while (mylist.Count > 0);
+        }
 
         text.text = currentNumber.ToString();
         mylist.Remove(currentNumber);
         startTime = Time.time;
         yield return new WaitForSeconds(delay);
         posted = false;
-        StartCoroutine(ShowNumber());
 
-        if (mylist.Count == 0)
+        if (mylist.Count > 0)
+        {
+            StartCoroutine(ShowNumber());
+        }
+
+        else if (mylist.Count == 0)
         {
 
             recorder.StopRecording();
