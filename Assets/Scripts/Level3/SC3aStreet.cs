@@ -11,7 +11,7 @@ public class SC3aStreet : LevelScript
 {
     [SerializeField] Transform[] SpawnPoses = null;
     [SerializeField] GameObject[] SpawnPrefabs = null;
-    [SerializeField] float CarShowTime = 0.5f;
+    [SerializeField] float CarShowTime = 1f;
     [SerializeField] float CarSpeed = 55f;
     [SerializeField] float Delay = 1f;
     [SerializeField] int TotalCount = 70;
@@ -35,6 +35,14 @@ public class SC3aStreet : LevelScript
     public RecordingController recorder;
     public Text statusText;
     public Camera camera;
+    public GazeVisualizer gazeVisualizer;
+    public GazeData gazeData;
+    public Transform gazeOriginCamera;
+    public GazeController gazeController;
+
+
+
+   
 
     void Awake()
     {
@@ -123,6 +131,17 @@ public class SC3aStreet : LevelScript
 
     }
 
+    private void OnEnable()
+    {
+        if (gazeController)
+        {
+            gazeController.OnReceive3dGaze += OnReceive;
+        }
+    }
+    private void OnReceive(GazeData obj)
+    {
+        gazeData = obj;
+    }
     void OnDestroy()
     {
         recorder.StopRecording();
@@ -148,6 +167,8 @@ public class SC3aStreet : LevelScript
             recorder.StartRecording(); 
             Pointer.SetActive(false);
 
+            
+
         }
 
         Vector2 touchpadValue = touchPadAction.GetAxis(handType);
@@ -168,11 +189,9 @@ public class SC3aStreet : LevelScript
             }
 
             
-            //if(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-            //StartCoroutine(Post(true));
-            //if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) 
-            // StartCoroutine(Post(false));
         }
+
+        
     }
 
     void buttonIsClicked()
@@ -190,6 +209,30 @@ public class SC3aStreet : LevelScript
         formData.Add(new MultipartFormDataSection("arrow_pressed", (IsLeft) ? "Left": "Right"));
         formData.Add(new MultipartFormDataSection("accuracy", (SpawnPosIndex == 0 == IsLeft) ? "Correct": "Wrong"));
         formData.Add(new MultipartFormDataSection("reaction_time", ((Time.time - startTime) * 1000).ToString("0.0")));
+        
+
+        if (gazeData != null)
+        {
+            Vector3 origin = gazeOriginCamera.position;
+            Vector3 direction = gazeOriginCamera.TransformDirection(gazeData.GazeDirection);
+
+            if (Physics.SphereCast(origin, 0.05f, direction, out RaycastHit hit, Mathf.Infinity))
+            {
+                if (hit.collider.CompareTag("Left"))
+                {
+                    formData.Add(new MultipartFormDataSection("looked", "Left"));
+                }
+                else if (hit.collider.CompareTag("Right"))
+                {
+                    formData.Add(new MultipartFormDataSection("looked", "Right"));
+                }
+                else
+                {
+                    formData.Add(new MultipartFormDataSection("looked", "Else"));
+                }
+
+            }
+        }
 
         string url = Constant.DOMAIN + (Constant.SC3AData);
 

@@ -10,6 +10,7 @@ namespace PupilLabs
     {
         public SubscriptionsController subsCtrl;
         public Text statusText;
+        public GameObject status;
 
         private CalibrationController calibrationController;
 
@@ -71,6 +72,7 @@ namespace PupilLabs
             StartCoroutine(DisableTextAfter(1));
             Scene.SetActive(true); //I make it active here. Used to work
             Hand.SetActive(true);
+            status.SetActive(false);
         }
 
         private void CalibrationFailed()

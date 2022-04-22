@@ -20,7 +20,7 @@ public class Sc3aPractice : MonoBehaviour
 
     [SerializeField] Transform[] SpawnPoses = null;
     [SerializeField] GameObject[] SpawnPrefabs = null;
-    [SerializeField] float CarShowTime = 0.5f;
+    [SerializeField] float CarShowTime = 1f;
     [SerializeField] float CarSpeed = 55f;
     [SerializeField] float Delay = 1f;
     [SerializeField] int TotalCount = 10;

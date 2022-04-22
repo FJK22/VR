@@ -16,6 +16,10 @@ TagManager:
   - FluidPlate
   - RightHand
   - PracticeBeaker
+  - Left
+  - Right
+  - VRCamera
+  - TV
   layers:
   - Default
   - TransparentFX

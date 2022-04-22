@@ -181,6 +181,7 @@ namespace PupilLabs
                 gazeDirectionMarker.position = origin + direction * hit.distance;
                 gazeDirectionMarker.LookAt(origin);
 
+
                 if (errorAngleBasedMarkerRadius)
                 {
                     gazeDirectionMarker.localScale = GetErrorAngleBasedScale(origMarkerScale, hit.distance, angleErrorEstimate);
