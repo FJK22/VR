@@ -11,7 +11,7 @@ public class SC3bStreet : LevelScript
 {
     [SerializeField] Transform[] SpawnPoses = null;
     [SerializeField] GameObject[] SpawnPrefabs = null;
-    [SerializeField] float CarShowTime = 0.5f;
+    [SerializeField] float CarShowTime = 1f;
     [SerializeField] float CarSpeed = 55f;
     [SerializeField] float Delay = 1f;
     [SerializeField] int TotalCount = 70;
@@ -35,6 +35,10 @@ public class SC3bStreet : LevelScript
     public RecordingController recorder;
     public Text statusText;
     public Camera camera;
+    public GazeVisualizer gazeVisualizer;
+    public GazeData gazeData;
+    public Transform gazeOriginCamera;
+    public GazeController gazeController;
 
     void Awake()
     {
@@ -121,7 +125,17 @@ public class SC3bStreet : LevelScript
         mylist.Add(0);
         mylist.Add(1);
     }
-
+    private void OnEnable()
+    {
+        if (gazeController)
+        {
+            gazeController.OnReceive3dGaze += OnReceive;
+        }
+    }
+    private void OnReceive(GazeData obj)
+    {
+        gazeData = obj;
+    }
     void OnDestroy()
     {
         recorder.StopRecording();
@@ -189,6 +203,29 @@ public class SC3bStreet : LevelScript
         formData.Add(new MultipartFormDataSection("arrow_pressed", (IsLeft) ? "Left": "Right"));
         formData.Add(new MultipartFormDataSection("accuracy", (SpawnPosIndex == 0 == IsLeft) ? "Wrong": "Correct"));
         formData.Add(new MultipartFormDataSection("reaction_time", ((Time.time - startTime) * 1000).ToString("0.0")));
+
+        if (gazeData != null)
+        {
+            Vector3 origin = gazeOriginCamera.position;
+            Vector3 direction = gazeOriginCamera.TransformDirection(gazeData.GazeDirection);
+
+            if (Physics.SphereCast(origin, 0.05f, direction, out RaycastHit hit, Mathf.Infinity))
+            {
+                if (hit.collider.CompareTag("Left"))
+                {
+                    formData.Add(new MultipartFormDataSection("looked", "Left"));
+                }
+                else if (hit.collider.CompareTag("Right"))
+                {
+                    formData.Add(new MultipartFormDataSection("looked", "Right"));
+                }
+                else
+                {
+                    formData.Add(new MultipartFormDataSection("looked", "Else"));
+                }
+
+            }
+        }
 
         string url = Constant.DOMAIN + (Constant.SC3BData);
 

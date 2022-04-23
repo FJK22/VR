@@ -17,18 +17,13 @@ public class Sc1LivingRoom : LevelScript
     [SerializeField] VideoPlayer video = null;
     [SerializeField] AudioSource[] audios = null;
     public GameObject Pointer;
-    string looked;
 
 
     [Space]
     [Header("Eye Tracker")]
     public RecordingController recorder;
     public Text statusText;
-    public GazeVisualizer gazeVisualizer;
-    public GazeData gazeData;
-    public Transform gazeOriginCamera;
-    public GazeController gazeController;
-    TimeSync timeSync;
+
 
 
     void Awake()
@@ -38,19 +33,7 @@ public class Sc1LivingRoom : LevelScript
         bool connected = recorder.requestCtrl.IsConnected;
     }
 
-    private void OnEnable()
-    {
-        if (gazeController)
-        {
-            gazeController.OnReceive3dGaze += OnReceive;
-        }
-    }
     
-   
-    private void OnReceive(GazeData obj)
-    {
-        gazeData = obj;
-    }
 
     void OnDestroy()
     {
@@ -60,29 +43,7 @@ public class Sc1LivingRoom : LevelScript
     void Update()
     {
 
-        if (gazeData != null)
-        {
-            Vector3 origin = gazeOriginCamera.position;
-            Vector3 direction = gazeOriginCamera.TransformDirection(gazeData.GazeDirection);
-
-            if (Physics.SphereCast(origin, 0.05f, direction, out RaycastHit hit, Mathf.Infinity))
-            {
-                if (hit.collider.tag == "TV")
-                {
-                    looked = "TV";
-                    LookedAt(looked);
-
-                }
-                else
-                {
-                    looked = "Else";
-                    LookedAt(looked);
-
-                }
-
-
-            }
-        }
+        
 
         StartBTN.onClick.AddListener(buttonIsClicked);
         
@@ -124,25 +85,7 @@ public class Sc1LivingRoom : LevelScript
         btnIsClicked = true;
     }
 
-    void LookedAt(string lookedAtWhat)
-    {
-        string date = System.DateTime.Now.ToString("yyyy_MM_dd");
-        string path = $"{Application.dataPath}/Data/{UserGroup}/{UserName + "_" + date}/Sc1LivingRoom/EyeTracking/" + UserName + "_" + "LookedAt.csv";
-
-        double pupilTime = timeSync.GetPupilTimestamp();
-        double unityTime = Time.realtimeSinceStartup;
-
-        if (!File.Exists(path))
-        {
-            string header = "Pupil Timestamp,Unity Time,Looked At" + Environment.NewLine;
-
-            File.AppendAllText(path, header);
-        }
-
-        string values = $"{pupilTime}, {unityTime}, {lookedAtWhat}" + Environment.NewLine;
-
-        File.AppendAllText(path, values);
-    }
+    
 
     IEnumerator EndTask()
     {

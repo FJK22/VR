@@ -20,6 +20,10 @@ TagManager:
   - Right
   - VRCamera
   - TV
+  - Book
+  - AvatarsBar
+  - Experiments
+  - Instructions
   layers:
   - Default
   - TransparentFX

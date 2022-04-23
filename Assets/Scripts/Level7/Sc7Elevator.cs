@@ -17,7 +17,7 @@ public class Sc7Elevator : LevelScript {
     [SerializeField] AudioSource InterviewrAS = null;
 
     [SerializeField] AudioSource[] characters = null;
-    [SerializeField] GameObject watson = null;
+
 
     private Animation DoorsAnim;
     public float DoorsAnimSpeed = 1;
@@ -129,7 +129,6 @@ public class Sc7Elevator : LevelScript {
         {
             a.enabled = true;
         }
-        watson.SetActive(true);
         StartCoroutine(StartDelay(StartDelayTime));
     }
     
