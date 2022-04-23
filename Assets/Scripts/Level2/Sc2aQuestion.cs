@@ -13,6 +13,7 @@ public class Sc2aQuestion : MonoBehaviour
     string _q3 = "";
     string _q4 = "";
     string _q5 = "";
+    string _q6 = "";
 
 
     public string Q1 { set { _q1 = value; Validate(); } }
@@ -20,11 +21,11 @@ public class Sc2aQuestion : MonoBehaviour
     public string Q3 { set { _q3 = value; Validate(); } }
     public string Q4 { set { _q4 = value; Validate(); } }
     public string Q5 { set { _q5 = value; Validate(); } }
-
+    public string Q6 { set { _q6 = value; Validate(); } }
 
     void Validate()
     {
-        BtSubmit.interactable = _q1 != "" && _q2 != "" && _q3 != "" && _q4 != "" && _q5 != "";
+        BtSubmit.interactable = _q1 != "" && _q2 != "" && _q3 != "" && _q4 != "" && _q5 != "" && _q6 != "";
     }
     public void Submit()
     {
@@ -42,6 +43,7 @@ public class Sc2aQuestion : MonoBehaviour
         formData.Add(new MultipartFormDataSection("q3", _q3));
         formData.Add(new MultipartFormDataSection("q4", _q4));
         formData.Add(new MultipartFormDataSection("q5", _q5));
+        formData.Add(new MultipartFormDataSection("q6", _q6));
 
         UnityWebRequest www = UnityWebRequest.Post(Constant.DOMAIN + Constant.SC2AQS, formData);
         yield return www.SendWebRequest();
