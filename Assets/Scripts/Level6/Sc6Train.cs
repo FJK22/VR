@@ -58,6 +58,7 @@ public class Sc6Train : LevelScript
         string date = System.DateTime.Now.ToString("yyyy_MM_dd");
         recorder.customPath = $"{Application.dataPath}/Data/{UserGroup}/{UserName + "_" + date}/Sc8TrainStation/EyeTracking";
         bool connected = recorder.requestCtrl.IsConnected;
+        Pointer.SetActive(true);
     }
 
     void OnDestroy()
