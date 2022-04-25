@@ -207,7 +207,6 @@ public class EGGData{
     }
     public EGGData(string path, string file)
     {
-        Debug.Log("EEG Constrator" + path + file);
         if (!Directory.Exists(path))
         {
             Directory.CreateDirectory(path);

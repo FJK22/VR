@@ -8,7 +8,8 @@ using Valve.VR;
 using UnityEngine.UI;
 using PupilLabs;
 using UnityEngine.SceneManagement;
-
+using System;
+using System.IO;
 
 public class Sc2aLectureHall : LevelScript
 {
@@ -21,7 +22,7 @@ public class Sc2aLectureHall : LevelScript
     float startTime = 0f;
     public Camera camera;
     List<int> mylist = new List<int>();
-
+    int newNumber;
 
     [Space]
     [Header("VR Trigger")]
@@ -34,6 +35,7 @@ public class Sc2aLectureHall : LevelScript
     public RecordingController recorder;
     public Text statusText;
 
+   
     void Awake()
     {
         
@@ -283,9 +285,12 @@ public class Sc2aLectureHall : LevelScript
 
     }
 
+ 
+
     void OnDestroy()
     {
         recorder.StopRecording();
+        
     }
     void Update()
     {
@@ -307,6 +312,8 @@ public class Sc2aLectureHall : LevelScript
         }
 
         
+
+
     }
 
     new public void StartTask()
@@ -344,32 +351,37 @@ public class Sc2aLectureHall : LevelScript
         {
             yield return new WaitForSeconds(3);
         }
-        // this is for remove repeat
-        while (true)
+        
+       
+
+        if (mylist.Count > 0)
         {
-            int newNumber = mylist[Random.Range(0, mylist.Count)];
+            newNumber = mylist[UnityEngine.Random.Range(0, mylist.Count)];
 
             if (newNumber != currentNumber)
             {
                 currentNumber = newNumber;
-                break;
 
+                text.text = currentNumber.ToString();
+
+                startTime = Time.time;
+
+
+                yield return new WaitForSeconds(delay);
+
+
+                posted = false;
+                mylist.Remove(currentNumber);
 
             }
 
-        }
-
-        text.text = currentNumber.ToString();
-        mylist.Remove(currentNumber);
-        startTime = Time.time;
-        yield return new WaitForSeconds(delay);
-        posted = false;
-        count++;
-
-        if (count < 225)
-        {
+            
             StartCoroutine(ShowNumber());
+            
         }
+
+        
+        
         else
         {
             recorder.StopRecording();
@@ -381,5 +393,7 @@ public class Sc2aLectureHall : LevelScript
 
 
     }
+
+   
 }
 

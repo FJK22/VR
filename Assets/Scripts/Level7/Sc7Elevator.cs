@@ -212,7 +212,7 @@ public class Sc7Elevator : LevelScript {
 
             recorder.StartRecording();
             TaskCanvas.GetComponent<Canvas>().enabled = false;
-            TaskCanvas.GetComponent<GraphicRaycaster>().enabled = false;
+            //TaskCanvas.GetComponent<GraphicRaycaster>().enabled = false;
             //Pointer.SetActive(false);
         }
         if (phoneFirstShown && touchPadClick.GetStateDown(handType))

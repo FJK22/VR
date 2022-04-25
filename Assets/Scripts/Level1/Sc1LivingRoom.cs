@@ -25,19 +25,18 @@ public class Sc1LivingRoom : LevelScript
     public Text statusText;
 
 
-
     void Awake()
     {
         string date = System.DateTime.Now.ToString("yyyy_MM_dd");
         recorder.customPath = $"{Application.dataPath}/Data/{UserGroup}/{UserName + "_" + date}/Sc1LivingRoom/EyeTracking";
         bool connected = recorder.requestCtrl.IsConnected;
     }
-
-    
+   
 
     void OnDestroy()
     {
         recorder.StopRecording();
+        
     }
 
     void Update()
@@ -53,8 +52,8 @@ public class Sc1LivingRoom : LevelScript
             StartTask();
             recorder.StartRecording(); 
             Pointer.SetActive(false);
-
             
+
 
         }
 
@@ -65,6 +64,8 @@ public class Sc1LivingRoom : LevelScript
             btnIsClicked = false;
             StartCoroutine(EndTask()); 
         }
+
+        
     }
 
 
@@ -85,8 +86,8 @@ public class Sc1LivingRoom : LevelScript
         btnIsClicked = true;
     }
 
-    
-
+   
+   
     IEnumerator EndTask()
     {
         recorder.StopRecording();

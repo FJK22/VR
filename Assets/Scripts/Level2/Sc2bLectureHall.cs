@@ -20,7 +20,7 @@ public class Sc2bLectureHall : LevelScript
     float startTime = 0f;
     public Camera camera;
     List<int> mylist = new List<int>();
-
+    int newNumber;
 
     [Space]
     [Header("VR Trigger")]
@@ -333,32 +333,30 @@ public class Sc2bLectureHall : LevelScript
         {
             yield return new WaitForSeconds(3);
         }
-        // this is for remove repeat
-        while (true)
+        if (mylist.Count > 0)
         {
-            int newNumber = mylist[Random.Range(0, mylist.Count)];
+            newNumber = mylist[UnityEngine.Random.Range(0, mylist.Count)];
 
             if (newNumber != currentNumber)
             {
                 currentNumber = newNumber;
-                break;
 
+                text.text = currentNumber.ToString();
+
+                startTime = Time.time;
+
+
+                yield return new WaitForSeconds(delay);
+
+
+                posted = false;
+                mylist.Remove(currentNumber);
 
             }
 
-        }
 
-        text.text = currentNumber.ToString();
-        mylist.Remove(currentNumber);
-        startTime = Time.time;
-        yield return new WaitForSeconds(delay);
-        posted = false;
-
-        count++;
-
-        if (count < 225)
-        {
             StartCoroutine(ShowNumber());
+
         }
         else
         {

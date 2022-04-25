@@ -24,6 +24,7 @@ public class Sc2bPractice : MonoBehaviour
     public Camera camera;
     int count2 = 0;
     List<int> mylist = new List<int>();
+    int newNumber;
 
     [Space]
     [Header("VR Trigger")]
@@ -141,31 +142,27 @@ public class Sc2bPractice : MonoBehaviour
         {
             yield return new WaitForSeconds(3);
         }
-        while (true)
+
+        if (mylist.Count > 0)
         {
-            int newNumber = mylist[Random.Range(0, mylist.Count)];
+            newNumber = mylist[Random.Range(0, mylist.Count)];
 
             if (newNumber != currentNumber)
             {
                 currentNumber = newNumber;
-                break;
+                text.text = currentNumber.ToString();
 
+                yield return new WaitForSeconds(delay);
+
+                mylist.Remove(currentNumber);
 
             }
 
-        }
 
-
-        text.text = currentNumber.ToString();
-        mylist.Remove(currentNumber);
-        yield return new WaitForSeconds(delay);
-        count++;
-
-        if (count < 30)
-        {
             StartCoroutine(ShowNumber());
+
         }
-        else if (countPress < 4 && count == 30)
+        else if (countPress < 4 && mylist.Count == 0)
         {
             StartCoroutine(StartAgain());
         }
