@@ -8,8 +8,8 @@ using Valve.VR;
 using UnityEngine.UI;
 using PupilLabs;
 using UnityEngine.SceneManagement;
-using System;
-using System.IO;
+
+
 
 public class Sc2aLectureHall : LevelScript
 {
@@ -351,37 +351,36 @@ public class Sc2aLectureHall : LevelScript
         {
             yield return new WaitForSeconds(3);
         }
-        
-       
 
-        if (mylist.Count > 0)
+        posted = false;
+
+
+
+        do
         {
-            newNumber = mylist[UnityEngine.Random.Range(0, mylist.Count)];
+
+            newNumber = mylist[Random.Range(0, mylist.Count)];
 
             if (newNumber != currentNumber)
             {
                 currentNumber = newNumber;
-
-                text.text = currentNumber.ToString();
-
-                startTime = Time.time;
-
-
-                yield return new WaitForSeconds(delay);
-
-
-                posted = false;
-                mylist.Remove(currentNumber);
-
+                break;
             }
 
-            
-            StartCoroutine(ShowNumber());
-            
-        }
+        } while (mylist.Count > 0);
 
-        
-        
+       
+
+        text.text = currentNumber.ToString();
+        mylist.Remove(currentNumber);
+        startTime = Time.time;
+        yield return new WaitForSeconds(delay);
+        count++;
+
+        if (count < 225)
+        {
+            StartCoroutine(ShowNumber());
+        }
         else
         {
             recorder.StopRecording();
@@ -389,7 +388,6 @@ public class Sc2aLectureHall : LevelScript
             yield return new WaitForSeconds(2f);
             NextScene();
         }
-
 
 
     }

@@ -333,30 +333,30 @@ public class Sc2bLectureHall : LevelScript
         {
             yield return new WaitForSeconds(3);
         }
-        if (mylist.Count > 0)
+        posted = false;
+
+        do
         {
-            newNumber = mylist[UnityEngine.Random.Range(0, mylist.Count)];
+
+            newNumber = mylist[Random.Range(0, mylist.Count)];
 
             if (newNumber != currentNumber)
             {
                 currentNumber = newNumber;
-
-                text.text = currentNumber.ToString();
-
-                startTime = Time.time;
-
-
-                yield return new WaitForSeconds(delay);
-
-
-                posted = false;
-                mylist.Remove(currentNumber);
-
+                break;
             }
 
+        } while (mylist.Count > 0);
 
+        text.text = currentNumber.ToString();
+        mylist.Remove(currentNumber);
+        startTime = Time.time;
+        yield return new WaitForSeconds(delay);
+        count++;
+
+        if (count < 225)
+        {
             StartCoroutine(ShowNumber());
-
         }
         else
         {
@@ -365,8 +365,7 @@ public class Sc2bLectureHall : LevelScript
             yield return new WaitForSeconds(2f);
             NextScene();
         }
-
-
+       
 
     }
 }

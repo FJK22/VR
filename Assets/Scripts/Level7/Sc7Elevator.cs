@@ -225,11 +225,11 @@ public class Sc7Elevator : LevelScript {
         }
        
         
-        if (isStarted && Time.time - startTime > TimeLimit && !Moving)
-        {
-            reactionTime = TimeLimit;
-            StartCoroutine(Post(false));
-        }
+        //if (isStarted && Time.time - startTime > TimeLimit && !Moving)
+        //{
+         //   reactionTime = TimeLimit;
+           // StartCoroutine(Post(false));
+        //}
         RaycastHit[] hits;
         //if (grabPinchAction.GetStateDown(handType)) 
         //{
@@ -500,7 +500,7 @@ public class Sc7Elevator : LevelScript {
         {
             StartCoroutine(Post(true));
         }
-        else if (DoorsAnim[AnimName].speed > 0)
+        if (DoorsAnim[AnimName].speed > 0)
         {
             MessageManager.Instance.Messge("You are on the wrong floor.", 2);
         }
