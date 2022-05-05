@@ -502,12 +502,17 @@ public class Sc7Elevator : LevelScript {
         }
         if (DoorsAnim[AnimName].speed > 0)
         {
-            MessageManager.Instance.Messge("You are on the wrong floor.", 2);
+           // MessageManager.Instance.Messge("You are on the wrong floor.", 2);
         }
         if (Time.time - startTime > TimeLimit)
         {
             reactionTime = Time.time - startTime;
             StartCoroutine(Post(false));
+        }
+        if (isStarted && Time.time - startTime > TimeLimit && !Moving)
+        {
+           reactionTime = TimeLimit;
+           StartCoroutine(Post(false));
         }
     }
 }

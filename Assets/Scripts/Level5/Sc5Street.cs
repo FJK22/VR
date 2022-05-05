@@ -23,7 +23,7 @@ public class Sc5Street : LevelScript
     [SerializeField] AudioSource messageSound = null;
     [SerializeField] float missedCallDelay = 3;
     [SerializeField] float messageDelay = 3;
-    [SerializeField] float mapDelay = 3;
+    [SerializeField] float mapDelay = 4;
 
     public static Sc5Street Instance;
     
