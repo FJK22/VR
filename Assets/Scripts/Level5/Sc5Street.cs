@@ -35,6 +35,8 @@ public class Sc5Street : LevelScript
     int currentPointIndex = 0;
     public GameObject VRController;
     public GameObject Pointer;
+    public Button btn;
+
     [Space]
     [Header("VR Trigger")]
     public SteamVR_Input_Sources handType;
@@ -55,17 +57,12 @@ public class Sc5Street : LevelScript
     public Text statusText;
     public Camera camera;
 
-    private void Awake()
+    void Awake()
     {
         Pointer.SetActive(true);
         Instance = this;
         string date = System.DateTime.Now.ToString("yyyy_MM_dd");
-
         recorder.customPath = $"{Application.dataPath}/Data/{UserGroup}/{UserName + "_" + date}/Sc7StreetPedestrian/EyeTracking";
-
-
-        bool connected = recorder.requestCtrl.IsConnected;
-
         camera.clearFlags = CameraClearFlags.Skybox;
     }
 
@@ -74,23 +71,31 @@ public class Sc5Street : LevelScript
         recorder.StopRecording();
     }
 
+    void Start()
+    {
+        
+        btn.onClick.AddListener(ButtonOnClick);
+    }
+    void ButtonOnClick()
+    {
+        StartTask();
+    }
+    new public void StartTask()
+    {
+
+        base.StartTask();
+        EEG.Instance.Init("Sc7StreetPedestrian");
+        VRController.GetComponent<VRController>().enabled = true;
+        recorder.StartRecording();
+        TaskCanvas.GetComponent<Canvas>().enabled = false;
+        TaskCanvas.GetComponent<GraphicRaycaster>().enabled = false;
+        Pointer.SetActive(false);
+        StartCoroutine(LimitTimer());
+    }
 
     void Update()
     {
-        StartBTN.onClick.AddListener(buttonIsClicked);
 
-
-        if (!isStarted && btnIsClicked)
-        {
-            VRController.GetComponent<VRController>().enabled = true;
-            StartTask();
-            recorder.StartRecording();
-            TaskCanvas.GetComponent<Canvas>().enabled = false;
-            TaskCanvas.GetComponent<GraphicRaycaster>().enabled = false;
-            Pointer.SetActive(false);
-
-
-        }
 
         if (isStarted && !missedCallPan.activeSelf && !callingPan.activeSelf && !messagePan.activeSelf && grabPinchAction.GetStateDown(handType))
         {
@@ -119,28 +124,9 @@ public class Sc5Street : LevelScript
          }
     }
 
-    void buttonIsClicked()
-    {
-        btnIsClicked = true;
-    }
+  
 
-    new public void StartTask()
-    {
-        
-        base.StartTask();
-        EEG.Instance.Init("Sc7StreetPedestrian");
-        //if (IsVR)
-        //{
-        //    Vector3 phonePos = phone.transform.localPosition;
-        //   Quaternion phoneRot = phone.transform.localRotation;
-
-        //phone.transform.SetParent(VRCamera.transform.Find("Camera"));
-        //  phone.transform.localRotation = phoneRot;
-        //  phone.transform.localPosition = phonePos;
-        //}
-        //mapCanvas.SetActive(true);
-        StartCoroutine(LimitTimer());
-    }
+   
     private void OnTriggerEnter(Collider other)
     {
         if(other.tag == "Player")

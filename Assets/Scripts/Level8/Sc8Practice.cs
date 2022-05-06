@@ -1,91 +1,65 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Valve.VR;
+using TMPro;
 using UnitySimpleLiquid;
 
 public class Sc8Practice : MonoBehaviour
 {
-
-    [SerializeField] Text textInstruction = null;
-    public Button StartPracticeBTNl;
-    public Button StartInstructionBTNl;
-    bool praticeButtonIsClicked = false;
-    public Canvas PracticeCanvas;
-    public Text CanvasText;
-    public GameObject EEG;
     public GameObject Hand;
-    public GameObject buttonStartPractice;
-    int count2 = 0;
-    public GameObject emptyBeaker;
-    public GameObject liquidBeaker;
+    public GameObject EEG;
+    public bool ptcompleted;
+    public Button btn;
+    public GameObject PTButton;
+    public GameObject CanvasInstructions;
 
-    [Space]
-    [Header("VR Trigger")]
-    public SteamVR_Input_Sources handType;
-    public SteamVR_Action_Boolean grabPinchAction = SteamVR_Input.GetAction<SteamVR_Action_Boolean>("GrabPinch");
-    public GameObject Pointer;
+    public GameObject Beaker;
+    public GameObject BrownBottle;
+
+    public TextMeshProUGUI robotInstructions;
 
     void Start()
     {
-        Pointer.SetActive(true);
-        StartInstructionBTNl.interactable = false;
-        emptyBeaker.SetActive(false);
-        liquidBeaker.SetActive(false);
-    }
+        ptcompleted = true;
+        Beaker.SetActive(false);
+        BrownBottle.SetActive(false);
 
-   
+        btn.onClick.AddListener(PTButtonOnClick);
+    }
     void Update()
     {
-        StartPracticeBTNl.onClick.AddListener(buttonIsClicked);
-        StartInstructionBTNl.onClick.AddListener(instructionButtonIsClicked);
-
-        if (praticeButtonIsClicked)
+        if (ptcompleted == true && Beaker.GetComponent<LiquidContainer>().fillAmountPercent > 0.5f)
         {
-            count2++;
-
-            if (count2 == 1)
-            {
-                //Pointer.SetActive(false);
-                buttonStartPractice.SetActive(false);
-                StartInstructionBTNl.interactable = true;
-                PracticeCanvas.enabled = false;
-            }
-        }
-        if (emptyBeaker.GetComponent<LiquidContainer>().fillAmountPercent > 0.5f)
-        {
-            textInstruction.text = "Well done. This is how we can interact with the equipment.";
             StartCoroutine(PracticeCompleted());
+
+            ptcompleted = false;
         }
-    }
-
-    void buttonIsClicked()
-    {
-        praticeButtonIsClicked = true;
-
-
 
     }
-    public void instructionButtonIsClicked()
+
+
+    void PTButtonOnClick() 
     {
-        StartInstructionBTNl.interactable = false;
-        textInstruction.text = "Grab the beaker with liquid by holding the trigger button and pour the liquid into the other beaker.";
-        emptyBeaker.SetActive(true);
-        liquidBeaker.SetActive(true);
+        PTButton.SetActive(false);
+        CanvasInstructions.SetActive(false);
+        Beaker.SetActive(true);
+        BrownBottle.SetActive(true);
+        robotInstructions.text = "Grab the brown bottle with bromine with the controller and pour the bromine into the beaker.";
+
+        
     }
 
     IEnumerator PracticeCompleted()
     {
-        PracticeCanvas.enabled = true;
-        CanvasText.text = "Practice completed. You will now start the calibration process.";
-        yield return new WaitForSeconds(10f);
-        Destroy(liquidBeaker);
-        Destroy(emptyBeaker);
+        robotInstructions.text = "Practice completed, you will now start a calibration process before conducting the study.";
+        yield return new WaitForSeconds(10.0f);
+        Destroy(Beaker);
+        Destroy(BrownBottle);
+        Hand.SetActive(false);
         EEG.SetActive(true);
         this.gameObject.SetActive(false);
-        Hand.SetActive(false);
        
     }
+    
 }

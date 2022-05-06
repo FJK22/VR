@@ -4,18 +4,20 @@ using UnityEngine;
 
 public class RotateAround : MonoBehaviour
 {
-    public GameObject target;
+
+    public GameObject Target;
     float timeLeft = 10.0f;
+
     void Update()
     {
-        // Spin the object around the target at 20 degrees/second.
-        transform.RotateAround(target.transform.position, Vector3.up, 170 * Time.deltaTime);
-        
+        transform.RotateAround(Target.transform.position, Vector3.up, 170 * Time.deltaTime);
+
         timeLeft -= Time.deltaTime;
-        
+
         if (timeLeft < 0)
         {
             this.gameObject.SetActive(false);
         }
+
     }
 }

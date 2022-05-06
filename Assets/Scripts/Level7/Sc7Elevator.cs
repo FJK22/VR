@@ -97,7 +97,6 @@ public class Sc7Elevator : LevelScript {
 
         string date = System.DateTime.Now.ToString("yyyy_MM_dd");
         recorder.customPath = $"{Application.dataPath}/Data/{UserGroup}/{UserName + "_" + date}/Sc9Elevator/EyeTracking";
-        bool connected = recorder.requestCtrl.IsConnected;
 
         Moving = false;
         BtnSoundFX = GetComponent<AudioSource>();

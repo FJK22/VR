@@ -64,7 +64,7 @@ EditorBuildSettings:
     guid: b8520176fbcc86245a1dafdcf60eb279
   - enabled: 1
     path: Assets/Scenes/Sc8ChemistryLab.unity
-    guid: 20eee4da9ec75d349a1690969257eade
+    guid: aad964513ff0275428468a98d659a2fa
   - enabled: 1
     path: Assets/Scenes/Sc8Questionnaire.unity
     guid: 9954b35612102ca4f90f426df97b5cd3

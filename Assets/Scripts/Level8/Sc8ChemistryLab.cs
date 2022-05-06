@@ -1,337 +1,346 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Valve.VR.InteractionSystem;
-using Valve.VR.InteractionSystem.Sample;
+using TMPro;
 using UnitySimpleLiquid;
-using SimpleJSON;
-using UnityEngine.Networking;
 using PupilLabs;
-using Looxid.Link;
+using UnityEngine.Networking;
 
 public class Sc8ChemistryLab : LevelScript
 {
+    public Button btn;
+    public GameObject TaskButton;
+    public GameObject CanvasInstructions;
+    public TextMeshProUGUI RobotInstructions;
+    public GameObject Pointer;
+    float startTime = 0;
+    [SerializeField] int TimeLimit = 600;
+    private float attentionAverage;
+    private int count;
+    int countBool = 0;
+    int countBool2 = 0;
 
-    //private LinkDataValue attention;
+    [Space]
+    [Header("Experiment 1")]
+    public GameObject Exp1;
+    public bool experiment1;
+    public GameObject MiniPotassium;
+    public MeshCollider PotassiumMeshCollider;
+
+    [Space]
+    [Header("Experiment 2")]
+    public GameObject Exp2;
+    public bool experiment2;
+    public GameObject BeakerExp2;
+    public MeshCollider BrownBottleMeshCollider;
+    public MeshCollider BrownBottleFluidMeshCollider;
+    public CapsuleCollider BrownBottleCapsuleCollider;
+    public MeshCollider AluminumMeshCollider;
+    public CapsuleCollider AluminumCapsuleCollider;
+    public GameObject MiniAluminum;
+
+    [Space]
+    [Header("Experiment 3")]
+    public GameObject Exp3;
+    public bool experiment3;
+    public GameObject PlateExp3;
+    public MeshCollider NitromethaneMeshCollider;
+    public MeshCollider NitromethaneFluidMeshCollider;
+    public CapsuleCollider NitromethaneCapsuleCollider;
+    public MeshCollider MethanolMeshCollider;
+    public MeshCollider MethanolFluidMeshCollider;
+    public CapsuleCollider MethanolCapsuleCollider;
+    public MeshCollider LighterMeshCollider;
+    public BoxCollider LighterBoxCollider;
+    public GameObject FlameExp3;
 
     [Space]
     [Header("Eye Tracker")]
     public RecordingController recorder;
-    public Text statusText;
-
-    [Space]
-    [Header("EXP")]
-    [SerializeField] TextMeshProUGUI Txt_Instruction;
-    public GameObject ExperimentManager;
-    private bool exp1finished = false;
-    private bool attentionChecking = false;
-
-    float startTime = 0;
-    public Button startExperimentBTN;
-    [SerializeField] int TimeLimit = 600;
-    //bool startExButtonClicked;
-    [HideInInspector] public bool startExButtonClicked = false;
-    private int count;
-    private float attentionAverage;
-    bool burnFLameIsActive;
-    int countBool = 0;
-    int countBool2 = 0;
-
-    bool btnIsClicked = false;
-    public GameObject burnFlame;
-    //public Button startButton;
-
-    [Space]
-    [Header("Experiment 1")]
-    // public GameObject Plate;
-    public GameObject PotassiumStone;
-    public GameObject MiniPotassiumStone;
-    //public Renderer plate_renderer;
-    public MeshCollider meshColliderPotassium;
-    int Exp1 = 0;
-
-    [Space]
-    [Header("Experiment 2")]
-    public GameObject Beaker;
-    public GameObject Aluminum;
-    public GameObject MiniAluminum;
-    public MeshCollider meshColliderAluminum;
-    public MeshCollider meshColliderBromine;
-    public MeshCollider meshColliderBromineFluid;
-    public CapsuleCollider capsuleColliderBromine;
-    bool Exp2 = false;
-
-    [Space]
-    [Header("Experiment 3")]
-    public GameObject FluidPlate;
-    public MeshCollider meshColliderNitromethane;
-    public MeshCollider meshColliderNitromethaneFluid;
-    public CapsuleCollider capsuleColliderNitromethane;
-    public MeshCollider meshColliderMethanol;
-    public MeshCollider meshColliderMethanolFluid;
-    public CapsuleCollider capsuleColliderMethanol;
-    public MeshCollider meshColliderLighter;
-    public BoxCollider boxColliderLighter;
-    public GameObject BurnerFlame;
-    bool Exp3 = false;
 
     void Awake()
     {
         string date = System.DateTime.Now.ToString("yyyy_MM_dd");
         recorder.customPath = $"{Application.dataPath}/Data/{UserGroup}/{UserName + "_" + date}/Sc10ChemistryLab/EyeTracking";
-        bool connected = recorder.requestCtrl.IsConnected;
     }
+
     void OnDestroy()
     {
         recorder.StopRecording();
     }
+
+
     void Start()
     {
-        //attention = new LinkDataValue();
+        experiment1 = false;
+        experiment2 = false;
+        experiment3 = false;
+        Exp1.SetActive(false);
+        Exp2.SetActive(false);
+        Exp3.SetActive(false);
 
-        startExperimentBTN.interactable = false;
+        AluminumMeshCollider.enabled = false;
+        AluminumCapsuleCollider.enabled = false;
 
-        //plate_renderer = Plate.GetComponent<Renderer>();
-        meshColliderPotassium = PotassiumStone.GetComponent<MeshCollider>();
-        meshColliderAluminum = Aluminum.GetComponent<MeshCollider>();
-
-        burnFLameIsActive = false;
+        btn.onClick.AddListener(ButtonOnClick);
     }
 
-    void buttonIsClicked()
-    {
-        btnIsClicked = true;
-        TaskCanvas.GetComponent<Canvas>().enabled = false;
-        TaskCanvas.GetComponent<GraphicRaycaster>().enabled = false;
-    }
-    public void buttonExpIsClicked()
+    void ButtonOnClick()
     {
         StartTask();
-
     }
 
     new public void StartTask()
     {
         base.StartTask();
         EEG.Instance.Init("Sc10ChemistryLab");
+        recorder.StartRecording();
+        CanvasInstructions.SetActive(false);
+        experiment1 = true;
         StartCoroutine(Experiments());
         StartCoroutine(LimitTimeCounter());
     }
 
-    //void OnEnable()
-    //{
-    //    LooxidLinkData.OnReceiveMindIndexes += OnReceiveMindIndexes;
-    //}
-
-    //void OnDisable()
-    //{
-
-    //    LooxidLinkData.OnReceiveMindIndexes -= OnReceiveMindIndexes;
-    //}
-
+    // Update is called once per frame
     void Update()
     {
-        StartBTN.onClick.AddListener(buttonIsClicked);
-
         EEG.Instance.attention.value = Mathf.Lerp((float)EEG.Instance.attention.value, (float)EEG.Instance.attention.target, 0.2f);
         attentionAverage = (float)(attentionAverage * count + EEG.Instance.attention.value) / (count + 1);
         count++;
 
-        if (!isStarted && btnIsClicked)
+   
+        if (experiment1 == true)
         {
-            recorder.StartRecording();
-            startExperimentBTN.interactable = true;
-            startExperimentBTN.onClick.AddListener(buttonExpIsClicked);
+            StartCoroutine(StartExperiment1());
         }
-        if (ExperimentManager.GetComponent<ExperimentManager>().CurrentExperiment1 == true)
+
+        if (experiment2 == true)
         {
-            StartCoroutine(CurrentExpt1());
+            StartCoroutine(StartExperiment2());
         }
-        if (ExperimentManager.GetComponent<ExperimentManager>().CurrentExperiment2 == true)
+        if (experiment3 == true)
         {
-            StartCoroutine(CurrentExpt2());
-        }
-        if (ExperimentManager.GetComponent<ExperimentManager>().CurrentExperiment3 == true)
-        {
-            StartCoroutine(CurrentExpt3());
+            StartCoroutine(StartExperiment3());
         }
     }
 
-    IEnumerator CurrentExpt1()
+    IEnumerator StartExperiment1()
     {
-        yield return new WaitForSeconds(0.1f);
+        Exp1.SetActive(true);
+        TaskButton.SetActive(false);
+        
 
-        if (MiniPotassiumStone.activeSelf == false)
+        if (MiniPotassium.activeSelf == false)
         {
+            if (EEG.Instance.attention.value < 0.4)
+            {
+                PotassiumMeshCollider.enabled = false;
+                RobotInstructions.text = "Your attention level is low. You can only complete this experiment with higher attention levels";
+            }
+            else
+            {
+                PotassiumMeshCollider.enabled = true;
+                RobotInstructions.text = "Grab the potassium rock and place it in the water of the beaker.";
+            }
+
+        }
+        else 
+        { 
+            experiment1 = false;
+            RobotInstructions.text = "Well done for completing experiment 1.";
+            yield return new WaitForSeconds(10.0f);
+            StartCoroutine(StartExperiment2());
+
+        }
+    }
+
+    IEnumerator StartExperiment2()
+    {
+        experiment2 = true;
+        yield return new WaitForSeconds(2.0f);
+        Exp1.SetActive(false);
+        Exp2.SetActive(true);
+
+
+        if (BeakerExp2.GetComponent<LiquidContainer>().fillAmountPercent > 0.5f && MiniAluminum.activeSelf == false)
+        {
+            if (EEG.Instance.attention.value < 0.4)
+            {
+                AluminumMeshCollider.enabled = false;
+                AluminumCapsuleCollider.enabled = false;
+
+                RobotInstructions.text = "Your attention level is low. You can only complete this experiment with higher attention levels";
+            }
+            else
+            {
+                BrownBottleMeshCollider.enabled = false;
+                BrownBottleFluidMeshCollider.enabled = false;
+                BrownBottleCapsuleCollider.enabled = false;
+
+                AluminumMeshCollider.enabled = true;
+                AluminumCapsuleCollider.enabled = true;
+
+                RobotInstructions.text = "Grab the aluminum and place it into the beaker with bromine.";
+
+            }
+
+        }
+        else if (BeakerExp2.GetComponent<LiquidContainer>().fillAmountPercent > 0.5f && MiniAluminum.activeSelf == true)
+        {
+            experiment2 = false;
+            RobotInstructions.text = "Well done for completing experiment 2.";
+            yield return new WaitForSeconds(12.0f);
+            StartCoroutine(StartExperiment3());
+        }
+        else
+        {
+            if (EEG.Instance.attention.value < 0.4)
+            {
+                BrownBottleMeshCollider.enabled = false;
+                BrownBottleFluidMeshCollider.enabled = false;
+                BrownBottleCapsuleCollider.enabled = false;
+
+                RobotInstructions.text = "Your attention level is low. You can only complete this experiment with higher attention levels";
+            }
+            else
+            {
+                BrownBottleMeshCollider.enabled = true;
+                BrownBottleFluidMeshCollider.enabled = true;
+                BrownBottleCapsuleCollider.enabled = true;
+
+                RobotInstructions.text = "Grab the brown bottle with bromine and pour it into the beaker.";
+            }
            
+        }
+
+    }
+
+    IEnumerator StartExperiment3()
+    {
+        experiment3 = true;
+        yield return new WaitForSeconds(2.0f);
+        Exp2.SetActive(false);
+        Exp3.SetActive(true);
+
+        
+
+        if (PlateExp3.GetComponent<LiquidContainer>().fillAmountPercent == 0.2f && FlameExp3.activeSelf == false)
+        {
 
             if (EEG.Instance.attention.value < 0.4)
             {
-                meshColliderPotassium.enabled = false;
-                Txt_Instruction.text = "Your attention level is low. You can only complete this experiment with higher attention levels.";
-                attentionChecking = true;
+                NitromethaneMeshCollider.enabled = false;
+                NitromethaneFluidMeshCollider.enabled = false;
+                NitromethaneCapsuleCollider.enabled = false;
+
+                MethanolMeshCollider.enabled = false;
+                MethanolFluidMeshCollider.enabled = false;
+                MethanolCapsuleCollider.enabled = false;
+
+                RobotInstructions.text = "Your attention level is low. You can only complete this experiment with higher attention levels";
             }
             else
             {
-                meshColliderPotassium.enabled = true;
-                Txt_Instruction.text = "Grab the Potassium and add it into the water of the beaker.";
+                NitromethaneMeshCollider.enabled = false;
+                NitromethaneFluidMeshCollider.enabled = false;
+                NitromethaneCapsuleCollider.enabled = false;
+
+                MethanolMeshCollider.enabled = true;
+                MethanolFluidMeshCollider.enabled = true;
+                MethanolCapsuleCollider.enabled = true;
+
+                RobotInstructions.text = "Grab the tube with Methanol and pour it into the plate that has Nitromethane.";
             }
-
+            
         }
-        else
+        else if (PlateExp3.GetComponent<LiquidContainer>().fillAmountPercent == 0.9f && FlameExp3.activeSelf == false)
         {
-            attentionChecking = false;
-            Txt_Instruction.text = "This is a chemical reaction of potassium in the water. Well done for completing this experiment.";
-            Destroy(PotassiumStone);
-            StartCoroutine("Experiment2");
-        }
-    }
-    IEnumerator CurrentExpt2()
-    {
-        yield return new WaitForSeconds(0.1f);
 
-        if (Beaker.GetComponent<LiquidContainer>().fillAmountPercent > 0.5f) meshColliderAluminum.enabled = (EEG.Instance.attention.value >= 0.4f);
-
-
-        if (EEG.Instance.attention.value < 0.4)
-        {
-            if (attentionChecking)
+            if (EEG.Instance.attention.value < 0.4)
             {
-                meshColliderBromine.enabled = false;
-                meshColliderBromineFluid.enabled = false;
-                capsuleColliderBromine.enabled = false;
-                Txt_Instruction.text = "Your attention level is low. You can only complete this experiment with higher attention levels.";
-            }
-        }
-        else if (MiniAluminum.activeSelf == false)
-        {
-            if (Beaker.GetComponent<LiquidContainer>().fillAmountPercent < 0.5f)
-            {
-                meshColliderBromine.enabled = true;
-                meshColliderBromineFluid.enabled = true;
-                capsuleColliderBromine.enabled = true;
-                Txt_Instruction.text = "Pour Bromine to the beaker container.";
+                NitromethaneMeshCollider.enabled = false;
+                NitromethaneFluidMeshCollider.enabled = false;
+                NitromethaneCapsuleCollider.enabled = false;
+
+                MethanolMeshCollider.enabled = false;
+                MethanolFluidMeshCollider.enabled = false;
+                MethanolCapsuleCollider.enabled = false;
+
+                LighterMeshCollider.enabled = false;
+                LighterBoxCollider.enabled = false;
+
+                RobotInstructions.text = "Your attention level is low. You can only complete this experiment with higher attention levels";
             }
             else
             {
-                Txt_Instruction.text = "Put the alimunium into the beaker with bromine.";
+                NitromethaneMeshCollider.enabled = false;
+                NitromethaneFluidMeshCollider.enabled = false;
+                NitromethaneCapsuleCollider.enabled = false;
+
+                MethanolMeshCollider.enabled = false;
+                MethanolFluidMeshCollider.enabled = false;
+                MethanolCapsuleCollider.enabled = false;
+
+                LighterMeshCollider.enabled = true;
+                LighterBoxCollider.enabled = true;
+
+                RobotInstructions.text = "Grab the lighter and add the flame into the plate that has Nitromethane and Methanol.";
             }
+           
         }
-        else
+        else if (PlateExp3.GetComponent<LiquidContainer>().fillAmountPercent == 0.9f && FlameExp3.activeSelf == true)
         {
-            attentionChecking = false;
-            Destroy(Aluminum);
-            Txt_Instruction.text = "This is a chemical reaction of aliminum and bromine. Well done for completing this experiment.";
-            StartCoroutine("Experiment3");
+            experiment3 = false;
+            RobotInstructions.text = "Well done for completing experiment 3.";
+            recorder.StopRecording();
+            StartCoroutine(PostData());
+
+
         }
+        else if (PlateExp3.GetComponent<LiquidContainer>().fillAmountPercent < 0.2f && FlameExp3.activeSelf == false)
+        {
+            if (EEG.Instance.attention.value < 0.4)
+            {
+                NitromethaneMeshCollider.enabled = false;
+                NitromethaneFluidMeshCollider.enabled = false;
+                NitromethaneCapsuleCollider.enabled = false;
+
+                MethanolMeshCollider.enabled = false;
+                MethanolFluidMeshCollider.enabled = false;
+                MethanolCapsuleCollider.enabled = false;
+
+                LighterMeshCollider.enabled = false;
+                LighterBoxCollider.enabled = false;
+
+                RobotInstructions.text = "Your attention level is low. You can only complete this experiment with higher attention levels";
+            }
+            else 
+            {
+                NitromethaneMeshCollider.enabled = true;
+                NitromethaneFluidMeshCollider.enabled = true;
+                NitromethaneCapsuleCollider.enabled = true;
+
+                MethanolMeshCollider.enabled = false;
+                MethanolFluidMeshCollider.enabled = false;
+                MethanolCapsuleCollider.enabled = false;
+
+                LighterMeshCollider.enabled = false;
+                LighterBoxCollider.enabled = false;
+
+                RobotInstructions.text = "Grab the white bottle with Nitromethane and pour it into the plate.";
+            }
+            
+        }
+
     }
-
-    IEnumerator CurrentExpt3()
-    {
-        yield return new WaitForSeconds(0.1f);
-        if (FluidPlate.GetComponent<LiquidContainer>().fillAmountPercent > 0.9f) meshColliderLighter.enabled = (EEG.Instance.attention.value >= 0.4f);
-        if (FluidPlate.GetComponent<LiquidContainer>().fillAmountPercent > 0.9f) boxColliderLighter.enabled = (EEG.Instance.attention.value >= 0.4f);
-
-        if (EEG.Instance.attention.value < 0.4)
-        {
-            Debug.Log("attention < 0.4");
-            if (attentionChecking)
-            {
-                meshColliderNitromethane.enabled = false;
-                meshColliderNitromethaneFluid.enabled = false;
-                capsuleColliderNitromethane.enabled = false;
-
-                meshColliderMethanol.enabled = false;
-                meshColliderMethanolFluid.enabled = false;
-                capsuleColliderMethanol.enabled = false;
-
-                meshColliderLighter.enabled = false;
-                boxColliderLighter.enabled = false;
-                Txt_Instruction.text = "Your attention level is low. You can only complete this experiment with higher attention levels.";
-            }
-        }
-        else if (!BurnerFlame.activeSelf) 
-        {
-            if (FluidPlate.GetComponent<LiquidContainer>().fillAmountPercent == 0.0f)
-            {
-                meshColliderNitromethane.enabled = true; //we enable here first liquid
-                meshColliderNitromethaneFluid.enabled = true;
-                capsuleColliderNitromethane.enabled = true;
-
-                meshColliderMethanol.enabled = false;
-                meshColliderMethanolFluid.enabled = false;
-                capsuleColliderMethanol.enabled = false;
-
-                meshColliderLighter.enabled = false;
-                boxColliderLighter.enabled = false;
-                Txt_Instruction.text = "Pour the Nitromethane into the glass plate.";
-            }
-            else if (FluidPlate.GetComponent<LiquidContainer>().fillAmountPercent <= 0.3f) //if we pour first liquid into plate
-            {
-                meshColliderNitromethane.enabled = false;
-                meshColliderNitromethaneFluid.enabled = false;
-                capsuleColliderNitromethane.enabled = false;
-
-                meshColliderMethanol.enabled = true; //we enable second liquid
-                meshColliderMethanolFluid.enabled = true;
-                capsuleColliderMethanol.enabled = true;
-
-                meshColliderLighter.enabled = false;
-                boxColliderLighter.enabled = false;
-                Txt_Instruction.text = "Pour the Methanol that is in the tube into the glass plate.";
-            }
-            else
-            {
-                Txt_Instruction.text = "Add the lighter into the glass plate."; 
-            }
-        }
-        else
-        {
-            Debug.Log("exp3 finish");
-            attentionChecking = false;
-            Txt_Instruction.text = "This is a chemical reaction of Nitromethane combnined with Methanol. Well done for completing this experiment.";
-            burnFLameIsActive = true; 
-            countBool++;
-
-            if (burnFLameIsActive && countBool == 1)
-            {
-                burnFLameIsActive = false;
-                recorder.StopRecording();
-                StartCoroutine(PostData());
-                Debug.Log("posted");
-            }
-        }
-    }
-
-
-    IEnumerator Experiment2()
-    {
-        if (!exp1finished)
-        {
-            exp1finished = true;
-            yield return new WaitForSeconds(10);
-            attentionChecking = true;
-            ExperimentManager.GetComponent<ExperimentManager>().StartExperiment2();
-        }
-    }
-
-
-    IEnumerator Experiment3()
-    {
-        yield return new WaitForSeconds(15);
-        attentionChecking = true;
-        ExperimentManager.GetComponent<ExperimentManager>().StartExperiment3();
-    }
-
     IEnumerator Experiments()
     {
         yield return new WaitForSeconds(0.1f);
         startTime = Time.time;
 
     }
+
     public IEnumerator LimitTimeCounter()
     {
         startTime = Time.time;
@@ -346,10 +355,14 @@ public class Sc8ChemistryLab : LevelScript
     IEnumerator PostData()
     {
         yield return new WaitForSeconds(7);
-        StartCoroutine(Post());
+        countBool++;
+
+        if (countBool == 1)
+        {
+            StartCoroutine(Post());
+        }
+
     }
-
-
 
     IEnumerator Post()
     {
@@ -375,11 +388,5 @@ public class Sc8ChemistryLab : LevelScript
         NextScene();
 
     }
-
-    //void OnReceiveMindIndexes(MindIndex mindIndexData)
-    //{
-    //    attention.target = double.IsNaN(mindIndexData.attention) ? 0.0f : (float)LooxidLinkUtility.Scale(LooxidLink.MIND_INDEX_SCALE_MIN, LooxidLink.MIND_INDEX_SCALE_MAX, 0.0f, 1.0f, mindIndexData.attention);
-    //}
-
 
 }

@@ -242,7 +242,16 @@ public class SC3bStreet : LevelScript
         isPressed = false;
         yield return new WaitForSeconds(2);
 
-        SpawnPosIndex = mylist[Random.Range(0, mylist.Count)];
+        do
+        {
+
+            SpawnPosIndex = mylist[Random.Range(0, mylist.Count)];
+            //break;
+
+
+        } while (mylist.Count > 0);
+
+
         int _carIndex = Random.Range(0, SpawnPrefabs.Length);
         Instantiate(SpawnPrefabs[_carIndex], SpawnPoses[SpawnPosIndex]).AddComponent<AutoCar>().Set(CarShowTime, CarSpeed);
         mylist.Remove(SpawnPosIndex);
