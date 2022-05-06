@@ -35,7 +35,6 @@ public class Sc5Street : LevelScript
     int currentPointIndex = 0;
     public GameObject VRController;
     public GameObject Pointer;
-    public Button btn;
 
     [Space]
     [Header("VR Trigger")]
@@ -71,22 +70,14 @@ public class Sc5Street : LevelScript
         recorder.StopRecording();
     }
 
-    void Start()
-    {
-        
-        btn.onClick.AddListener(ButtonOnClick);
-    }
-    void ButtonOnClick()
-    {
-        StartTask();
-    }
+   
     new public void StartTask()
     {
 
         base.StartTask();
         EEG.Instance.Init("Sc7StreetPedestrian");
-        VRController.GetComponent<VRController>().enabled = true;
         recorder.StartRecording();
+        VRController.GetComponent<VRController>().enabled = true;
         TaskCanvas.GetComponent<Canvas>().enabled = false;
         TaskCanvas.GetComponent<GraphicRaycaster>().enabled = false;
         Pointer.SetActive(false);
@@ -95,7 +86,12 @@ public class Sc5Street : LevelScript
 
     void Update()
     {
+        if (btnIsClicked && !isStarted)
+        {
+            StartTask();
 
+
+        }
 
         if (isStarted && !missedCallPan.activeSelf && !callingPan.activeSelf && !messagePan.activeSelf && grabPinchAction.GetStateDown(handType))
         {
