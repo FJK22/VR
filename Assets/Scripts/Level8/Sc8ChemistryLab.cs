@@ -141,7 +141,7 @@ public class Sc8ChemistryLab : LevelScript
             else
             {
                 PotassiumMeshCollider.enabled = true;
-                RobotInstructions.text = "Grab the potassium rock and place it in the water of the beaker.";
+                RobotInstructions.text = "Grab the potassium rock and place it in the water of the beaker (do not drop it).";
             }
 
         }
@@ -181,7 +181,7 @@ public class Sc8ChemistryLab : LevelScript
                 AluminumMeshCollider.enabled = true;
                 AluminumCapsuleCollider.enabled = true;
 
-                RobotInstructions.text = "Grab the aluminum and place it into the beaker with bromine.";
+                RobotInstructions.text = "Grab the aluminum and place it into the beaker with bromine (do not drop it).";
 
             }
 

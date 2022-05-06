@@ -223,7 +223,6 @@ public class Sc5Street : LevelScript
     IEnumerator MissedCall()
     {
         missedSound.Play();
-        //yield return new WaitForSeconds(0.01f);
         phone.SetActive(true);
         missedCallPan.SetActive(true);
         yield return new WaitForSeconds(missedCallDelay);
@@ -233,7 +232,6 @@ public class Sc5Street : LevelScript
     IEnumerator Message()
     {
         messageSound.Play();
-       // yield return new WaitForSeconds(1);
         phone.SetActive(true);
         messagePan.SetActive(true);
         yield return new WaitForSeconds(messageDelay);
