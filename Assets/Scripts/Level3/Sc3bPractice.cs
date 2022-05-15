@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Valve.VR;
 using UnityEngine.UI;
-using TMPro;
+
 
 public class Sc3bPractice : MonoBehaviour
 {
@@ -20,9 +20,9 @@ public class Sc3bPractice : MonoBehaviour
 
     [SerializeField] Transform[] SpawnPoses = null;
     [SerializeField] GameObject[] SpawnPrefabs = null;
-    [SerializeField] float CarShowTime = 0.5f;
-    [SerializeField] float CarSpeed = 55f;
-    [SerializeField] float Delay = 1f;
+    [SerializeField] float CarShowTime = 1.15f;
+    [SerializeField] float CarSpeed = 50f;
+    [SerializeField] float Delay = 1.15f;
     [SerializeField] int TotalCount = 10;
     List<int> mylist = new List<int>();
 

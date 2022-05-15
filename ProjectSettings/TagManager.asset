@@ -24,6 +24,8 @@ TagManager:
   - AvatarsBar
   - Experiments
   - Instructions
+  - Lecture
+  - PaperPlane
   layers:
   - Default
   - TransparentFX

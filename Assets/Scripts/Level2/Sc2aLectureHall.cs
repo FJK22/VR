@@ -35,7 +35,8 @@ public class Sc2aLectureHall : LevelScript
     public RecordingController recorder;
     public Text statusText;
 
-   
+
+
     void Awake()
     {
         
@@ -337,7 +338,12 @@ public class Sc2aLectureHall : LevelScript
         {
             formData.Add(new MultipartFormDataSection("accuracy", (currentNumber == 3) ? "Correct" : "Wrong"));
             formData.Add(new MultipartFormDataSection("reaction_time", ((Time.time - startTime) * 1000).ToString("0.0")));
+
+            
         }
+
+        
+
         UnityWebRequest www = UnityWebRequest.Post(Constant.DOMAIN + (Constant.SC2Data), formData);
         yield return www.SendWebRequest();
         if (www.result != UnityWebRequest.Result.Success)

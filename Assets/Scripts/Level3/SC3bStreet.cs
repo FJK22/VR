@@ -11,10 +11,10 @@ public class SC3bStreet : LevelScript
 {
     [SerializeField] Transform[] SpawnPoses = null;
     [SerializeField] GameObject[] SpawnPrefabs = null;
-    [SerializeField] float CarShowTime = 1f;
-    [SerializeField] float CarSpeed = 55f;
-    [SerializeField] float Delay = 1f;
-    [SerializeField] int TotalCount = 70;
+    [SerializeField] float CarShowTime = 1.15f;
+    [SerializeField] float CarSpeed = 50f;
+    [SerializeField] float Delay = 1.15f;
+    [SerializeField] int TotalCount = 50;
     List<int> mylist = new List<int>();
 
     int SpawnPosIndex;
@@ -104,26 +104,7 @@ public class SC3bStreet : LevelScript
         mylist.Add(1);
         mylist.Add(0);
         mylist.Add(1);
-        mylist.Add(0);
-        mylist.Add(1);
-        mylist.Add(0);
-        mylist.Add(1);
-        mylist.Add(0);
-        mylist.Add(1);
-        mylist.Add(0);
-        mylist.Add(1);
-        mylist.Add(0);
-        mylist.Add(1);
-        mylist.Add(0);
-        mylist.Add(1);
-        mylist.Add(0);
-        mylist.Add(1);
-        mylist.Add(0);
-        mylist.Add(1);
-        mylist.Add(0);
-        mylist.Add(1);
-        mylist.Add(0);
-        mylist.Add(1);
+
     }
     private void OnEnable()
     {

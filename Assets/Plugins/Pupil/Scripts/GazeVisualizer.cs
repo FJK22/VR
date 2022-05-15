@@ -11,7 +11,7 @@ namespace PupilLabs
 
         [Header("Settings")]
         [Range(0f, 1f)]
-        public float confidenceThreshold = 0.6f;
+        public float confidenceThreshold = 0.65f;
         public bool binocularOnly = true;
 
         [Header("Projected Visualization")]

@@ -33,6 +33,7 @@ public class Sc2bLectureHall : LevelScript
     public RecordingController recorder;
     public Text statusText;
 
+
     void Awake()
     {
         camera.clearFlags = CameraClearFlags.Skybox;
