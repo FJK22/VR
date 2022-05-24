@@ -7,6 +7,7 @@ public class Constant
     public const string Clear = @"common/clear_data";
     public const string USER = @"user/save_user";
     public const string SC1Data = @"sc1data/save_sc1data";
+    public const string SC1EyeTrackingData = @"sc1eyetracking/save_sc1eyetracking";
     public const string SC1QS = @"sc1qs/save_sc1qs";
     public const string SC2Data = @"sc2data/save_sc2data";
     public const string SC2BData = @"sc2bdata/save_sc2bdata";
